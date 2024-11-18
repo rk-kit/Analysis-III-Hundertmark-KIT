@@ -123,6 +123,7 @@
 \DeclareMathOperator{\rank}{rk}
 \DeclareMathOperator{\spann}{Spann}
 \DeclareMathOperator{\flaeche}{Fläche}
+\DeclareMathOperator{\bew}{Bew}
 
 % Mengenbezeichner
 \newcommand{\R}{\mathbb{R}}
@@ -457,5 +458,99 @@
             \textsc{Schritt 2}: $\mO_d$ ist translationsinvariant. Das heißt $\mO_d \subseteq \mA \impl \mB^d = \sigma\of{\mO_d} \subseteq \sigma\of{\mA} = \mA$. Das heißt $\mB^d \subseteq \mA$. Damit sind die Borelmengen translationsinvariant.
         \end{proof}
     \end{lemma}
+
+    \marginnote{[8. Nov]} (fehlt)
+    \newpage
+
+    \begin{satz}
+        \marginnote{[18. Nov]}
+        Es gilt
+        \begin{align*}
+            T\of{\lambda^d} &= \lambda^d\quad\forall T\in\bew\of{\R^d}
+        \end{align*}
+        \begin{proof}
+            \textsc{Schritt 1}: Sei $T\in\bew\of{\R^d}: T\of{0} = 0$. Das heißt $T$ ist linear. Dann definieren wir eine Translation
+            \begin{align*}
+                T_a\of{x} &\coloneqq x + a\\
+                \impl \pair{T_a \circ T}\of{x} &= T\of{x} + a\\
+                &= T\of{x} + T\of{b}\tag{$b\coloneqq T^{-1}\of{a}$}\\
+                &= T\of{x+b} = \pair{T\circ T_b}\of{x}\\
+                \impl T_a \circ T &= T \circ T_b
+                \intertext{Wir definieren}
+                \mu &\coloneqq T\of{\lambda^d} &= \lambda^d \circ T^{-1}\\
+                T_a\of{\mu} &= T_a\of{T\of{\lambda^d}} = T_a \circ T\of{\lambda^d}\\
+                &= T \circ T_b\of{\lambda^d} = T\of{T_b\of{\lambda_d}}\\
+                &= T\of{\lambda^d} = \mu
+            \end{align*}
+            Damit ist $\mu$ invariant unter Translation. Das heißt nach dem Eindeutigkeitssatz, dass $\mu = \alpha\lambda^d$.\\
+            Frage: Warum ist $\alpha = 1$?\\
+            Wir betrachten die abgeschlossene Einheitskugel $B\coloneqq\set{x\in\R^d: \abs{x}\leq 1}$. Dann folgt
+            \begin{align*}
+                T^{-1}\of{B} &= B\\
+                \impl \lambda^d\of{B} &= \lambda^{d}\of{T^{-1}\of{B}} = \mu\of{B} = \alpha \lambda^d\of{B}\\
+                \impl \alpha &= 1 \text{ falls } 0 < \lambda^d\of{B} <\infty\\
+                \impl T\of{\lambda^d} &= \lambda^d\quad\forall T\in\bew\of{\R^d}: T\of{0} = 0
+            \end{align*}
+            \textsc{Schritt 2}: Sei $T\in\bew\of{\R^d}$ beliebig und wir setzen $c\coloneqq T\of{0}$ und $S \coloneqq T_{-c} \circ T \in\bew\of{\R^d}$. Dann gilt
+            \begin{align*}
+                S\of{0} &= T_{-c} \of{T\of{0}} = T_{-c}\of{c} = 0\\
+                \impl S\of{\lambda^d} &= \lambda^d\text{ nach \textsc{Schritt 1}}
+                \intertext{Wir wollen das aber noch für allgemeine Bewegungen zeigen. Es gilt}
+                T &= T_c \circ S\\
+                \impl T\of{\lambda^d} &= T_c\of{S\of{\lambda_d}} = T_c\of{\lambda^d} = \lambda^d
+            \end{align*}
+            nach \textsc{Schritt 1}.\qedhere
+        \end{proof}
+    \end{satz}
+
+    \begin{beispiel}[Lebesgue-Maß von einem Punkt]
+        Sei $x\in\R^d$. Was ist dann $\lambda^d\of{\set{x}}$?. Wir definieren für $\varepsilon > 0$
+        \begin{align*}
+            J &\coloneqq \linterv{x, x+\varepsilon}\\
+            \impl x&\in J\\
+            \impl \lambda^d\of{\set{x}} &\leq \lambda^d\of{J} = \varepsilon^d \to 0\\
+            \impl \lambda^d\of{\set{x}} &= 0\quad\forall x\in\R^d
+        \end{align*}
+        Damit ist auch das Lebesgue-Maß von einer Menge von abzählbar vielen Punkten $A \coloneqq \bigcup_{n\in\N} \set{x_n}$ null, da
+        \begin{align*}
+            \lambda^d\of{A} &\leq \sum_{n\in\N}^{} \lambda^d\of{\set{x_n}} = 0\\
+            \impl \lambda^d\of{\Q^d} &= 0
+        \end{align*}
+    \end{beispiel}
+
+    \begin{beispiel}[Lebesgue-Maß einer Hyperebene]
+        Es sei $j\in\set{1, \ldots, d}$ und wir definieren eine Hyperebene $H_j\coloneqq\set{x\in\R^d: x_j = 0}$. Was ist dann $\lambda^d\of{H_j}$? Wir definieren
+        \begin{align*}
+            J_n \coloneqq \set{x\in\R^d: -n \leq x_k \leq n, k\neq j\land -\frac{\varepsilon}{(2n)^{d-1} 2\cdot2^n} \leq x_j \leq \frac{\varepsilon}{2\cdot 2^{n}(2n)^{d-1}}}
+        \end{align*}
+        Damit ist
+        \begin{align*}
+            H_j &\subseteq \bigcup_{n\in\N} J_n\\
+            \lambda^d\of{H_j} &\leq \lambda^d\of{\bigcup_{n\in\N} J_n} \leq \sum_{n=1}^{\infty} \lambda^d\of{J_n}\\
+            &= \sum_{n=1}^{\infty} (2n)^{d-1}\cdot \frac{2\varepsilon}{2(2n)^{d-1}2^n}\\
+            &= \varepsilon\sum_{n=1}^{\infty} 2^{-n} = \varepsilon\quad\forall\varepsilon > 0\\
+            \impl \lambda^d\of{H_j} &= 0
+        \end{align*}
+        Dieses Result gilt auch für allgemeine Hyperebenen, da wir eine Bewegung finden, die diese auf eine Hyperebene der Form $H_j$ abbildet.
+    \end{beispiel}
+
+    \newpage
+    \section{[*] Existenz von Maßen}
+    \imaginarysubsection{Existenz von Maßen}
+    \thispagestyle{pagenumberonly}
+
+    \begin{definition}[Halbring]
+        Eine Familie $\mS \subseteq\mP\of{X}$ heißt Halbring, falls
+        \begin{enumerate}[label=($\text{S}_{\arabic*}$)]
+            \item $\emptyset\in\mS$
+            \item $A, B\in\mS\impl A \cap B \in\mS$
+            \item $A, B\in\mS$ existieren endlich viele disjunkte Mengen $S_1, \ldots, S_M \in \mS$ mit $A \setminus B = \bigsqcup_{j=1}^{M} S_j$
+        \end{enumerate}
+    \end{definition}
+
+    \begin{satz}[Nach Carathéodory] % Satz 1
+        Sei $\mS\subseteq\mP\of{X}$ ein Halbring und $\mu: \mS \to \interv{0,\infty}$ ein Prämaß. Dann existiert (mindestens) eine Erweiterung von $\mu$ zu einem Maß $\mu$ auf $\sigma\of{\mS}$.\\
+        Falls $\mu$ $\sigma$-endlich auf $\mS$ ist, dann ist die Erweiterung eindeutig.
+    \end{satz}
 
 \end{document}
