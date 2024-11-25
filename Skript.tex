@@ -50,6 +50,7 @@
 \newtheorem{axiom}[blockelement]{Axiom}
 \newtheorem{beobachtung}[blockelement]{Beobachtung}
 \newtheorem{konzept}[blockelement]{Konzept}
+\newtheorem{konstruktion}[blockelement]{Konstruktion}
 \newtheorem{visualisierung}[blockelement]{Visualisierung}
 \newtheorem{anwendung}[blockelement]{Anwendung}
 \newtheorem{skizze}[blockelement]{Skizze}
@@ -138,7 +139,9 @@
 \newcommand{\mC}{\mathcal{C}}
 \newcommand{\mD}{\mathcal{D}}
 \newcommand{\mE}{\mathcal{E}}
+\newcommand{\mF}{\mathcal{F}}
 \newcommand{\mG}{\mathcal{G}}
+\newcommand{\mH}{\mathcal{H}}
 \newcommand{\mJ}{\mathcal{J}}
 \newcommand{\mK}{\mathcal{K}}
 \newcommand{\mL}{\mathcal{L}}
@@ -535,6 +538,8 @@
     \end{beispiel}
 
     \newpage
+
+
     \section{[*] Existenz von Maßen}
     \imaginarysubsection{Existenz von Maßen}
     \thispagestyle{pagenumberonly}
@@ -549,8 +554,112 @@
     \end{definition}
 
     \begin{satz}[Nach Carathéodory] % Satz 1
-        Sei $\mS\subseteq\mP\of{X}$ ein Halbring und $\mu: \mS \to \interv{0,\infty}$ ein Prämaß. Dann existiert (mindestens) eine Erweiterung von $\mu$ zu einem Maß $\mu$ auf $\sigma\of{\mS}$.\\
-        Falls $\mu$ $\sigma$-endlich auf $\mS$ ist, dann ist die Erweiterung eindeutig.
+        Sei $\mS\subseteq\mP\of{X}$ ein Halbring und $\mu: \mS \to \interv{0,\infty}$ ein Prämaß. Dann existiert (mindestens) eine Fortsetzung von $\mu$ zu einem Maß $\mu$ auf $\sigma\of{\mS}$.\\
+        Falls $\mu$ $\sigma$-endlich auf $\mS$ ist, dann ist die Fortsetzung eindeutig.
     \end{satz}
+
+    \begin{definition}[Äußere Maße]
+        \marginnote{[25. Nov]}
+        Eine Abbildung $\mu^{\ast}: \mP\of{X} \to \interv{0,\infty}$ ist ein äußeres Maß, falls
+        \begin{enumerate}[label=(\roman*)]
+            \item $\mu^{\ast}\of{\emptyset} = 0$\hfill (Normierung)
+            \item $A \subseteq B \impl \mu^{\ast}\of{A} \leq \mu^{\ast}\of{B}$\hfill (Monotonie)
+            \item $\mu^{\ast}\of{\bigcup_{n\in\N} A_n} \leq \sum_{n\in\N}^{} \mu^{\ast}\of{A_n}$\hfill ($\sigma$-Subadditivität)
+        \end{enumerate}
+    \end{definition}
+
+    \begin{konstruktion}
+        \label{konstruktion:prem}
+        Zu einem Prämaß $\mu$ auf $\mS$ gibt es ein äußeres Maß.\\
+        Nehme $A\subseteq X$. Wir bepflastern $A$ mit Mengen aus $\mS$:
+        \begin{align*}
+            \mC\of{A} &\coloneqq \set{(S_n)_{n\in\N}: S_n \in\mS~\forall n\in N \land A \subseteq \bigcup_{n\in\N} S_n}\tag{Cover}
+            \intertext{$\mC\of{A} = \emptyset$ ist dabei möglich. Gegeben ein Prämaß $\mu: \mS\to\interv{0,\infty}$ definieren wir nun}
+            \mu^{\ast}\of{A} &\coloneqq \begin{cases}
+                                            \inf \set{\sum_{n\in\N}^{} \mu\of{S_n}: (S_n)_n \in\mC\of{A}} &\text{ falls } \mC\of{A} \neq \emptyset\\
+                                            +\infty &\text{ falls } \mC\of{A} = \emptyset
+            \end{cases}
+        \end{align*}
+    \end{konstruktion}
+
+    \begin{lemma}
+        Das in Konstruktion~\ref{konstruktion:prem} definierte $\mu^{\ast}$ ist ein äußeres Maß.
+        \begin{proof}
+            \theoremescape
+            \begin{enumerate}[label=(\roman*)]
+                \item Wir nehmen $S_n = \emptyset$. Dann gilt $\mu^{\ast}\of{\emptyset} = 0$
+                \item Sei $A\subseteq B$. Angenommen $\mC\of{B} \neq \emptyset \impl \mC\of{B} \subseteq \mC\of{A}$
+                \begin{align*}
+                    \mu^{\ast}\of{B} &= \inf\set{\sum_{n\in\N}^{} \mu\of{S_n}: (S_n)_n \in\mC\of{B}}\\
+                    &\geq \inf\set{\sum_{n\in\N}^{} \mu\of{S_n}: (S_n)_n \in\mC\of{B}}\\
+                    &= \mu^{\ast}\of{A}
+                \end{align*}
+                \item Es gilt $\mu^{\ast}\of{A_n} = \inf \set{\sum_{n\in\N}^{} \mu\of{S_n}: (S_n)_n \in\mC\of{A}}$. Für jedes $n\in\N$ existiert ein $(S_{n,m})_m \in\mC\of{A_n}$ mit
+                \begin{align*}
+                    \sum_{m\in\N}^{} \mu\of{S_n,m} &\leq \mu^{\ast}\of{A_n} + \varepsilon \Sigma^n\quad\forall\varepsilon > 0\\
+                    \impl \mu^{\ast}\of{A} &\leq \sum_{n,m\in\N}^{} \mu\of{S_{n,m}}\\
+                    &= \sum_{n\in\N}^{} \of{\sum_{m\in\N}^{} \mu\of{S_{n,m}}}\\
+                    &\leq \sum_{n\in\N}^{} \pair{\mu^{\ast}\of{A_n} + \varepsilon\Sigma^n}\\
+                    &= \sum_{m\in\N}^{} \mu^{\ast}\of{A_m} + \varepsilon\quad\forall\varepsilon > 0\qedhere
+                \end{align*}
+            \end{enumerate}
+        \end{proof}
+    \end{lemma}
+
+    \begin{konstruktion}[Prämaß auf erzeugtem Ring]
+        Sei $\mu$ ein Prämaß auf einem Halbring $\mS$. Wir wollen $\mu$ zu einem Prämaß auf dem erzeugten Mengenring forsetzen. Dazu gehen wir wie folgt vor.\\
+        Wir setzen $\mS_{\cup} \coloneqq \set{S_1 \sqcup S_2 \sqcup \dots \sqcup S_n: S_j\in\mS}$ und definieren
+        \begin{align*}
+            \overline{\mu}\of{S_1 \sqcup \dots \sqcup S_n} &= \sum_{j=1}^{n} \mu\of{S_j}
+        \end{align*}
+        Wir zeigen die Wohldefiniertheit von $\mu$. Angenommen $S_1 \sqcup \dots \sqcup S_n = T_1 \sqcup \dots \sqcup T_n$ und $S_j, T_j\in \mS$. Dann gilt
+        \begin{align*}
+            S_j &= S_j \cap \pair{\bigsqcup_{k=1}^n S_k} = S_j \cap \pair{\bigsqcup_{k=1}^n T_k}\\
+            &= \bigsqcup_{k=1}^n \pair{S_j \cap T_k}
+            \intertext{Analog ist auch}
+            T_k &= \bigsqcup_{j=1}^n \pair{T_k \cap S_j}\\
+            \impl S_1 \sqcup \dots \sqcup S_M &= \bigsqcup_{j=1}^M \bigsqcup_{k=1}^N \pair{S_j \cap T_k}\\
+            \impl \overline{\mu}\of{S_1 \sqcup \dots \sqcup S_n} &= \overline{\mu}\of{\bigsqcup_{j=1}^M \bigsqcup_{k=1}^M\pair{S_j \cap T_k}}\\
+            \sum_{n=1}^{M} \sum_{k=1}^{N} \mu\of{S_j \cap T_k} &= \sum_{k=1}^{N} \mu\of{T_k} = \overline{\mu}\of{T_1 \sqcup \dots \sqcup T_N}
+        \end{align*}
+        Das heißt $\overline{\mu}$ ist wohldefiniert.\\[.5\baselineskip]
+        Frage: Wie verhält sich $\mS_{\cup}$ unter allgemeinen (endlichen) Vereinigungen und Schnitten? Wir betrachten $S, T\in \mS_{\cup}$ mit
+        \begin{align*}
+            S\cap T &= \pair{S_1 \sqcup \dots \sqcup S_M} \cap \pair{T_1 \sqcup \dots \sqcup T_N}\\
+            &= \bigsqcup_{j=1}^M \bigsqcup_{k=1}^N \pair{S_j \cap T_k} \in \mS_{\cup}
+        \end{align*}
+        Das heißt $\mS_{\cup}$ ist stabil unter (endlichen) Schnitten.
+        \begin{align*}
+            S\setminus T &= \pair{S_1 \sqcup \dots \sqcup S_M} \setminus\pair{T_1 \sqcup \dots \sqcup T_N}\\
+            \impl S \cap \comp{T} &= \pair{S_1 \sqcup \dots \sqcup S_M} \cap \bigcap_{n=1}^N \comp{T_k}\\
+            &= \bigsqcup_{j=1}^M \pair{S_j \cap \bigcap_{k=1}^N \comp{T_k}}\\
+            &= \bigsqcup_{j=1}^M \bigcap_{k=1}^N \pair{S_j \cap \comp{T_k}} \in \mS_{\cup}
+        \end{align*}
+        Das heißt für $S, T \in \mS_{\cup}$ ist auch $S\setminus T\in\mS_{\cup}$. Außerdem können wir schreiben
+        \begin{align*}
+            S\cup T &= \pair{S\setminus T} \sqcup \pair{S\cap T} \sqcup \pair{T \setminus S} \in \mS_{\cup}
+        \end{align*}
+        Das heißt $\mS_{\cup}$ ist ein Mengenring und $\overline{\mu}$ ist eine Fortsetzung von $\mu$ auf $\mS_{\cup}$.
+        \begin{align*}
+            \impl \overline{\mu}\of{T \cup S} &= \overline{\mu}\of{S \setminus T} + \overline{\mu}\of{S \cap T} + \overline{\mu}\of{T \setminus S}
+        \end{align*}
+        Das heißt $\overline{\mu}$ ist definiert für endlich viele Vereinigungen von Mengen aus $\mS_{\cup}$.\\[.5\baselineskip]
+        Behauptung: $\overline{\mu}$ ist ein Prämaß auf $\mS_{\cup}$. Also ist zu zeigen, dass $\overline{\mu}$ $\sigma$-additiv auf $\mS_{\cup}$ ist. Wir nehmen $(T_k)_k \subseteq \mS_{\cup}$
+        \begin{align*}
+            T &\coloneqq \bigsqcup_{k\in\N} T_k \in \mS_{\cup}
+            \intertext{Zu zeigen:}
+            \overline{\mu}\of{T} &= \sum_{k\in\N}^{} \overline{\mu}\of{T_k}
+            \intertext{Nach Definition von $\mS_{\cup}$ gibt es $(S_n)_n \subseteq \mS$ und Inidzes $0= i\of{0} \leq i\of{1} \leq i\of{2} \leq \dots$ mit}
+            T_k &= S_{i\of{k-1} + 1} \sqcup \dots \sqcup S_{i\of{k}}\tag{$k\in\N$}\\
+            T &= U_1 \sqcup \dots \sqcup U_L\\
+            U_l &\coloneqq \bigsqcup_{i\in J_l} S_i
+            \intertext{Indexmengen $J_1, \ldots, J_l \subseteq \N$ paarseise disjunkt und $J_1 \sqcup \ldots \sqcup J_L = \N$}
+            \overline{\mu}\of{T} &= \overline{\mu}\of{U_1 \sqcup \ldots \sqcup U_L}\\
+            &= \overline{\mu}\of{U_1} +\ldots + \overline{\mu}\of{U_l}\\
+            &= \mu\of{U_1} + \ldots + \mu\of{U_l}\\
+            &= \sum_{i\in J_1}^{} \mu\of{S_i} + \ldots + \sum_{i\in J_L}^{} \mu\of{S_i}\\
+            &= \sum_{j=1}^{\infty} \mu\of{S_j} = \sum_{k=1}^{\infty} \overline{\mu}\of{T_k}
+        \end{align*}
+    \end{konstruktion}
 
 \end{document}
