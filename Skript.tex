@@ -445,6 +445,7 @@
     \end{definition}
 
     \begin{satz}[Nach Carathéodory] % Satz 1
+        \label{satz:caratheodory}
         Sei $\mS\subseteq\mP\of{X}$ ein Halbring und $\mu: \mS \to \interv{0,\infty}$ ein Prämaß. Dann existiert (mindestens) eine Fortsetzung von $\mu$ zu einem Maß $\mu$ auf $\sigma\of{\mS}$.\\
         Falls $\mu$ $\sigma$-endlich auf $\mS$ ist, dann ist die Fortsetzung eindeutig.
     \end{satz}
@@ -540,11 +541,11 @@
             T &\coloneqq \bigsqcup_{k\in\N} T_k \in \mS_{\cup}
             \intertext{Zu zeigen:}
             \overline{\mu}\of{T} &= \sum_{k\in\N}^{} \overline{\mu}\of{T_k}
-            \intertext{Nach Definition von $\mS_{\cup}$ gibt es $(S_n)_n \subseteq \mS$ und Inidzes $0= i\of{0} \leq i\of{1} \leq i\of{2} \leq \dots$ mit}
+            \intertext{Nach Definition von $\mS_{\cup}$ gibt es $(S_n)_n \subseteq \mS$ und Indizes $0= i\of{0} \leq i\of{1} \leq i\of{2} \leq \dots$ mit}
             T_k &= S_{i\of{k-1} + 1} \sqcup \dots \sqcup S_{i\of{k}}\tag{$k\in\N$}\\
             T &= U_1 \sqcup \dots \sqcup U_L\\
             U_l &\coloneqq \bigsqcup_{i\in J_l} S_i
-            \intertext{Indexmengen $J_1, \ldots, J_l \subseteq \N$ paarseise disjunkt und $J_1 \sqcup \ldots \sqcup J_L = \N$}
+            \intertext{Indexmengen $J_1, \ldots, J_l \subseteq \N$ paarweise disjunkt und $J_1 \sqcup \ldots \sqcup J_L = \N$}
             \overline{\mu}\of{T} &= \overline{\mu}\of{U_1 \sqcup \ldots \sqcup U_L}\\
             &= \overline{\mu}\of{U_1} +\ldots + \overline{\mu}\of{U_l}\\
             &= \mu\of{U_1} + \ldots + \mu\of{U_l}\\
@@ -553,4 +554,97 @@
         \end{align*}
     \end{konstruktion}
 
+    \begin{bemerkung}[Prämaß und äußeres Maß]
+        \marginnote{[29. Nov]}
+        Wenn wir ein Prämaß $\mu$ auf einem Halbring $\mS$ haben, dann gilt
+        \begin{align*}
+            \mu\of{A} &= \mu^{\ast}\of{A}\quad\forall A\in\mS
+        \end{align*}
+        wobei $\mu^{\ast}$ das in Konstruktion~\ref{konstruktion:prem} definierte äußere Maß ist. Das heißt $\mu^{\ast}$ ist eine Fortsetzung von $\mu$.
+        \begin{proof}
+            Sei $A\in\mS$ und $(S_j)_j \in\mC\of{A}$ Überdeckung von $A$. Dann gilt
+            \begin{align*}
+                \mu\of{A} &= \overline{\mu}\of{A} = \overline{\mu}\of{\pair{\bigcup_{j\in\N} S_j}\cap A}\\
+                \intertext{Wegen der $\sigma$-Subadditivität von $\overline{\mu}$ gilt}
+                &\leq \sum_{j=1}^{\infty} \overline{\mu}\of{S_j \cap A} \leq \sum_{j=1}^{\infty} \overline{\mu}\of{S_j}
+                \intertext{Wir nehmen das Infimum auf beiden Seiten und erhalten}
+                \impl\mu\of{A} &\leq \mu^{\ast}\of{A}\quad\forall A\in\mS
+                \intertext{Wir wollen noch zeigen, dass $\mu\of{A} \geq \mu^{\ast}\of{A}$. Für ein $A\in\mS$ nehmen wir $(S_j)_j$ mit $S_1 \coloneqq A$, $S_2 = S_3 = \ldots = \emptyset$}
+                \impl \mu^{\ast}\of{A} &\leq \mu\of{A}\quad\forall A\in\mS\\
+                \impl \mu^{\ast}\of{A} &= \mu\of{A}\quad\forall A\in\mS\qedhere
+            \end{align*}
+        \end{proof}
+    \end{bemerkung}
+
+    \begin{definition}[Zerlegungsbedingung]
+        Sei $\mu^{\ast}$ ein äußeres Maß auf $\mP\of{X}$. Dann sagen wir $A\subseteq X$ erfüllt die Zerlegungsbedingung, falls
+        \begin{align*}
+            \mu^{\ast}\of{B} &= \mu^{\ast}\of{B \cap A} + \mu^{\ast}\of{B \setminus A}\quad\forall B\subseteq X\numbereq{eq:zerleg}
+        \end{align*}
+        Außerdem definieren wir
+        \begin{align*}
+            \mA_{\ast} &\coloneqq \set{A \subseteq X: A\text{ erfüllt die Zerlegungsbedingung~\ref{eq:zerleg}}}
+        \end{align*}
+    \end{definition}
+
+    \begin{bemerkung}
+        Die Bedingung~\ref{eq:zerleg} ist äquivalent zu der Bedingung
+        \begin{align*}
+            \mu^{\ast}\of{B} &\geq \mu^{\ast}\of{B \cap A} + \mu^{\ast}\of{B \setminus A}\quad\forall B\subseteq X
+        \end{align*}
+        da die Ungleichung in die andere Richtung bereits durch die $\sigma$-Subadditivität von $\mu^{\ast}$ gegeben ist.
+    \end{bemerkung}
+
+    \begin{lemma}
+        Sei $\mu^{\ast}$ das vom Prämaß $\mu$ auf $\mS$ erzeugte äußere Maß. Dann gilt
+        \begin{align*}
+            \mS \subseteq \mA_{\ast}
+        \end{align*}
+        \begin{proof}
+            Sei $A \in\mS$. Wir wollen zeigen, dass
+            \begin{align*}
+                \mu^{\ast}\of{B} &= \mu^{\ast}\of{B \cap A} + \mu^{\ast}\of{B \setminus A}\quad\forall B\subseteq X
+            \end{align*}
+            O.B.d.A sei $\mC\of{B} \neq \emptyset$. Sei $(B_n)_n \in \mC\of{B}$, $B_n\in\mS$. Dann gilt
+            \begin{align*}
+                B_n &= \pair{B_n \cap A} \sqcup \pair{B_n \setminus A}\\
+                \impl\mu\of{B_n} &= \overline{\mu}\of{B_n} = \overline{\mu}\of{\pair{B_n \cap A}} + \overline{\mu\of{B_n \setminus A}}\\
+                \impl \sum_{n=1}^{\infty} \mu\of{B_n} &= \sum_{n=1}^{\infty} \pair{\mu\of{B_n \cap A}} + \sum_{n=1}^{\infty} \pair{\overline{\mu}\of{B_n \setminus A}}
+                \intertext{Es gilt $\pair{B_n \cap A}_n \in\mC\of{B \cap A}$ und $\pair{B_n \setminus A}_n \in\mC\of{B\setminus A}$}
+                &\geq \mu^{\ast}\of{B\cap A} + \overline{\mu}^{\ast}\of{B\setminus A}\\
+                &= \mu^{\ast}\of{B \cap A} + \mu^{\ast}\of{B\setminus A}\\
+                \impl \mu\of{B} &\geq \mu^{\ast}\of{B \cap A} + \mu^{\ast}\of{B \setminus A}\qedhere
+            \end{align*}
+        \end{proof}
+    \end{lemma}
+    \noindent Wir sind jetzt in der Lage, den Satz von Carathéodory zu beweisen.
+    \begin{proof}[Beweis von Satz~\ref{satz:caratheodory}]
+        \textsc{Schritt 1}: Wir zeigen, dass $\mA_{\ast}$ eine Algebra ist. Die Stabilität unter Komplementbildung und $\emptyset\in\mA_{\ast}$ zeigt sich leicht. Wir wollen also noch zeigen, dass $A_1 \cup A_2 \in \mA_{\ast}$. Das heißt es soll gelten
+        \begin{align*}
+            \mu^{\ast}\of{B} &= \mu^{\ast}\of{B\cap \pair{A_1 \cup A_2}} + \mu^{\ast}\of{B \setminus\pair{A_1 \cup A_2}}\\
+            \intertext{Wir definieren}
+            B_1 &\coloneqq \pair{A_1 \cap B} \setminus A_2\\
+            B_2 &\coloneqq \pair{A_2 \cap B} \setminus A_1\\
+            B_3 &\coloneqq B \cap A_1 \cap A_2\\
+            B_4 = B \setminus \pair{A_1 \cup A_2}
+            \intertext{Dann gilt}
+            B \cap \pair{A_1 \cup A_2} &= \pair{B \cap A_1}\cup\pair{B\cap A_2}\\
+            &= B_1 \cup B_2 \cup B_3\\
+            B \setminus\pair{A_1 \cup A_2} &= B_4
+            \intertext{Das heißt es ist zu zeigen, dass}
+            \mu\of{B} &= \mu\of{B_1 \sqcup B_2 \sqcup B_3} + \mu\of{B_4}
+            \intertext{$A_1$ erfüllt die Zerlegungsbedingung. Also}
+            \mu^{\ast}\of{B} &= \mu^{\ast}\of{B \cap A_1} + \mu^{\ast}\of{B \setminus A_1}\\
+            &= \mu^{\ast}\of{B_1 \cup B_3} + \mu^{\ast}\of{B_2 \cup B_4}
+            \intertext{Verwende $A_2$, um $B_1 \cup B_3$ zu zerlegen}
+            \mu^{\ast}\of{B_1 \cup B_3} &= \mu^{\ast}\of{\pair{B_1 \cup B_2} \cap A_2} + \mu^{\ast}\of{\pair{B_1 \cup B_2} \setminus A_2}\\
+            &= \mu^{\ast}\of{B_1} + \mu^{\ast}\of{B_3}
+            \intertext{Genauso zerlegen von $B_2 \cup B_4$ mittels $A_2$}
+            \mu^{\ast}\of{B_2 \cup B_4} &= \mu^{\ast}\of{B_2} + \mu^{\ast}\of{B_4}\\
+            \impl \mu^{\ast}\of{B} &= \mu^{\ast}\of{B_1} + \mu^{\ast}\of{B_2} + \mu^{\ast}\of{B_3} + \mu^{\ast}\of{B_4}
+            \intertext{Machen dasselbe mit $\overline{B} \coloneqq B_1 \cup B_2 \cup B_3$}
+            \impl \mu^{\ast}\of{B_1 \cup B_2\cup B_3} &= \mu^{\ast}\of{B_1} + \mu^{\ast}\of{B_2} + \mu^{\ast}\of{B_3}
+        \end{align*}
+        Es folgt dann $A_1 \cup A_2$ erfüllt die Zerlegungsbedingung und damit $A_1 \cup A_2 \in\mA_{\ast}$.
+    \end{proof}
 \end{document}
