@@ -10,6 +10,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{mathabx}
 \usepackage{mathtools}
 \usepackage{setspace}
 \usepackage{float}
@@ -81,7 +82,7 @@
 \newcommand{\linterv}[1]{\left[#1\right)}
 \newcommand{\rinterv}[1]{\left(#1\right]}
 \newcommand{\interv}[1]{\left[#1\right]}
-\newcommand{\sprod}[1]{\left<#1\right>}
+\newcommand{\scalprod}[1]{\left<#1\right>}
 
 % Shorten commands
 \newcommand{\equivalent}[0]{\Leftrightarrow{}}
@@ -645,6 +646,116 @@
             \intertext{Machen dasselbe mit $\overline{B} \coloneqq B_1 \cup B_2 \cup B_3$}
             \impl \mu^{\ast}\of{B_1 \cup B_2\cup B_3} &= \mu^{\ast}\of{B_1} + \mu^{\ast}\of{B_2} + \mu^{\ast}\of{B_3}
         \end{align*}
-        Es folgt dann $A_1 \cup A_2$ erfüllt die Zerlegungsbedingung und damit $A_1 \cup A_2 \in\mA_{\ast}$.
+        Es folgt dann $A_1 \cup A_2$ erfüllt die Zerlegungsbedingung und damit $A_1 \cup A_2 \in\mA_{\ast}$.\\
+        \marginnote{[02. Dez]}
+        \textsc{Schritt 2}: Wir zeigen, dass $\mu^{\ast}$ endlich additiv auf $\mA_{\ast}$ ist. Seien $A_1, A_2\in\mA_{\ast}$ mit $A_1 \cap A_2 = \emptyset$. Wir benutzen $A_1$, um $A_1 \sqcup A_2$ zu zerlegen. Es gilt
+        \begin{align*}
+            \mu^{\ast}\of{A_1 \sqcup A_2} &= \mu^{\ast}\of{\pair{A_1 \sqcup A_2} \setminus A_1} + \mu^{\ast}\of{\pair{A_1 \sqcup A_2} \setminus A_2}\\
+            &= \mu^{\ast}\of{A_1} + \mu^{\ast}\of{A_2}
+        \end{align*}
+        \textsc{Schritt 3}: Wir zeigen, dass $\mA_{\ast}$ eine $\sigma$-Algebra und $\mu^{\ast}$ ein Maß auf $\mA_{\ast}$ ist. Sei $(A_j)_j \subseteq \mA_{\ast}$ und $A = \bigsqcup_{j\in\N} A_j$. Zu zeigen ist
+        \begin{align*}
+            \mu^{\ast}\of{B} &= \mu^{\ast}\of{B \cap A} + \mu^{\ast}\of{B\setminus A}\quad\forall B\subseteq X
+        \end{align*}
+        Dabei reicht $\geq$ zu zeigen, da die andere Ungleichung allgemein erfüllt ist. WIr definieren
+        \begin{align*}
+            F_n &\coloneqq \bigsqcup_{j=1}^n A_j \in\mA_{\ast}
+            \intertext{mit $F_n\nearrow A$ und}
+            B\setminus A &\subseteq B \setminus F_n\quad\forall n\in\N
+            \intertext{Also wird $B$ von $F_n$ zerlegt}
+            \mu^{\ast}\of{B} &= \mu^{\ast}\of{B \cap F_n} + \mu^{\ast}\of{B \setminus F_n}\\
+            &= \mu^{\ast}\of{B\cap \pair{\bigsqcup_{j=1}^{n} A_j}} + \mu^{\ast}\of{B \cap \bigcap \comp{A_j}}\\
+            \intertext{Wegen der endlichen Additivität von $\mu^{\ast}$ gilt}
+            &= \sum_{j=1}^{n} \mu^{\ast}\of{B \cap A_j} + \mu^{\ast}\of{B \cap \bigcap \comp{A_j}}\\[.5\baselineskip]
+            B \cap A &= B \cap \pair{\bigsqcup_{j\in\N} A_j} = \bigsqcup_{j\in\N}\pair{B \cap A_j}\\
+            \impl \mu^{\ast}\of{B \cap A} &= \mu^{\ast}\of{\bigsqcup_{j\in\N} \pair{B \cap A_j}}\\
+            \annot[{&}]{\leq}{$\sigma$-Subadd.} \sum_{j\in\N}^{} \mu^{\ast}\of{B \cap A_j}\\[.5\baselineskip]
+            \mu^{\ast}\of{B \cap A} + \mu^{\ast}\of{B\setminus A} &\leq \sum_{j=1}^{n} \mu^{\ast}\of{B \cap A_j} + \mu^{\ast}\of{B\setminus A}\\
+            &= \lim_{n\toinf} \sum_{j=1}^{n} \pair{\mu^{\ast}\of{B \cap A_j} + \mu^{\ast}\of{B \setminus A}}
+            \intertext{Aber wir wissen $B\setminus A \subseteq B \setminus F_n$. Damit folgt}
+            &\leq \lim_{n\toinf} \sum_{j=1}^{n} \pair{\mu^{\ast}\of{B \cap A_j} + \mu^{\ast}\of{B \setminus F_n}}\\
+            &= \lim_{n\toinf} \pair{\mu^{\ast} \of{B\cap F_n} + \mu^{\ast}\of{B \setminus F_n}} = \mu\of{B}
+        \end{align*}
+        Das heißt $A$ erfüllt die Zerlegungsbedingung und damit $A = \bigsqcup_{j\in\N} A_j \in\mA_{\ast}$. Das heißt $A_{\ast}$ ist ein Dynkinsystem. Wir wollen Satz~\ref{lemma:dynkin-sigma-equiv} anwenden und müssen daher noch zeigen, dass $A_{\ast}$ $\cap$-stabil ist. Es gilt
+        \begin{align*}
+            A_1 \cap A_2 &= \comp{\pair{\comp{A_1} \cup \comp{A_2}}} \in\mA_{\ast}
+        \end{align*}
+        für $A_1, A_2\in\mA_{\ast}$. Damit ist $A_{\ast}$ nach Lemma~\ref{lemma:dynkin-sigma-equiv} eine $\sigma$-Algebra.\\[\baselineskip]
+        \textsc{Schritt 4}: Wir zeigen, dass $\mu^{\ast}$ ein Maß auf $\mA_{\ast}$ ist. Sei
+        \begin{align*}
+            B\coloneqq A = \bigsqcup_{j\in\N} A_j \in\mA
+            \intertext{Wir zerlegen $B$ mittels $A$}
+            \impl \mu^{\ast}\of{B} &\geq \sum_{j=1}^{n} \mu^{\ast}\of{B \cap A_j} + \mu^{\ast}\of{B\setminus A}\\
+            \impl \mu^{\ast}\of{A} &\geq \sum_{j=1}^{n} \mu^{\ast}\of{A_j}
+            \intertext{Durch die $\sigma$-Subadditivität haben wir auch die Ungleichung in die andere Richtung. Also folgt}
+            \mu^{\ast}\of{A} &= \mu^{\ast}\of{\bigsqcup_{j\in\N} A_j} = \sum_{j\in\N}^{} \mu^{\ast}\of{A_j}\qedhere
+        \end{align*}
     \end{proof}
+    \noindent Um den Satz von Carathéodory auf $\lambda^d$ anwenden zu können, brauchen wir noch
+    \begin{enumerate}[label=-]
+        \item $\mJ^d \coloneqq$ \textit{Mengensystem der (rechts-)halboffenen Intervalle im $\R^d$} ist ein Halbring
+        \item $\lambda^d: \mJ^d \to \interv{0,\infty}$ ist ein Prämaß
+    \end{enumerate}
+
+    \begin{lemma}
+        \label{lemma:halbring-dotprod}
+        Seien $X_1, X_2$ Mengen und $\mS_1$ ein Halbring in $X_1$ sowie $\mS_2$ Halbring in $X_2$. Dann gilt $\mS_1 \times \mS_2$ ist ein Halbring in $X_1 \times X_2$.
+        \begin{proof}
+            \theoremescape
+            \begin{enumerate}[label=($\text{S}_{\arabic*}$)]
+                \item $\emptyset\in \mS_1 \times \mS_2$ folgt direkt aus $\emptyset \in \mS_1$ und $\emptyset\in\mS_2$
+                \item Seien $J_1^{1}, J_1^2\in\mS_1$ und $J_2^{1}, J_2^2\in\mS_2$. Dann gilt
+                \begin{align*}
+                    \pair{J_1^1 \times J_2^1} \cap \pair{J_1^2 \times J_2^2} &= \pair{J_1^1 \cap J_1^2}\times\pair{J_2^1 \cap J_2^2} \in \mS_1 \times \mS_2
+                \end{align*}
+                \item (Übung)
+            \end{enumerate}
+        \end{proof}
+    \end{lemma}
+
+    \begin{satz}
+        \begin{align*}
+            \mJ^{d} &\coloneqq \set{\linterv{a,b}: a,b\in\R^d, a <b}
+        \end{align*}
+        ist ein Halbring.
+        \begin{proof}
+            Für eine Dimension (das heißt $d=1$) zeigen sich die Halbring-Eigenschaften von $\mJ^1$ direkt durch Fallunterscheidungen. Wir wollen also für höhere Dimensionen einfach Lemma~\ref{lemma:halbring-dotprod} induktiv anwenden. Wir definieren also
+            \begin{align*}
+                \mJ^{2}&\coloneqq \mJ^1 \times \mJ^1
+                \intertext{Das ist nach dem Lemma ein Halbring}\\
+                \impl \mJ^{3} &\coloneqq \mJ^2 \times \mJ^1\text{ ist ein Halbring}\\
+                &\vdots\\
+                \impl\mJ^{3} &\coloneqq \mJ^{d-1}\times \mJ^1\text{ ist ein Halbring}\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{lemma}
+        Sei $\mu$ endlich-additiv auf einem Halbring $\mS$. Wir betrachten die folgenden Aussagen
+        \begin{enumerate}[label=(\alph*)]
+            \item $\mu$ ein Prämaß
+            \item $A_n \in \mS \land A_n \nearrow A \in \mS \impl \lim_{n\toinf} \mu\of{A_n} = \mu\of{A}$
+            \item $A_n\in\mS \land A_n \searrow A \in \mS \land \mu\of{A_1} < \infty \impl \lim_{n\toinf} \mu\of{A_n} = \mu\of{A}$
+            \item $A_n \in\mS\land A_n \searrow \emptyset \land \mu\of{A_1} < \infty \impl \lim_{n\toinf} A_n = 0$
+        \end{enumerate}
+        Dann gilt (a) $\equivalent$ (b) $\impl$ (c) $\equivalent$ (d). Gilt ferner $\mu\of{A} < \infty~\forall A\in\mS$, dann ist auch (c) $\impl (b)$. In diesem Fall sind also alle Aussagen äquivalent und damit verwendbar, um zu prüfen, ob $\mu$ ein Prämaß ist.
+        \begin{proof}
+        (Später)
+        \end{proof}
+    \end{lemma}
+
+    \begin{satz}
+        Sei $\lambda^d$ für $A\in\mJ^d$ mit
+        \begin{align*}
+            A &= \bigtimes_{j=1}^d \linterv{a_j, b_j} = \linterv{a,b}
+            \intertext{definiert als}
+            \lambda^d\of{\linterv{a,b}} &\coloneqq \prod_{j=1}^{d} \pair{b_j - a_j}
+        \end{align*}
+        Dann ist $\lambda^d$ ein Prämaß auf $\mJ^d$.
+        \begin{proof}
+            Es gilt $\lambda^d\of{\emptyset} = \lambda^d\of{\linterv{a,a}} = 0$. ??
+        \end{proof}
+    \end{satz}
+
+
 \end{document}
