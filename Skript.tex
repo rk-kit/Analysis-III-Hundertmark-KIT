@@ -10,7 +10,6 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{mathabx}
 \usepackage{mathtools}
 \usepackage{setspace}
 \usepackage{float}
@@ -747,13 +746,121 @@
     \begin{satz}
         Sei $\lambda^d$ für $A\in\mJ^d$ mit
         \begin{align*}
-            A &= \bigtimes_{j=1}^d \linterv{a_j, b_j} = \linterv{a,b}
+            A &= \times_{j=1}^d \linterv{a_j, b_j} = \linterv{a,b}
             \intertext{definiert als}
             \lambda^d\of{\linterv{a,b}} &\coloneqq \prod_{j=1}^{d} \pair{b_j - a_j}
         \end{align*}
         Dann ist $\lambda^d$ ein Prämaß auf $\mJ^d$.
         \begin{proof}
             Es gilt $\lambda^d\of{\emptyset} = \lambda^d\of{\linterv{a,a}} = 0$. ??
+        \end{proof}
+    \end{satz}
+
+    \marginnote{[06. Dez]}
+
+    Wir wollen Maße nun einfacher darstellen, als nur als Forsetzung eines Prämaßes, was auf einem Halbring definiert ist. Dafür sei nun $\mu$ ein Borelmaß auf $\R^d$ mit $\mu\of{K} < \infty$ für alle kompakten Mengen $K\subseteq \R^d$.
+
+    \begin{konstruktion}[Maße mit Funktionen identifizieren]
+        Wir betrachten zunächst nur den Fall $d=1$. Wir wollen $\mu$ auf den halboffenen Intervallen durch eine Funktion $F: \R \to \R$ darstellen. Das heißt es soll gelten
+        \begin{align*}
+            \mu\of{\linterv{a,b}} &= F\of{b}- F\of{a}\quad\forall a,b\in\R
+        \end{align*}
+        Welche Eigenschaften hat dann die Funktion $F$?
+        \begin{enumerate}
+            \item $F$ ist monoton wachsend
+            \begin{align*}
+                F\of{b} - F\of{a} &= \mu\of{\linterv{a,b}}\geq 0 \quad\forall b\geq a
+            \end{align*}
+            \item $F$ ist ?seitig stetig. Wir betrachten eine Folge $x_n \to b$ ($a < b$) mit $x_n \leq x_{n+1}$. Dann gilt
+            \begin{align*}
+                \bigcup_{n\in\N} \linterv{a, x_n} &= \linterv{a,b}
+                \intertext{Da $\mu$ ein Maß ist, ist es von unten stetig. Das heißt es gilt}
+                F\of{x_n} - F\of{a} &= \mu\of{\linterv{a, x_n}} \nearrow \mu\of{\linterv{a, b}} = F\of{b} - F\of{a}\\
+                \impl \lim_{x\nearrow b} F\of{x} &= F\of{b}
+            \end{align*}
+        \end{enumerate}
+    \end{konstruktion}
+
+    \begin{beispiel}[Dirac-Maß]
+
+    \end{beispiel}
+
+    \begin{satz}
+        Jede wachsende Funktion $F: \R\to\R$ die von rechts stetig ist und (von links Grenzwerte hat) erzeugt ein Borelmaß $\mu_F$, sodass
+        \begin{align*}
+            \mu_F\of{\linterv{a,b}} &= F\of{b} - F\of{a}\quad\forall a,b\in\R: a\leq b
+        \end{align*}
+        Ferner: Sei $G: \R\to\R$ wachsend und von rechts stetig mit $\mu_G = \mu_F$. Dann folgt
+        \begin{align*}
+            \exists c\in\R\colon G\of{x}&= F\of{x}+ C\quad\forall x\in\R
+        \end{align*}
+
+        \begin{proof}
+            Der letzte Teil zeigt sich durch nachrechnen direkt. Erster Teil: Siehe Literatur.
+        \end{proof}
+    \end{satz}
+
+    \newpage
+
+
+    \section{Messbare Abbildungen und Bildmaße}
+    \imaginarysubsection{Messbare Abbildungen und Bildmaße}
+    \thispagestyle{pagenumberonly}
+
+    \begin{definition}
+        Seien $\pair{X, \mA}$ und $\pair{X', \mA'}$ Messräume und $T: X\to X'$ eine Funktion. Dann heißt $T$ $\mA-\mA'$-messbar, falls
+        \begin{align*}
+            T^{-1}\of{A'} \in \mA\quad\forall A'\in\mA'
+        \end{align*}
+    \end{definition}
+
+    \begin{beispiel}
+        \theoremescape
+        \begin{enumerate}
+            \item Konstante Funktionen sind messbar
+            \item Wir betrachten $\pair{X, \mO}$, $\pair{X', \mO'}$ mit $\mO$ Mengensystem der offenen Mengen. Dann ist eine stetige Funktion $T$ $\mB\of{\mO} - \mB\of{\mO'}$-messbar, da die Urbilder offener Mengen unter stetigen Funktionen offen sind
+        \end{enumerate}
+    \end{beispiel}
+
+    \begin{satz}
+        Seien $\pair{X, \mA}$, $\pair{X', \mA'}$ Messräume und $\mE' \subseteq \mP\of{X'}$ Erzeuger von $\mA' = \sigma\of{\mE'}$. Dann ist $T$ genau dann $\mA$-$\mA'$-messbar, wenn
+        \begin{align*}
+            T^{-1}\of{E'} \in \mA\quad\forall E'\in\mE'
+        \end{align*}
+        \begin{proof}
+            $\Sigma' \coloneqq \set{A' \subseteq X': T^{-1}\of{A'} \in \mA}$ ist eine $\sigma$-Algebra in $X'$ (Übung) mit $\mE' \subseteq \Sigma'$
+            \begin{align*}
+                \impl \mA' = \sigma\of{\mE'} &\subseteq \sigma\of{\Sigma'} = \Sigma'\\
+                \impl \mA' &= \Sigma'\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{satz}
+        \label{satz:verknuepfung-messbar}
+        Seien $\pair{X_1, \mA_1}, \pair{X_2, \mA_2}, \pair{X_3, \mA_3}$ Messräume und $T_1: X_1 \to X_2$ $\mA_1$-$\mA_2$-messbar sowie $T_2: X_2 \to X_3$ $\mA_2 $- $\mA_3$-messbar. Dann ist $T_2 \circ T_1: X_1 \to X_3$ $\mA_1 $-$ \mA_3$-messbar.
+
+        \begin{proof}
+            Sei $A_3\in\mA_3$. Dann ist
+            \begin{align*}
+                \pair{T_2 \circ T_1}^{-1}\of{A_3} &= T_1^{-1}\underbrace{\of{T_2^{-1}\of{A_3}}}_{\in\mA_2}\in\mA_3\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{bemerkung}
+        Sei $I$ eine Index-Menge und $\pair{X_j, \mA_j}$ ein Messraum für $j\in I$. Abbildung $T_j: X \to X_j$. Dann ist $\sigma\of{\bigcup_{j\in I} T_j^{-1}\of{\mA_j}}$ die kleinste $\sigma$-Algebra, auf $X$, für die alle Abbildungen $T_j$ messbar (also $\sigma\of{\bigcup_{j\in I} T_j^{-1}\of{\mA_j}}$-$\mA_j$-messbar) sind.
+    \end{bemerkung}
+
+    \begin{satz}
+        $S: X_0 \to X$ ist $\mA_0$-$\mA$-messbar. Dann ist $\mA = \sigma\of{\bigcup_{j\in I} T^{-1}\of{\mA_j}}$ genau dann, wenn
+        \begin{align*}
+            T_j \circ S: X_0 \to X_j\text{ ist } \mA_0 \text{-} \mA_j\text{-messbar}
+        \end{align*}
+        \begin{proof}
+            \anf{$\impl$} Folgt direkt aus Satz~\ref{satz:verknuepfung-messbar}.\\[.5\baselineskip]
+            \anf{$\Leftarrow$} Nehmen $E \in \bigcup_{j\in I} T_j^{-1}\of{\mA_j}$. Dann ist $E \in T^{-1}_j\of{\mA_j}$ für ein $j\in I$. Dann ist $E = T_j^{-1}\of{\mA_j}$. Es folgt $S^{-1}\of{E} = S^{-1}\of{T_j^{-1}\of{\mA_j}} = \pair{T_j \circ S}^{-1}\of{\mA_j} \subseteq \mA_0$.\\
+            $\mE \coloneqq \bigcup_{j\in I} T_j^{-1}\of{\mA_j}$ ist Erzeuger von $\mA \coloneqq \sigma\of{\mE}$. Damit folgt die Behauptung.
         \end{proof}
     \end{satz}
 
