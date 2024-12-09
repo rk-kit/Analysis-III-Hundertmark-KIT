@@ -803,8 +803,9 @@
     \newpage
 
 
-    \section{Messbare Abbildungen und Bildmaße}
-    \imaginarysubsection{Messbare Abbildungen und Bildmaße}
+    \section{[*] Messbare Abbildungen und Bildmaße}
+
+    \subsection{Messbare Abbildungen}
     \thispagestyle{pagenumberonly}
 
     \begin{definition}
@@ -864,5 +865,172 @@
         \end{proof}
     \end{satz}
 
+    \subsection{Bildmaße}
+
+    \begin{notation}
+        \marginnote{[09. Dez]}
+        Seien $\pair{X, \mA}, \pair{X', \mA'}$ Messräume. Wir schreiben $T: \pair{X, \mA} \to \pair{X', \mA'}$ für eine Funktion $T: X \to X'$, die $\mA$-$\mA'$-messbar ist.
+    \end{notation}
+
+    \begin{konstruktion}
+        \label{konstruktion:bildmass}
+        Sei $\mu$ ein Maß auf $\pair{X, \mA}$ und $T: \pair{X, \mA} \to \pair{X', \mA'}$ eine Funktion. Wir nehmen $A' \in \mA'$ und definieren
+        \begin{align*}
+            \mu'\of{A'} &\coloneqq \mu\of{T^{-1}\of{A'}}
+        \end{align*}
+        Dann ist $\mu'$ ein Maß auf $\pair{X', \mA'}$.
+    \end{konstruktion}
+
+    \begin{definition}[Bildmaß]
+        Im Sinne von Konstruktion~\ref{konstruktion:bildmass} nennen wir $\mu'$ das Bild von $\mu$ unter $T$. Das heißt wir schreiben
+        \begin{align*}
+            \mu' &\coloneqq T\of{\mu}
+            \intertext{Es gilt}
+            T\of{\mu}\of{A'} &\coloneqq \mu\of{T^{-1}\of{A'}}
+        \end{align*}
+    \end{definition}
+
+    \begin{bemerkung}[Transitivität der Bildmaße]
+        Ist $T_1: \pair{X_1, \mA_1} \to \pair{X_2, \mA_2},~T_2: \pair{X_2, \mA_2} \to \pair{X_3, \mA_3}$ und $\mu$ ein Maß auf $\pair{X_1, \mA_1}$. Dann gilt
+        \begin{align*}
+            \pair{T_2 \circ T_1}\of{\mu} &= T_2\of{T_1\of{\mu}}\\
+            \pair{T_2 \circ T_1}^{-1} &= T_1^{-1}\circ T_2^{-1}\\
+            \impl \pair{T_2 \circ T_1}^{-1}\of{A_3} &=T_1^{-1}\of{T_2^{-1}\of{A_3}}
+        \end{align*}
+    \end{bemerkung}
+
+    \newpage
+
+
+    \section{[*] Messbare numerische Funktionen}
+    \imaginarysubsection{Messbare numerische Funktionen}
+    \thispagestyle{pagenumberonly}
+
+    \begin{definition}[$\overline{\R}$]
+        Wir schreiben $\overline{\R} \coloneqq \R \cup \set{-\infty, \infty}$ für die Menge der reellen Zahlen einschließlich $\pm\infty$. Wir definieren die algebraischen Operationen wie folgt:
+        \begin{align*}
+            x + \infty &\coloneqq \infty\quad\forall x\in\R\\
+            x - \infty &\coloneqq -\infty\quad\forall x\in\R\\
+            \infty + \infty &\coloneqq \infty\\
+            -\infty + \pair{-\infty} = -\infty -\infty &\coloneqq -\infty\\
+            -\infty &< x < \infty\quad\forall x\in\R\\
+            x\cdot\infty &\coloneqq\infty\quad\forall x > 0\\
+            x\cdot\pair{-\infty} &\coloneqq -\infty\quad\forall x > 0\\
+            x\cdot\infty &\coloneqq\pair{-\infty}\quad\forall x < 0\\
+            x\cdot\pair{-\infty} &\coloneqq \infty\quad\forall x < 0\\
+            0\cdot\pair{\pm \infty} &\coloneqq 0\\
+            \frac{x}{\pm\infty} &\coloneqq 0\quad\forall x\in\R\\
+            \infty\cdot\infty &= \infty\\
+            \infty\cdot\pair{-\infty} &= -\infty
+        \end{align*}
+        Dabei bleiben Ausdrücke wie $\infty - \infty$ nicht definiert. Wir definieren offene Mengen im $\overline{\R}$ wie folgt: $U \subseteq \overline{\R}$ ist offen, wenn
+        \begin{align*}
+            \forall x\in U\cap\R\ex R>0\colon \pair{x-R, x+R} &\subseteq U
+            \intertext{Außerdem muss für den Fall $\infty\in U$ zu sätzlich gelten}
+            \exists R > 0\colon \rinterv{R, \infty} &\subseteq U\\
+            \intertext{Analog muss für $-\infty\in U$ gelten}
+            \exists L > 0\colon \linterv{-\infty, L} &\subseteq U
+        \end{align*}
+        Mit dieser Definition können wir die Borel-$\sigma$-Algebra auf $\overline{\R}$ definieren mit $\overline{\mB}^{1} = \mB\of{\overline{\R}} = \overline{\mB}$.\\
+        Dann gilt für die Spur-$\sigma$-Algebra $\overline{\mB}^{1} \cap \R = \mB^1$.
+    \end{definition}
+
+    \begin{bemerkung}[Identitätsfunktion]
+        Sei $\pair{X, \mA}$ ein Messraum und $A \in\mA$. Dann definieren wir die Identitätsfunktion (von $A$) mit
+        \begin{align*}
+            \mathbf{1}_A\of{x} &\coloneqq \begin{cases}
+                                              1 &x\in A\\
+                                              0 &x\not\in A
+            \end{cases}
+        \end{align*}
+        Diese ist Borel-messbar. Außerdem gilt
+        \begin{align*}
+            A\subseteq B \impl \mathbf{1}_A &\leq \mathbf{1}_B\\
+            \mathbf{1}_{\comp{A}} &= 1 - \mathbf{1}_A
+        \end{align*}
+    \end{bemerkung}
+
+    \begin{definition}[Numerische Funktion]
+        Eine numerische Funktion ist eine Funktion $f: X\to\overline{\R}$. Ist $\mA$ eine $\sigma$-Algebra in $X$, so heißt $f$ $\mA$-messbar, falls es $\mA$-$\overline{\mB}$-messbar ist. Das heißt
+        \begin{align*}
+            \forall B\in\overline{\mB}\colon f^{-1}\of{B} \in\mA
+        \end{align*}
+    \end{definition}
+
+    \begin{satz}
+        \label{satz:messbarkeit}
+        Sei $\mA$ eine $\sigma$-Algebra auf $X$. Dann ist eine numerische Funktion $f: X\to\overline{\R}$ genau dann $\mA$-messbar, wenn
+        \begin{align*}
+            \set{x\in X: f\of{x} \geq \alpha} \in\mA\quad\forall \alpha\in\R
+        \end{align*}
+        \begin{proof}
+            Wir setzen $\overline{\mE} \coloneqq \set{\interv{\alpha, \infty}: \alpha\in\R}$. Zu zeigen ist $\sigma\of{\overline{\mE}} = \overline{\mB}^1$
+            \begin{enumerate}[label=(\arabic*)]
+                \item Es gilt $\interv{\alpha, \infty} \in \overline{\mB}^1~\forall\alpha\in\R$. Das heißt
+                \begin{align*}
+                    \impl\Sigma &\coloneqq \sigma\of{\overline{\mE}} \subseteq \overline{\mB}^1\\
+                    \linterv{\alpha, \beta} &= \interv{\alpha, \infty} \setminus \interv{\beta, \infty} \in\overline{\mB}^1\tag{$\alpha \leq \beta$}\\
+                    \impl \linterv{\alpha, \beta} &\in \R\cap\overline{\mB}^1\\
+                    \impl \mB^1 &\subseteq \R \cap \overline{B}^1 = \sigma\of{\R \cap \overline{\mB}^1}
+                \end{align*}
+                \item Es gilt
+                \begin{align*}
+                    \set{+\infty} &= \bigcap_{n\in\N} \interv{n, \infty} \in \sigma\of{\mE}\\
+                    \set{-\infty} &= \bigcap_{n\in\N} \comp{\interv{-n, \infty}} \in \sigma\of{\mE}\\
+                    \impl \forall \overline{G}\in\Sigma\colon \overline{G} \cap \R &= \overline{G} \cap \pair{\comp{\set{-\infty,\infty}}} = \Sigma\\
+                    \impl \R \cap \Sigma &\coloneqq \Sigma\\
+                    \impl \mB^1 &\subseteq \Sigma\\
+                    \impl \overline{\mB}^1 &= \mB^1 \cup \set{0, \set{-\infty}, \set{\infty}, \linterv{-\infty, \infty}} \subseteq \Sigma
+                \end{align*}
+                Also ist $\overline{\mE}$ ein Erzeuger von $\overline{\mB}^1$ und es genügt die Maßeigenschaften auf dem Erzeuger zu haben.
+            \end{enumerate}
+        \end{proof}
+    \end{satz}
+
+    \begin{satz}
+        Sei $\mA$ eine $\sigma$-Algebra auf $X$. Dann ist eine numerische Funktion $f: X\to\overline{\R}$ genau dann $\mA$-messbar, wenn eine der folgenden äquivalenten Bedingungen erfüllt ist:
+        \begin{align*}
+            &\set{x\in X: f\of{x} \geq \alpha} \in\mA\quad\forall \alpha\in\R\tag{1}\\
+            \equivalent &\set{x\in X: f\of{x} > \alpha} \in\mA\quad\forall \alpha\in\R\tag{2}\\
+            \equivalent &\set{x\in X: f\of{x} \leq \alpha} \in\mA\quad\forall \alpha\in\R\tag{3}\\
+            \equivalent &\set{x\in X: f\of{x} < \alpha} \in\mA\quad\forall \alpha\in\R\tag{4}
+        \end{align*}
+
+        \begin{proof}
+            Die Äquivalenz zu (1) folgt direkt aus Satz~\ref{satz:messbarkeit}. Warum sind die anderen Aussagen dazu äquivalent? (Übung).
+        \end{proof}
+    \end{satz}
+
+    \begin{satz}
+        Für messbare Funktionen $f, g: X \to \overline{\R}$ und $\pair{X, \mA}$ ein Messraum folgt
+        \begin{align*}
+            \set{f < g}, \set{f \leq g}, \set{f = g}, \set{f \neq g} \in\mA
+        \end{align*}
+        \begin{proof}
+            $\Q$ ist abzählbar. Dann ist
+            \begin{align*}
+                \set{f < g} &= \set{x\in X: f\of{x} < g\of{x}}\\
+                &= \bigcup_{r\in\Q} \set{f < r} \cap \set{r < g} \in\mA\\
+                \set{f \leq g} &= \comp{\set{f > g}}\\
+                \set{f = g} &= \set{f\leq g} \cap \set{f\geq g} = \mA\\
+                \set{f\neq g} &= \comp{\set{f = g}} \in \mA\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{satz}
+        Seien $f, g: X \to \R$ $\mA$-messbar. Dann folgt $f\pm g$ (falls definiert) sowie $f\cdot g$ sind messbar.
+        \begin{proof}
+            \begin{align*}
+                \set{f + g\geq \alpha} &= \set{f\geq \underbrace{\alpha -g}_{\eqqcolon h}}\\
+                &= \set{f\geq h}
+                \intertext{Das heißt es reicht aus zu zeigen, dass $\alpha -g$ (bzw. $\alpha + g$) messbare Funktionen für ein festes $\alpha\in\R$ sind. $g$ ist messbar, das heißt}
+                \set{g \leq \beta} &\in\mA\\
+                h\geq\beta &\equivalent \alpha - g \geq \beta\equivalent g \leq \alpha + \beta\\
+                \set{h\geq \beta} &= \set{g \leq \alpha + \beta}
+            \end{align*}
+            Rest: Nächste Vorlesung.
+        \end{proof}
+    \end{satz}
 
 \end{document}
