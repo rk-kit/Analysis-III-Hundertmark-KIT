@@ -69,6 +69,8 @@
 \reversemarginpar
 \makeatother
 
+\DeclareMathAlphabet{\altmathbb}{U}{BOONDOX-ds}{m}{n}
+
 % Long equations
 \allowdisplaybreaks
 
@@ -90,6 +92,7 @@
 \renewcommand{\emptyset}{\varnothing}
 \newcommand{\dif}{\mathop{}\!\mathrm{d}}
 \newcommand{\dsty}{\displaystyle}
+\newcommand{\charfunc}{\altmathbb{1}}
 
 \newcommand{\toinf}{\to\infty}
 \newcommand{\fa}{\;\forall}
@@ -1002,6 +1005,7 @@
     \end{satz}
 
     \begin{satz}
+        \label{satz:messbarkeit-1}
         Für messbare Funktionen $f, g: X \to \overline{\R}$ und $\pair{X, \mA}$ ein Messraum folgt
         \begin{align*}
             \set{f < g}, \set{f \leq g}, \set{f = g}, \set{f \neq g} \in\mA
@@ -1019,18 +1023,172 @@
     \end{satz}
 
     \begin{satz}
+        \marginnote{[13. Dez]}
         Seien $f, g: X \to \R$ $\mA$-messbar. Dann folgt $f\pm g$ (falls definiert) sowie $f\cdot g$ sind messbar.
         \begin{proof}
             \begin{align*}
-                \set{f + g\geq \alpha} &= \set{f\geq \underbrace{\alpha -g}_{\eqqcolon h}}\\
+                \set{f - g\geq \alpha} &= \set{f\geq \underbrace{g + \alpha}_{\eqqcolon h}}\\
                 &= \set{f\geq h}
-                \intertext{Das heißt es reicht aus zu zeigen, dass $\alpha -g$ (bzw. $\alpha + g$) messbare Funktionen für ein festes $\alpha\in\R$ sind. $g$ ist messbar, das heißt}
+                \intertext{Das heißt es reicht aus zu zeigen, dass $\alpha + g$ (bzw. $h$) messbare Funktionen für ein festes $\alpha\in\R$ sind. $g$ ist messbar, das heißt}
                 \set{g \leq \beta} &\in\mA\\
-                h\geq\beta &\equivalent \alpha - g \geq \beta\equivalent g \leq \alpha + \beta\\
-                \set{h\geq \beta} &= \set{g \leq \alpha + \beta}
+                h\geq\beta &\equivalent g + \alpha \geq \beta\equivalent g \leq \beta - \alpha\\
+                \set{h\geq \beta} &= \set{g \leq \beta - \alpha}
+                \intertext{Das ist messbar, da $g$ messbar ist und wir Satz~\ref{satz:messbarkeit-1} anwenden können. Damit ist $h$ und damit $f - g$ messbar.\endgraf\noindent Um zu zeigen, dass auch $f+g$ messbar ist, können wir einfach zeigen, dass $-g$ messbar ist. Es gilt}
+                \set{-g \geq \gamma} &= \set{g\geq -\gamma}
+                \intertext{Damit ist $-g$, also auch $f - (-g) = f + g$ messbar.\endgraf\noindent Wir zeigen noch die Messbarkeit von $f\cdot g$. Annahme: $f$ und $g$ sind reellwertig}
+                \pair{f+g}^2 - \pair{f-g}^2 &= 4fg\\
+                \impl fg &= \frac{1}{4}\pair{\pair{f+g}^2 - \pair{f-g}^2}
+                \intertext{Das heißt es reicht aus, zu zeigen, dass die Messbarkeit einer Funktion $h$ auch die Messbarkeit von $h^2$ impliziert}
+                \set{h^2 \geq \beta} &= X\quad\text{ falls } \beta \leq 0\\
+                \set{h^2\geq \beta} &= \set{h\geq \sqrt{\beta}} \cup \set{h\leq - \sqrt{\beta}} \in \mA\quad\text{ falls } \beta > 0
+                \intertext{Damit haben wir die Messbarkeit von $h^2$ gezeigt. Wir wollen nun noch die Annahme loswerden, dass $f$ und $g$ reellwertig sind. Wir definieren}
+                X_1 &\coloneqq \set{fg = +\infty} \cup \pair{\set{f > 0} \cap \set{g = \infty} \sqcup \pair{\set{f < 0} \cap \set{g = -\infty}}}\\
+                &~~\cup \pair{\set{f = \infty} \cap \set{g\geq 0} \cup \set{f = \infty} \cap \set{g < 0}} (?)\\
+                X_2 &\coloneqq \set{fg = -\infty}\\
+                X_3 &\coloneqq \set{fg = 0} = \set{f = 0} \cup \set{g = 0}\\
+                X_4 &\coloneqq \comp{\pair{X_1 \cup X_2 \cup X_3}}\\
+                \impl f, g: X_4 &\to \R\text{ sind reellwertig}\\
+                fg &= fg\mathbf{1}_{X_4} + \infty\mathbf{1}_{X_1} - \infty\mathbf{1}_{X_2} + 0\mathbf{1}_{X_3}
             \end{align*}
-            Rest: Nächste Vorlesung.
+            Damit ist $fg$ nach Voraussetzung messbar, da $X_4\in\mA$.\qedhere
         \end{proof}
     \end{satz}
+
+    \begin{satz}[WICHTIG]
+        \label{satz:funktfolge-sup}
+        Sei $(f_n)_n$ eine Folge messbarer Funktionen $f_n: X\to \overline{\R}$. Dann sind $\sup_n f_n$, $\inf_n f_n$, $\limsup_{n\toinf} f_n$ sowie $\liminf_{n\toinf} f_n$ messbar.
+    \end{satz}
+
+    \begin{bemerkung}
+        Sei $s\coloneqq \sup_n f_n = \sup_{n\in \N} f_n$ ist punktweise definiert. Das heißt
+        \begin{align*}
+            s\of{x} &= \pair{\sup_n f_n}\of{x} \coloneqq \sup_n f_n\of{x} = \sup\set{f_n\of{x}: n\in \N}
+        \end{align*}
+    \end{bemerkung}
+
+    \begin{proof}[Beweis von Satz~\ref{satz:funktfolge-sup}]
+        Sei $s\of{x} \coloneqq \sup_{n} f_n\of{x}$. Dann ist
+        \begin{align*}
+            \set{s \leq \alpha} &= \set{x: s\of{x} \leq \alpha} \eqqcolon A_1\\
+            \bigcup_{n\in\N}\set{f_n \leq \alpha} &= \bigcap_{n\in\N} \set{x\in X: f_n\of{x} < \alpha} = A_2 \in \mA
+            \intertext{Wir zeigen $A_1 = A_2$. Sei $x\in A_1$. Dann ist}
+            \alpha &\geq s\of{x} = \sup f_n\of{x} \geq f_n\of{x}\\
+            \impl f_m\of{x} &\leq \alpha\quad\forall m\in\N\\
+            \impl A_1 &\subseteq A_2
+            \intertext{Sei $x\in A_2$. Dann folgt}
+            f_n\of{x} &\leq\alpha\quad\forall n\in\N\\
+            \impl \sup f_n\of{x} &\leq \alpha\impl x \in A_1
+            \intertext{Damit ist $A_1 = A_2$. Es gilt}
+            \inf_n f_n &= -\sup_{n} \pair{-f_n}
+            \intertext{ist messbar}
+            \pair{\limsup_{n} f_n}\of{x} &= \inf_n \sup_{\alpha \geq n} f_{\alpha}\of{x}\\
+            \pair{\liminf_{n} f_n}\of{x} &= \sup_n \inf_{\alpha \geq n} f_{\alpha}\of{x}\qedhere
+        \end{align*}
+    \end{proof}
+
+    \begin{korollar}
+        Sei $(f_n)_n$ eine Folge messbarer Funktionen auf $X$ und $\pair{X, \mA}$ ein Messraum. Angenommen $\forall x\in X$ existiert der Grenzwert $f\of{x} \coloneqq \lim_{n\toinf} f_n\of{x}$ (wir schreiben auch $f = \lim_{n\toinf} f_n$). Dann ist $f$ messbar.
+
+        \begin{proof}
+            \begin{align*}
+                f = \lim_{n\toinf} f_n &= \limsup_{n\toinf} f_n = \liminf_{n\toinf} f_n
+            \end{align*}
+            Damit ist $f$ nach dem vorherigen Satz messbar.
+        \end{proof}
+    \end{korollar}
+
+    \begin{korollar}
+        Seien $f_1, \ldots, f_n: X\to\overline{\R}$ messbare Funktionen. Dann sind
+        \begin{align*}
+            f_1 \lor f_2 \lor \dots \lor f_n &\coloneqq \max\of{f_1, f_2, \ldots, f_n}\tag{punktweise}
+            \intertext{sowie}
+            f_1 \land f_2 \land \dots \land f_n &\coloneqq \min\of{f_1, f_2, \ldots, f_n}
+        \end{align*}
+        messbar.
+        \begin{proof}
+            Nehme die Folge $(\overline{f}_n)_n$ mit $\overline{f}_m = f_m$ für $1\leq m \leq n$ und $\overline{f}_m = f_n$ für $m > n$. Damit ist
+            \begin{align*}
+                f_1 \lor \dots f_n &= \sup_n \overline{f}_n
+            \end{align*}
+            messbar nach Satz~\ref{satz:funktfolge-sup}. Die zweite Behauptung zeigt sich analog.
+        \end{proof}
+    \end{korollar}
+
+    \begin{notation}
+        Sei $f: X \to \overline{\R}$ eine Funktion. Wir definieren
+        \begin{align*}
+            f_+ &\coloneqq f \lor 0 = \max\of{f, 0} \geq 0\tag{Positivteil}\\
+            f_- &\coloneqq \pair{-f} \lor 0 \geq 0\tag{Negativteil}
+            \intertext{Damit gilt außerdem}
+            f &= f_+ - f_-\\
+            \abs{f} &= f_+ + f_-
+        \end{align*}
+    \end{notation}
+
+    \begin{korollar}
+        Sei $f: X \to \overline{\R}$ eine Funktion. Dann ist $f$ genau dann $\mA$-messbar, wenn $f_+$ und $f_-$ messbar sind.
+    \end{korollar}
+
+    \begin{korollar}
+        Sei $f: X \to \overline{\R}$ eine $\mA$-messbare Funktion. Dann ist $\abs{f}$ messbar.
+    \end{korollar}
+
+    \newpage
+    \section{[*] Elementarfunktionen und ihr Integral}
+    \imaginarysubsection{Elementarfunktionen}
+    \thispagestyle{pagenumberonly}
+
+    \begin{definition}
+        Es sei $\pair{X, \mA}$ ein Messraum. Wir definieren $E_+ \coloneqq E_+\of{X, \mA}$ als die Menge aller nicht-negativen Elementarfunktionen. Das heißt $u\in E_+$, falls $u: X \to \R_+ = \linterv{0, \infty}$ $\mA$-messbar ist und $\bild\of{u}$ endlich viele Werte annimmt. Das heißt
+        \begin{align*}
+            u\of{X} &= \set{\alpha_1, \alpha_2, \ldots, \alpha_n}\\
+            \intertext{mit}
+            0&\leq \alpha_j < \infty\quad\forall j \leq n\\
+            \alpha_i &\neq \alpha_n\quad\forall i\neq j
+        \end{align*}
+        Wir setzen $A_j \coloneqq u^{-1}\of{\set{\alpha_j}} \in \mA$. Damit gilt $u\of{x} = \sum_{j=1}^{n} \alpha_j \charfunc_{A_j}\of{x}$. Wir haben den Raum $X$ nun folgendermaßen disjunkt zerlegt: $X= A_1 \sqcup A_2 \sqcup \dots \sqcup A_n$.\\
+        Sind umgekehrt nicht-notwendigerweise disjunkte $\tilde{A}_1, \ldots, \tilde{A}_n \in \mA$. Dann ist $ \sum_{j=1}^{n} \tilde{\alpha_j} \charfunc_{\tilde{A}_j}$ eine Elementarfunktion.
+    \end{definition}
+
+    \begin{bemerkung}[Eigenschaften von $E_+$]
+        Sei $\alpha \in \R_+$ und $u, v\in E_+$. Dann gilt
+        \begin{enumerate}[label=-]
+            \item $\alpha u\in E_+$
+            \item $u + v \in E_+$
+            \item $u - v\in E_+$
+            \item $u \land v \in E_+$
+            \item $u\lor v\in E_+$
+        \end{enumerate}
+
+        \begin{proof}
+            Folgt direkt aus der Definition und den Messbarkeitseigenschaften aus dem letzten Kapitel.
+        \end{proof}
+    \end{bemerkung}
+
+    \begin{notation}[Normaldarstellung]
+        Sei $u \in E_+$. Dann schreiben wir $u\of{x} = \sum_{j=1}^{n} \alpha_j \charfunc_{A_j}$ als Normaldarstellung mit $\bigsqcup_{j=1}^n = X$.
+    \end{notation}
+
+    \begin{lemma}
+        Sei $u\in E_+ = E_+\of{X, \mA}$ mit Normaldarstellungen
+        \begin{align*}
+            u = \sum_{j=1}^{n} \alpha_j \charfunc_{A_j} &= \sum_{k=1}^{n} \beta_k \charfunc_{B_k}
+            \intertext{Sei $\mu$ ein Maß auf $\pair{X, \mA}$. Dann gilt}
+            \sum_{j=1}^{n} \alpha_j \mu\of{A_j} &= \sum_{k=1}^{n} \beta_k \mu\of{B_k}
+        \end{align*}
+        Das heißt die Uneindeutigkeit der Normaldarstellung verschwindet bei der Verwendung eines Maßes.
+        \begin{proof}
+            \begin{align*}
+                X &= A_1 \sqcup \dots \sqcup A_m\\
+                &= B_1 \sqcup \dots \sqcup B_n\\
+                \impl A_j &= \sqcup_{k=1}^n \pair{A_j \cap B_k}\\
+                \impl B_k &= \sqcup_{j=1}^m \pair{A_j \cap B_k}\\
+                \impl \mu\of{A_j} &= \sum_{k=1}^{n} \mu\of{A_j \cap B_k}\\
+                \impl \mu\of{B_k} &= \sum_{j=1}^{m} \mu\of{A_j \cap B_k}\\
+                \impl \sum_{j=1}^{m} \alpha_j \mu\of{A_j} &= \sum_{j=1}^{m} \sum_{k=1}^{n} \alpha_j\mu\of{A_j \cap B_k}\\
+                \impl \sum_{k=1}^{n} \beta_j \mu\of{B_k} &= \sum_{k=1}^{n} \sum_{j=1}^{m} \beta_j\mu\of{A_j \cap B_k}
+            \end{align*}
+        \end{proof}
+    \end{lemma}
 
 \end{document}
