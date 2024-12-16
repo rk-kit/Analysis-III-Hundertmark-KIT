@@ -1134,6 +1134,8 @@
     \end{korollar}
 
     \newpage
+
+
     \section{[*] Elementarfunktionen und ihr Integral}
     \imaginarysubsection{Elementarfunktionen}
     \thispagestyle{pagenumberonly}
@@ -1170,6 +1172,7 @@
     \end{notation}
 
     \begin{lemma}
+        \label{lemma:elementar-eind}
         Sei $u\in E_+ = E_+\of{X, \mA}$ mit Normaldarstellungen
         \begin{align*}
             u = \sum_{j=1}^{n} \alpha_j \charfunc_{A_j} &= \sum_{k=1}^{n} \beta_k \charfunc_{B_k}
@@ -1181,14 +1184,117 @@
             \begin{align*}
                 X &= A_1 \sqcup \dots \sqcup A_m\\
                 &= B_1 \sqcup \dots \sqcup B_n\\
-                \impl A_j &= \sqcup_{k=1}^n \pair{A_j \cap B_k}\\
-                \impl B_k &= \sqcup_{j=1}^m \pair{A_j \cap B_k}\\
-                \impl \mu\of{A_j} &= \sum_{k=1}^{n} \mu\of{A_j \cap B_k}\\
-                \impl \mu\of{B_k} &= \sum_{j=1}^{m} \mu\of{A_j \cap B_k}\\
-                \impl \sum_{j=1}^{m} \alpha_j \mu\of{A_j} &= \sum_{j=1}^{m} \sum_{k=1}^{n} \alpha_j\mu\of{A_j \cap B_k}\\
-                \impl \sum_{k=1}^{n} \beta_j \mu\of{B_k} &= \sum_{k=1}^{n} \sum_{j=1}^{m} \beta_j\mu\of{A_j \cap B_k}
+                \impl A_j = \bigsqcup_{k=1}^n \pair{A_j \cap B_k} &\quad B_k = \bigsqcup_{j=1}^m \pair{A_j \cap B_k}\\
+                \impl \charfunc_{A_j} = \sum_{k=1}^{n} \charfunc_{A_j \cap B_k} &\quad\charfunc_{B_k} = \sum_{j=1}^{m} \charfunc_{A_j \cap B_k}\\
+                \impl u &= \sum_{j=1}^{m} \alpha_j \charfunc_{A_j} &= \sum_{j=1}^{n} \sum_{k=1}^{m} \alpha_j \charfunc_{A_j \cap B_k} = \sum_{j=1}^{n} \sum_{k=1}^{m} \beta_k \charfunc_{A_j \cap B_k}
+            \end{align*}
+            Jeder Punkt $x\in X$ liegt in genau einer Menge $A_j \cap B_k$
+            \begin{align*}
+                u\of{x} &= \alpha_{j_0} \charfunc_{A_{j_0} \cap B_k}\of{x} = \beta_{k_0} \charfunc_{A_{j_0} \cap B_{k_0}}\\
+                \sum_{j=1}^{m} \alpha_j \mu\of{A_j} &= \sum_{j=1}^{m} \alpha_j \mu\of{\bigcup_{k=1}^n A_j \cap B_k}\\
+                &= \sum_{k=1}^{n} \mu\of{A_j \cap B_k} = \sum_{j=1}^{m} \sum_{k=1}^{n} \alpha_j \mu\of{A_j \cap B_k}\\
+                &= \sum_{j=1}^{m} \sum_{k=1}^{n} \beta_k \mu\of{A_j \cap B_k} = \sum_{k=1}^{n} \beta_k \mu\of{B_k}\qedhere
             \end{align*}
         \end{proof}
     \end{lemma}
+
+    \begin{definition}
+        \marginnote{[16. Dez]}
+        Sei $\pair{X, \mA, \mu}$ ein Maßraum und $u$ eine Elementarfunktion. Dann heißt die von der spezifischen Normaldarstellung $\mu = \sum_{j=1}^{n} \alpha_j \charfunc_{A_j}$ unabhängige Zahl (Lemma~\ref{lemma:elementar-eind})
+        \begin{align*}
+            \int_{}^{} u \dif \mu \coloneqq \sum_{j=1}^{n} \alpha_j \mu\of{A_j}
+        \end{align*}
+        das ($\mu$-)Integral von $u$ (über $X$). Wir schreiben auch
+        \begin{align*}
+            \int_{}^{} u \dif \mu = \int_{X}^{} u \dif \mu &= \int_{X}^{} u\of{x} \dif \mu\of{x} = \int_{X}^{} u\of{x} \mu\of{\dif x}
+        \end{align*}
+        und definieren in diesem Sinne eine Abbildung
+        \begin{align*}
+            E_+ &\to \overline{\R}\\
+            u &\mapsto \int_{}^{} u \dif \mu
+        \end{align*}
+    \end{definition}
+
+    \begin{lemma}[Eigenschaften des Integrals]
+        Für $A\subseteq X$, $\alpha\in\R$ und $u,v\in E_+$ gilt
+        \begin{enumerate}[label=(\roman*)]
+            \item $\dsty \int_{}^{} \charfunc_{A} \dif \mu = \mu\of{A}$
+            \item $\dsty \int_{}^{} \alpha u \dif \mu = \alpha \int_{}^{} u \dif \mu$
+            \item $\dsty \int_{}^{} \pair{u + v} \dif \mu = \int_{}^{} u \dif \mu + \int_{}^{} v \dif \mu$
+            \item $u\leq v \impl \dsty \int_{}^{} u \dif \mu \leq \int_{}^{} v \dif \mu$
+        \end{enumerate}
+        \begin{proof}
+        (i)
+            und (ii) folgen direkt aus der Definition. Für (iii) sei
+            \begin{align*}
+                u = \sum_{j=1}^{m} \alpha_j \charfunc_{A_j} &\quad v = \sum_{k=1}^{n} \beta_k \charfunc_{B_k}\\
+                \impl A_j = \bigsqcup_{k=1}^n A_j \cap B_k &\quad B_k = \bigsqcup_{j=1}^m A_j \cap B_k\\
+                u = \sum_{j=1}^{m} \sum_{k=1}^{n} \alpha_j \charfunc_{A_j \cap B_k} &\quad v = \sum_{j=1}^{m} \sum_{k=1}^{n} \beta_k \charfunc_{A_j \cap B_k}\\
+                \impl u +v = \sum_{j=1}^{m} \sum_{k=1}^{n} &\pair{\alpha_j + \beta_k} \charfunc_{A_j \cap B_k}\\
+                \int_{}^{} u \dif \mu = \sum_{j=1}^{m} \sum_{k=1}^{n} \alpha_j \mu\of{A_j \cap B_k} &\quad \int_{}^{} v \dif \mu = \sum_{j=1}^{m} \sum_{k=1}^{n} \beta_k \mu\of{A_j \cap B_k}
+            \end{align*}
+            \begin{align*}
+                \int_{}^{} \pair{u+v} \dif \mu &= \sum_{j=1}^{m} \sum_{k=1}^{n} \pair{\alpha_j + \beta_k} \mu\of{A_j \cap B_k}\\
+                &= \sum_{j=1}^{m} \sum_{k=1}^{n} \alpha_j \mu\of{A_j \cap B_k} + \sum_{j=1}^{m} \sum_{k=1}^{n} \beta_k \mu\of{A_j \cap B_k} = \int_{}^{} u \dif \mu + \int_{}^{} v \dif \mu
+            \end{align*}
+            Für (iv) gilt mit der Definition, die wir auch schon bei (iii) verwendet haben, dass $\alpha_j \leq \beta_k$ auf $A_j \cap B_k$
+            \begin{align*}
+                \impl \int_{}^{} u \dif \mu = \sum_{j}^{k} \alpha_j \mu\of{A_j \cap B_k} \leq \sum_{j}^{} \sum_{k}^{} \beta_k \mu\of{A_j \cap B_k} = \int_{}^{} v \dif \mu\qedhere
+            \end{align*}
+        \end{proof}
+    \end{lemma}
+
+    \newpage
+
+
+    \section{[*] Das Integral von nicht-negativen meßbaren Funktionen}
+    \imaginarysubsection{Integral nicht-negativer Funktionen}
+    \thispagestyle{pagenumberonly}
+
+    \begin{satz}
+        Für jede wachsende Folge $(u_n)_n \subseteq E_+$ und jedes $u\in E_+$ gilt
+        \begin{align*}
+            u \leq \sup_{n\in\N} u_n \impl \int_{}^{} u \dif \mu \leq \sup_{n\in \N} \int_{}^{} u_n \dif \mu
+        \end{align*}
+
+        \begin{proof}
+            Sei $u = \sum_{j=1}^{m} \alpha_j \charfunc_{A_j}$ und $0 < \delta < 1$. Wir definieren $B_n \coloneqq \set{x\in X: u_n\of{x} \geq \delta u\of{x}}$. Wir wissen nach Voraussetzung, dass $u_n \leq u_{n+1}$, das heißt $\sup_{n\in\N} u_n\of{x} \geq u\of{x}~\forall x\in X$. Sei $x\in X$ fest. Ist $u\of{x} > 0$, dann gilt $\exists N\of{x}\in\N: u_n\of{x}\geq \delta u\of{x}$ für $n\geq N\of{x}$.\\
+            Aus $u_{n+1} \geq u_n$ folgt $B_n \subseteq B_{n+1}$. Außerdem ist $\forall x\in X: x\in B_n$ für ein ausreichend großes $n$. Also haben wir $B_n \nearrow X$. Auch ist $u_n \geq \delta u\charfunc_{B_n}$
+            \begin{align*}
+                \impl \int_{}^{} u_n \dif \mu &\geq \int_{}^{} \delta u\charfunc_{B_n} \dif \mu\\
+                u &= \sum_{j=1}^{n} \alpha_j \charfunc_{A_j}\\
+                \impl u \charfunc_{B_n} &= \sum_{j=1}^{n} \alpha_j \charfunc_{A_j \cap B_n}\\
+                \delta \int_{}^{} u\charfunc_{B_n} \dif\mu &= \delta \int_{}^{} \sum_{j=1}^{n} \alpha_j \charfunc_{A_j \cap B_n} \dif \mu\\
+                &= \delta \sum_{j=1}^{n} \alpha_j \mu\of{A_j \cap B_n} \to \delta \sum_{j=1}^{n} \alpha_j \mu\of{A_j}\\
+                \impl \sup_{n\in\N} \int_{}^{} u_n \dif \mu = \lim_{n\toinf} \int_{}^{} u \dif \mu &\geq \delta\sum_{j=1}^{n} \alpha_j \lim_{n\toinf} \mu\of{A_j \cap B_n} = \delta\sum_{j=1}^{n} \alpha_j \charfunc_{A_j} = \delta\int_{}^{} u \dif \mu
+            \end{align*}
+            Das gilt für alle $\delta < 1$. Mit dem Limes für $\delta \to 1$ folgt dann die Behauptung.
+        \end{proof}
+    \end{satz}
+
+    \begin{korollar}
+        Seien $(u_n)_n, (v_n)_n \subseteq E_+$ wachsende Folgen von Elementarfunktionen. Dann gilt
+        \begin{align*}
+            \sup_{n\in\N} u_n = \sup_{n\in\N} v_n \impl \sup_{n\in\N} \int_{}^{} u \dif \mu = \sup_{n\in\N} \int_{}^{} v \dif \mu
+        \end{align*}
+
+        \begin{proof}
+            Nach dem vorherigen Satz und $u_n \leq \sup_{n\in\N} v_n$ gilt
+            \begin{align*}
+                \int_{}^{} u_n \dif \mu &\leq \sup_{n\in\N} \int_{}^{} v_n \dif \mu\\
+                \impl \sup_{n\in\N} \int_{}^{} u_n \dif x &\leq \sup_{n\in\N} \int_{}^{} v_n \dif \mu\\
+                \intertext{Aus Symmetriegründen gilt dann}
+                \impl \sup_{n\in\N} \int_{}^{} u_n \dif x &= \sup_{n\in\N} \int_{}^{} v_n \dif \mu
+            \end{align*}
+        \end{proof}
+    \end{korollar}
+
+    \begin{notation}
+        Wir schreiben $E^n = E^n_+ = E^n_+\of{X, \mA}$ für die Menge aller numerischen meßbaren Funktionen $f\geq 0$ auf $X$, für die es eine wachsende Folge $(u_n)_n \subseteq E_+$ gibt, sodass $\sup_{n\in\N} u_n = f$. Für $f\in E_+^n$ ist dann
+        \begin{align*}
+            \int_{}^{} f \dif \mu \coloneqq \sup\set{\int_{}^{} u_n \dif \mu: u_n \subseteq E_+,~\sup_{n\in\N} u_n = f}
+        \end{align*}
+        Das nennen wir das ($\mu$-)Integral von $f$.
+    \end{notation}
 
 \end{document}
