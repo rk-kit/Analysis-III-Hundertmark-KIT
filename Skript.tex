@@ -1275,7 +1275,7 @@
     \begin{korollar}
         Seien $(u_n)_n, (v_n)_n \subseteq E_+$ wachsende Folgen von Elementarfunktionen. Dann gilt
         \begin{align*}
-            \sup_{n\in\N} u_n = \sup_{n\in\N} v_n \impl \sup_{n\in\N} \int_{}^{} u \dif \mu = \sup_{n\in\N} \int_{}^{} v \dif \mu
+            \sup_{n\in\N} u_n = \sup_{n\in\N} v_n \impl \sup_{n\in\N} \int_{}^{} u_n \dif \mu = \sup_{n\in\N} \int_{}^{} v_n \dif \mu
         \end{align*}
 
         \begin{proof}
@@ -1290,11 +1290,150 @@
     \end{korollar}
 
     \begin{notation}
-        Wir schreiben $E^n = E^n_+ = E^n_+\of{X, \mA}$ für die Menge aller numerischen meßbaren Funktionen $f\geq 0$ auf $X$, für die es eine wachsende Folge $(u_n)_n \subseteq E_+$ gibt, sodass $\sup_{n\in\N} u_n = f$. Für $f\in E_+^n$ ist dann
+        Wir schreiben $E^{\ast} = E^{\ast}_+ = E^{\ast}_+\of{X, \mA}$ für die Menge aller numerischen meßbaren Funktionen $f\geq 0$ auf $X$, für die es eine wachsende Folge $(u_n)_n \subseteq E_+$ gibt, sodass $\sup_{n\in\N} u_n = f$. Für $f\in E_+^n$ ist dann
         \begin{align*}
             \int_{}^{} f \dif \mu \coloneqq \sup\set{\int_{}^{} u_n \dif \mu: u_n \subseteq E_+,~\sup_{n\in\N} u_n = f}
         \end{align*}
         Das nennen wir das ($\mu$-)Integral von $f$.
     \end{notation}
+
+    \begin{bemerkung}[Eigenschaften des Integrals]
+        \marginnote{[20. Dez]}
+        Seien $f, g\in E^{\ast}$ und $\alpha\in\R_+$. Dann gilt
+        \begin{enumerate}[label=(\roman*)]
+            \item $\alpha f\in E^{\ast}$
+            \item $f\pm g \in E^{\ast}$
+            \item $fg \in E^{\ast}$
+            \item $f \lor g \coloneqq \max\of{f, g}\in E^{\ast}$
+            \item $f \land g \coloneqq \min\of{f, g}\in E^{\ast}$
+            \item $\dsty \int_{}^{} \pair{\alpha f} \dif \mu = \alpha\int_{}^{} f \dif \mu$
+            \item $\dsty \int_{}^{} \pair{f+g} \dif \mu = \int_{}^{} f \dif \mu + \int_{}^{} g \dif \mu$
+            \item $f\leq g \impl \dsty \int_{}^{} f \dif \mu \leq \int_{}^{} g \dif \mu$
+        \end{enumerate}
+
+        \begin{proof}
+            \theoremescape
+            \begin{enumerate}
+                \item[(i)-(v)] Beachte $f = \sup_{n\in\N} u_n$ und $g = \sup_{n\in\N} v_n$. Damit lassen sich entsprechende Folgen finden, um auch Kombinationen von $f$ und $g$ im obigen Sinne zu finden.
+                \item[(vi)] (Übung)
+                \item[(vii)] Es ist $f = \lim_{n\toinf} u_n$, $g= \lim_{n\toinf} v_n$. Das heißt
+                \begin{align*}
+                    \int_{}^{} f \dif \mu &= \sup_{n\in\N} \int_{}^{} u_n \dif \mu = \lim_{n\toinf} \int_{}^{} u_n \dif \mu\\
+                    \int_{}^{} g \dif \mu &= \sup_{n\in\N} \int_{}^{} v_n \dif \mu = \lim_{n\toinf} \int_{}^{} v_n \dif \mu\\
+                    \int_{}^{} f+g \dif \mu &= \sup_{n\in\N} \int_{}^{} (u_n + v_n) \dif \mu = \lim_{n\toinf} \int_{}^{} (u_n + v_n) \dif \mu\\
+                    &= \lim_{n\toinf} \pair{\int_{}^{} u_n \dif \mu + \int_{}^{} v_n \dif \mu} = \lim_{n\toinf} \int_{}^{} u_n \dif \mu + \lim_{n\toinf} \int_{}^{} v_n \dif \mu\\
+                    &= \int_{}^{} f \dif \mu + \int_{}^{} g \dif \mu
+                \end{align*}
+                \item[(viii)] $f\leq g \impl u_k \leq \sup_{n\in\N} v_n$. Wir definieren $(\tilde{u}_n)_n$ mit $\tilde{u}_n \coloneqq u_k$ für ein festes $k$
+                \begin{align*}
+                    \impl \sup_{n\in\N} \tilde{u}_k = u_k &\leq \sup_{n\in\N} v_n\\
+                    \impl \int_{}^{} u_k \dif \mu = \sup_{n\in\N} \int_{}^{} \tilde{u}_k \dif \mu &\leq \sup_{n\in\N} \int_{}^{} v_n \dif \mu = \int_{}^{} g \dif \mu\\
+                    \impl \int_{}^{} u_k \dif \mu &\leq \int_{}^{} g \dif \mu\\
+                    \impl \int_{}^{} f \dif \mu &= \sup_{k\in\N} \int_{}^{} u_k \dif \mu = \int_{}^{} g \dif \mu
+                \end{align*}
+            \end{enumerate}
+        \end{proof}
+    \end{bemerkung}
+
+    \begin{bemerkung}[Interpretation des Integrals]
+        Das Integral bezüglich einem Maß $\mu$ ist eine monotone Linearform von $E^{\ast}$ nach $\interv{0, \infty}$. Aber was ist $E^{\ast}$?
+    \end{bemerkung}
+
+    \begin{notation}
+        Es sei $\mM_+ \coloneqq \mM_+\of{X, \mA} \coloneqq \set{f: x\to\interv{0, \infty},~f\text{ ist }\mA\text{-messbar}}$.
+    \end{notation}
+
+    \begin{satz}
+        $E^{\ast}\of{X, \mA} = \mM_+\of{X, \mA}$.
+
+        \begin{proof}
+            $E^{\ast} \subseteq \mM_+$ ist klar. Wir zeigen die Inklusion in die andere Richtung. Wir definieren für ein $n\in\N$, $j\in\set{0, \ldots, n2^{n}}$
+            \begin{align*}
+                A_{j,n} &\coloneqq \begin{cases}
+                                       \set{f \geq j2^{-n}} \cap \set{f \leq (j+1)2^{-n}} & j\in\set{0, \ldots, n2^{n}-1}\\
+                                       \set{f\geq n} &j = n2^{n}-1
+                \end{cases}\\
+                &= \begin{cases}
+                       \set{j2^{-n} \leq f \leq (j+1)2^{-n}}& j\in\set{0, \ldots, n2^{n}-1}\\
+                       \set{f\geq n} &j = n2^{n}-1
+                \end{cases}
+            \end{align*}
+            Für ein festes $n$ ist $A_{j,n} \cap A_{k, n} = \emptyset$ für $j\neq k$. Wir setzen
+            \begin{align*}
+                u_n &\coloneqq \sum_{j=0}^{n2^n} j2^{-n} \charfunc_{A_{j,n}}
+            \end{align*}
+            Behauptung 1: $u_n \leq u_{n+1}~\forall n\in\N$. Bew.:
+            \begin{align*}
+                A_{2k, n+1} &= \set{2k2^{-(n+1)} \leq f \leq (2k+1)2^{-(n+1)}} = \set{k2^{-n} \leq f \leq (2k+1)2^{-(n+1)}}\\
+                A_{2k+1, n+1} &= \set{(2k+1)2^{-(n+1)} \leq f \leq (2k+1)2^{-(n+1)}}\\
+                \impl A_{k,n} &= A_{2k, n+1} \sqcup A_{2k+1, n+1}\\
+                \impl u_{n} &\leq u_{n+1}
+            \end{align*}
+            Damit ist auch $u_n \leq f~\forall n\in\N$. Umgekehrt auf $A_{j,n}$ ist $f\of{x} \leq (j+1)2^{-n} = u_n\of{x} + 2^{-n}$. Das heißt $\lim_{n\toinf} u_n = f$ für $x\in A_{j,n}$. Insgesamt gilt damit $\lim_{n\toinf}u_n = f$.
+        \end{proof}
+    \end{satz}
+
+    \begin{satz}[Monotone Konvergenz] % Satz 5
+        \label{satz:monoton-konv}
+        Sei $(f_n)_n$ eine wachsende Folge in $E^{\ast}\of{X, \mA}$. Dann folgt $\dsty\sup_{n\in\N} f_n \in E^{\ast}$ und $\dsty\sup_{n\in\N} \int_{}^{} f_n \dif \mu = \int_{}^{} \sup_{n\in\N} f \dif \mu$.
+
+        \begin{proof}
+            Sei $f\coloneqq \sup_{n\in\N} f_n$. Dann reicht es, zu zeigen, dass $\exists (v_n)_n\subseteq E_+$ wachsend mit $\sup_{n\in\N} v_n = f$ und $v_n \leq f_n$. Denn in diesem Fall ist
+            \begin{align*}
+                \int_{}^{} v_n \dif \mu &\leq \int_{}^{} f_n \dif \mu \leq \sup_{n\in\N} \int_{}^{} f_n \dif \mu\\
+                \impl \sup_{n\in\N} \int_{}^{} v_n \dif \mu &\leq \sup_{n\in\N} \int_{}^{} f_n \dif \mu
+                \intertext{Mit Bemerkung~\ref{bemerkung:temp-lemma} folgt dann}
+                \sup_{n\in\N}\int_{}^{} f_n \dif \mu &= \int_{}^{} \sup_{n\in\N} f_n \dif \mu
+                \intertext{Wir brauchen also nur noch die Existenz von $(v_n)_n$. Zu $(f_n)$ existiert ein $(u_{m,n})_n \subseteq E_+$ mit $u_{m, n} \leq u_{m-1, n}$ sowie $f_n = \sup_{m} u_{m,n}$. Das heißt}
+                v_m &\leq v_{m+1}\\
+                \impl \sup_{m} v_m &\in E_+
+                \intertext{Behauptung: $\sup_{m} v_m = f = \sup_n f_n$. Da $u_{m,n} \leq f_n \leq f_{n+1}$}
+                \impl \sup_{m} v_m &\leq \sup_{m} f_m = f\\
+                \intertext{Auch ist $v_m = u_{m-1} \lor u_{m-2} \lor \ldots \geq u_{m,n} \to f_n$}
+                f_n &= \sup_{m} u_{m,n} = \sup_{m} v_m\\
+                \impl f &= \sup_{n} f_n \leq \sup_{m} v_m \leq f\\
+                \impl f &= \sup_{m\in\N} v_m\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{bemerkung}
+        \label{bemerkung:temp-lemma}
+        Im Sinne von Satz~\ref{satz:monoton-konv} gilt die Ungleichung $\dsty\sup_{n\in\N} \int_{}^{} f_n \dif \mu \leq \int_{}^{} \sup_{n\in\N} f \dif \mu$ allgemein. Die Voraussetzung, dass die Folge wächst ist nur für die Ungleichung in die andere Richtung relevant.
+    \end{bemerkung}
+
+    \begin{korollar}
+        Sei $(f_n)_n \subseteq E^{\ast}$. Dann folgt $\dsty \sum_{n=1}^{\infty} f_n \in E^{\ast}$ und $\dsty \int_{}^{} \pair{ \sum_{n=1}^{\infty} f_n} \dif \mu = \sum_{n=1}^{\infty} \int_{}^{} f_n \dif \mu$.
+        \begin{proof}
+            Wir haben $f_n \geq 0$. Das heißt die Partialsummen von $(f_n)_n$ sind monoton wachsend. Damit ergibt sich die Behauptung direkt aus Satz~\ref{satz:monoton-konv}.
+        \end{proof}
+    \end{korollar}
+
+    \newpage
+
+
+    \section{[*] Integrierbarkeit}
+    \imaginarysubsection{Integrierbarkeit}
+    \thispagestyle{pagenumberonly}
+
+    Wir haben $f\geq 0$ messbar auf $X$. Dann ist $\dsty \int_{X}^{} f \dif \mu$ wohldefiniert. Wir wollen das auch auf Funktionen mit negativen Werten erweitern.
+
+    \begin{definition}
+        Eine numerische Funktion $f: X\to\overline{\R}$ heißt ($\mu$-)integrierbar, wenn sie $\mA$-messbar ist sowie $ \int_{}^{} f_+ \dif \mu, \int_{}^{} f_- \dif \mu\in\R$. In diesem Fall definieren wir
+        \begin{align*}
+            \int_{}^{} f \dif \mu &= \int_{}^{} f_+ \dif \mu - \int_{}^{} f_- \dif \mu
+        \end{align*}
+    \end{definition}
+
+    \begin{satz}
+        Sei $f: X \to\overline{\R}$ messbar und $\mu$ ein Maß auf $\mA$. Dann sind folgende Aussagen äquivalent
+        \begin{enumerate}[label=(\roman*)]
+            \item $f_+$ und $f_-$ sind integrierbar
+            \item Es existieren integrierbare Funktionen $u, v\geq 0$ mit $f = u-v$
+            \item Es existiert eine integrierbare Funktion $g\geq 0$ mit $\abs{f} \leq g$
+            \item $\abs{f}$ ist integrierbar
+        \end{enumerate}
+        Im Fall (ii) ist $\dsty \int_{}^{} f \dif \mu = \int_{}^{} u \dif \mu - \int_{}^{} v \dif \mu$.
+    \end{satz}
 
 \end{document}
