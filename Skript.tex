@@ -1413,7 +1413,8 @@
 
 
     \section{[*] Integrierbarkeit}
-    \imaginarysubsection{Integrierbarkeit}
+
+    \subsection{Integration von allgemeinen numerischen Funktionen}
     \thispagestyle{pagenumberonly}
 
     Wir haben $f\geq 0$ messbar auf $X$. Dann ist $\dsty \int_{X}^{} f \dif \mu$ wohldefiniert. Wir wollen das auch auf Funktionen mit negativen Werten erweitern.
@@ -1426,6 +1427,7 @@
     \end{definition}
 
     \begin{satz}
+        \label{satz:integrierbarkeit-equi}
         Sei $f: X \to\overline{\R}$ messbar und $\mu$ ein Maß auf $\mA$. Dann sind folgende Aussagen äquivalent
         \begin{enumerate}[label=(\roman*)]
             \item $f_+$ und $f_-$ sind integrierbar
@@ -1434,6 +1436,144 @@
             \item $\abs{f}$ ist integrierbar
         \end{enumerate}
         Im Fall (ii) ist $\dsty \int_{}^{} f \dif \mu = \int_{}^{} u \dif \mu - \int_{}^{} v \dif \mu$.
+        \marginnote{[10. Jan]}
+        \begin{proof}
+        (i)
+            $\impl$ (ii): Wir wählen $u= f_+$ und $v=f_-$. Damit existieren die geforderten Funktionen.\\[.2\baselineskip]
+            (ii) $\impl$ (iii): $u$ und $v$ sind integrierbare, nicht-negative Funktionen. Damit ist auch $u+v$ integrierbar und nicht-negativ und es gilt
+            \begin{align*}
+                f &= u-v \leq u \leq u+v\\
+                -f &= v -u \leq v \leq v+u\\
+                \impl \abs{f} &\leq u + v \eqqcolon g
+            \end{align*}
+            (iii) $\impl$ (iv): Aus der Monotonie des Integrals (für nicht-negative, integrierbare Funktionen) folgt
+            \begin{align*}
+                \int_{}^{} \abs{f\of{x}} \dif \mu\of{x} &\leq \int_{}^{} g\of{x} \dif \mu\of{x} < \infty
+            \end{align*}
+            (iv) $\impl$ (i): Es gilt $f_+ \leq \abs{f}$ und $f_- \leq \abs{f}$. Das heißt nach der Argumentation aus der vorherigen Implikation sind $f_+$ und $f_-$ integrierbar.\\[.5\baselineskip]
+            Im Fall (ii) ist $f = u-v = f_+ - f_-$. Daraus folgt
+            \begin{align*}
+                \impl u + f_- &= f_+ + v\\
+                \impl \int_{}^{} u \dif \mu + \int_{}^{} f_- \dif \mu &= \int_{}^{} f_+ \dif \mu + \int_{}^{} v \dif \mu\\
+                \impl \int_{}^{} u \dif x - \int_{}^{} v \dif \mu &= \int_{}^{} f_+ \dif \mu - \int_{}^{} f_- \dif \mu = \int_{}^{} f \dif \mu
+            \end{align*}
+        \end{proof}
     \end{satz}
 
+    \begin{bemerkung}[Komplexwertige Integrale]
+        Eine messbare Funktion $f: X \to\C$ ist integrierbar, falls $Re\of{f}$ und $\Im\of{f}$ integrierbar sind. Wir definieren dann
+        \begin{align*}
+            \int_{}^{} f \dif \mu &= \int_{}^{} \Re\of{f} \dif \mu + i\int_{}^{} \Im\of{f} \dif \mu
+        \end{align*}
+        Eine entsprechende Version von Satz~\ref{satz:integrierbarkeit-equi} gilt dann auch für komplexe Funktionen.
+    \end{bemerkung}
+
+    \subsection{Linearität und Monotonie des Integrals}
+
+    \begin{satz} % Satz 3
+        \label{satz:int-basic-prop}
+        Seien $f, g$ integrierbar und $\alpha\in\R$. Dann sind $\alpha f$ und $f+g$ ebenfalls integrierbar und es gilt
+        \begin{align*}
+            \int_{}^{} \alpha f \dif \mu &= \alpha \int_{}^{} f \dif \mu\tag{i}\\
+            \int_{}^{} f+g \dif \mu &= \int_{}^{} f \dif \mu + \int_{}^{} g \dif \mu\tag{ii}
+        \end{align*}
+        Außerdem sind auch $\max\of{f, g}$ und $\min\of{f, g}$ integrierbar.\hfill(iii)
+        \begin{proof}
+            \theoremescape
+            \begin{enumerate}[label=(\roman*)]
+                \item
+                Es gilt $\pair{\alpha f}_+ = \alpha f_+$ und $\pair{\alpha f}_- = \alpha f_-$, falls $\alpha \geq 0$ sowie $\pair{\alpha f}_- = \alpha f_+$ und $\pair{\alpha f}_+ = \alpha f_-$, falls $\alpha < 0$. Für $\alpha \geq 0$ gilt
+                \begin{align*}
+                    \int_{}^{} \alpha f \dif \mu &= \int_{}^{} \pair{\alpha f}_+ \dif \mu - \int_{}^{} \pair{\alpha f}_- \dif \mu = \int_{}^{} \alpha f_+ \dif \mu - \int_{}^{} \alpha f_- \dif \mu\\
+                    &= \alpha \int_{}^{} f_+ \dif \mu - \alpha \int_{}^{} f_- \dif \mu = \alpha \int_{}^{} f \dif \mu
+                \end{align*}
+                Der Fall $\alpha < 0$ zeigt sich analog.
+                \item $f$ und $g$ lassen sich in positiv- und negativ-Teil zerlegen. Das heißt
+                \begin{align*}
+                    f+g &= f_+ - f_- + g_+ - g_- = \underbrace{f_+ + g_+}_{\eqqcolon u} - \underbrace{\pair{f_- + g_-}}_{\eqqcolon v}
+                    \intertext{Mit Satz~\ref{satz:integrierbarkeit-equi} folgt die Integrierbarkeit von $f+g$ und es gilt}
+                    \int_{}^{} f+g \dif \mu &= \int_{}^{} u \dif \mu - \int_{}^{} v \dif \mu = \int_{}^{} f_+ + g_+ \dif \mu - \int_{}^{} f_- + g_- \dif \mu\\
+                    &= \int_{}^{} f_+ \dif \mu - \int_{}^{} f_- \dif \mu + \int_{}^{} g_+ \dif \mu - \int_{}^{} g_- \dif \mu = \int_{}^{} f \dif \mu + \int_{}^{} g \dif \mu
+                \end{align*}
+                \item Es gilt $\abs{\max\of{f, g}}\leq \abs{f} + \abs{g}$ sowie $\abs{\min\of{f, g}}\leq \abs{f} + \abs{g}$. Damit folgt die Integrierbarkeit direkt aus Satz~\ref{satz:integrierbarkeit-equi}, da $f$ und $g$ integrierbar sind.
+            \end{enumerate}
+        \end{proof}
+    \end{satz}
+
+    \begin{bemerkung}
+        Für komplexe Funktionen $f, g: X\to \C$ gilt Satz~\ref{satz:int-basic-prop} analog (mit $\alpha\in\C$).
+        \begin{proof}
+            Der Beweis ist eine Standardrechnung und funktioniert genauso wie der Beweis des Satzes für reelle Funktionen mit einer zusätzlichen Zerlegung in Real- und Imaginärteil.
+        \end{proof}
+    \end{bemerkung}
+
+    \begin{satz}
+        \label{satz:int-monoton-dreieck}
+        Seien $f, g$ integrierbar auf $X$. Dann gilt
+        \begin{align*}
+            f \leq g \impl \int_{}^{} f \dif \mu &\leq \int_{}^{} g \dif \mu\tag{Monotonie}
+            \intertext{sowie}
+            \abs{ \int_{}^{} f \dif \mu} &\leq \int_{}^{} \abs{f} \dif \mu\tag{Dreiecksungleichung}
+        \end{align*}
+
+        \begin{proof}
+            Monotonie: Aus $f\leq g$ folgen $f_+ \leq g_+$ und $f_- \geq g_-$
+            \begin{align*}
+                \impl \int_{}^{} f \dif \mu &= \int_{}^{} f_+ \dif \mu - \int_{}^{} f_- \dif \mu\\
+                &\leq \int_{}^{} g_+ \dif \mu - \int_{}^{} g_- \dif \mu = \int_{}^{} g \dif \mu
+            \end{align*}
+            Dreiecksungleichung: Da $f\leq \abs{f}$ und $-f \leq \abs{f}$ folgt aus der Monotonie
+            \begin{align*}
+                \int_{}^{} f \dif \mu &\leq \int_{}^{} \abs{f} \dif \mu\\
+                -\int_{}^{} f \dif \mu = \int_{}^{} -f \dif \mu &\leq \int_{}^{} \abs{f} \dif \mu\\
+                \impl \abs{ \int_{}^{} f \dif \mu} &\leq \int_{}^{} \abs{f} \dif \mu
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{bemerkung}
+        Sei $f: X \to \C$ integrierbar. Bisher haben sich alle Sätze und Argumente für reelle Funktionen ohne Probleme auch auf komplexe Funktionen übertragen. Bei Satz~\ref{satz:int-monoton-dreieck} ist hier jedoch etwas Vorsicht geboten. Wir versuchen, die Dreiecksungleichung analog zum vorherigen Beweis auch auf komplexe Funktionen zu übertragen:
+        \begin{align*}
+            \abs{ \int_{}^{} f \dif \mu} &= \abs{\int_{}^{} \Re\of{f} \dif \mu + i \int_{}^{} \Im\of{f} \dif \mu}\\
+            &\leq \abs{ \int_{}^{} \Re\of{f} \dif \mu} + \abs{\int_{}^{} \Im\of{f} \dif \mu}\\
+            &\leq \int_{}^{} \abs{\Re\of{f}} \dif \mu + \int_{}^{} \abs{\Im\of{f}} \dif \mu\\
+            &= \int_{}^{} \abs{\Re\of{f}} + \abs{\Im\of{f}} \dif \mu
+            \intertext{Die einzige Abschätzung, die wir jetzt noch sinnvoll machen können, um wieder $\abs{f}$ im Integral stehen zu haben, ist, sowohl Real- als auch Imaginärteil gegen den Betrag abzuschätzen}
+            &\leq 2 \int_{}^{} \abs{f} \dif \mu
+        \end{align*}
+        Der Faktor, den wir hier zusätzlich erhalten, ergibt sich aber nicht aus den Eigenschaften des komplexen Integrals, sondern entsteht nur durch unsere zu großzügigen Abschätzungen. Wir führen stattdessen ein besseres Argument mit Polarkoordinaten: \textit{(fehlt)}
+
+        %%
+    \end{bemerkung}
+
+    \subsection{Der Raum $\mL^1\of{\mu}$}
+    \begin{definition}
+        Wir definieren $\mL^{1}\of{\mu} \coloneqq \mL^{1}\of{\mu, \R}$ als die Menge aller $\mu$-integrierbaren reellen Funktionen auf $X$. Analog dazu ist $\mL^{1}\of{\mu, \C}$ die Menge aller $\mu$-integrierbaren komplexen Funktionen. Aus Satz~\ref{satz:int-basic-prop} und der zugehörigen Bemerkung folgt bereits, dass $\mL^{1}\of{\mu, \R}$ bzw. $\mL^1\of{\mu, \C}$ Vektorräume bezüglich Addition und Multiplikation mit $\alpha\in\R$ bzw. $\alpha\in\C$ sind.\\
+        Es gilt
+        \begin{align*}
+            \abs{ \int_{}^{} f \dif x - \int_{}^{} g \dif \mu} = \abs{\int_{}^{} f-g \dif \mu} \leq \int_{}^{} \abs{f-g} \dif \mu
+        \end{align*}
+        Damit definiert $\norm{f}_1 \coloneqq \int_{}^{} \abs{f} \dif \mu$ eine Halbnorm auf unserem Vektorraum. Dabei ist $\norm{f}_1$ keine Norm, denn aus $\norm{f}_1 = 0$ folgt nicht-notwendigerweise, dass $f=0$. Betrachten wir dafür das Lebesgue-Maß und die Funktion $f=\charfunc_{0}$. Dann gilt $ \int_{}^{} \abs{f} \dif \lambda^{1} = \lambda^{1}\of{\set{0}} = 0$, aber $f$ ist nicht die Nullfunktion.
+    \end{definition}
+
+    \subsection{Integration über (messbaren) Teilmengen}
+    \begin{definition}
+        Sei $f$ eine messbare numerische Funktion, die entweder nicht-negativ oder integrierbar bezüglich $\mu$ ist. Sei weiter $A\in\mA$. Dann setzt man
+        \begin{align*}
+            \int_{A}^{} f \dif \mu = \int_{}^{} f\cdot \charfunc_{A} \dif \mu
+        \end{align*}
+        und nennt $ \int_{A}^{} f \dif \mu$ das ($\mu$-)Integral von $f$ über $A$.
+    \end{definition}
+
+    \begin{bemerkung}
+        Seien $A, B\in \mA$. Dann gilt $\charfunc_{A\cup B} + \charfunc_{A \cap B} = \charfunc_{A} + \charfunc_{B}$. Das heißt
+        \begin{align*}
+            \int_{A \cup B}^{} f \dif x + \int_{A\cap B}^{} f \dif x &= \int_{A}^{} f \dif x + \int_{B}^{} f \dif \mu
+        \end{align*}
+        Insbesondere gilt $ \int_{A\cup B}^{} f \dif \mu = \int_{A}^{} f \dif \mu + \int_{B}^{} f \dif \mu$, falls $A\cap B = \emptyset$.
+        \begin{proof}
+        (Übung)
+        \end{proof}
+        Zusätzlich übertragen sich auch Monotonie, Linearität und Dreiecksungleichung (mit entsprechenden Einschränkungen auf die Menge $A$).
+    \end{bemerkung}
 \end{document}
