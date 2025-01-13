@@ -1576,4 +1576,157 @@
         \end{proof}
         Zusätzlich übertragen sich auch Monotonie, Linearität und Dreiecksungleichung (mit entsprechenden Einschränkungen auf die Menge $A$).
     \end{bemerkung}
+
+    \begin{lemma}
+
+    \end{lemma}
+
+    \newpage
+
+
+    \section{[*] Fast überall bestehende Eigenschaften}
+    \imaginarysubsection{Fast überall bestehende Eigenschaften}
+    \thispagestyle{pagenumberonly}
+
+    \begin{definition}
+        \marginnote{[13. Jan]}
+        Sei $\pair{X, \mA, \mu}$ ein Maßraum und \textit{E} eine Eigenschaft, die für $x\in X$ sinnvoll definiert ist. Dann sagen wir \textit{E} ist ($\mu$-)fast-sicher wahr oder \textit{E} gilt ($\mu$-)fast-sicher (abgekürzt ($\mu$-)fs. und im Englischen ($\mu$-)almost-everywhere bzw. ($\mu$-)ae.), falls es eine Nullmenge $N\in\mA$ (d.h. $\mu\of{N} = 0$) gibt, sodass \textit{E} gilt für alle $x\not\in N$.
+    \end{definition}
+
+    \begin{beispiel}
+        Sei $f: X \to \overline{\R}$ eine messbare, numerische Funktion. Dann ist $f$ $\mu$-fast-überall endlich, falls $\exists N\in\mA\colon \mu\of{N} = 0 \land \pair{\forall x\in\comp{N}\colon f\of{x}\in\R}$.
+    \end{beispiel}
+
+    \begin{beispiel}
+        Sei $f_n$ eine Folge von messbaren Funktionen. Dann gilt $f_n \to f$ $\mu$-fs. genau dann, wenn eine Nullmenge $N\in\mA$ existiert, sodass $f_n\of{x} \to f\of{x}$ für alle $x\in\comp{N}$ und $n\toinf$.
+    \end{beispiel}
+
+    \begin{satz} % Satz 2
+        \label{satz:nullmenge-integral-null}
+        Sei $f \in \mM_+\of{X, \mA}$ eine nicht-negative, messbare Funktion. Dann gilt $ \int_{}^{} f \dif \mu = 0$ genau dann, wenn $f=0$ $\mu$-fast-überall.
+
+        \begin{proof}
+            \anf{$\impl$}: Wir definieren $N\coloneqq \set{f > 0} \in\mA$. Dann gilt
+            \begin{align*}
+                N &= \bigcup_{n\in\N} \underbrace{\set{f > \frac{1}{n}}}_{\eqqcolon N_n \in \mA}\\
+                \mu\of{N_n} &= \mu\of{\set{f > \frac{1}{n}}} = \int_{}^{} \charfunc_{\set{f > \frac{1}{n}}} \dif \mu\\
+                &= \int_{\set{f > \frac{1}{n}}}^{} 1 \dif \mu \leq \int_{\set{f > \frac{1}{n}}}^{} nf \dif \mu\\
+                &\leq n \int_{}^{} f \dif \mu = 0\\
+                \impl \mu\of{N} &= 0
+            \end{align*}
+            \anf{$\Leftarrow$}: Angenommen $f = 0$ $\mu$-fs. Das heißt es existiert eine Nullmenge $N$, sodass $f\of{x} = 0~\forall x\in\comp{N}$. Sei $u_m \coloneqq m \cdot \charfunc_{N}$, dann gilt $\forall x\in X$, dass $f\of{x} \leq \sup_{m} u_m\of{x} \eqqcolon u\of{x}$.
+            \begin{align*}
+                0\leq \int_{}^{} f \dif \mu &\leq \int_{}^{} u \dif \mu = \lim_{m\toinf} \int_{}^{} u_m \dif \mu = \lim_{m\toinf} \pair{m \mu\of{N}} = 0\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{korollar}
+        Sei $f: X \to\overline{R}$ eine beliebige meßbare, numerische Funktion und $N\in\mA$ eine $\mu$-Nullmenge. Dann ist $f$ über $N$ integrierbar und $ \int_{N}^{} f \dif \mu = 0$.
+
+        \begin{proof}
+            \textsc{Fall 1}: Ist $f\geq 0$, dann folgt die Behauptung direkt aus Satz~\ref{satz:nullmenge-integral-null}.\\
+            \textsc{Fall 2}: Ist $f = f_+ - f_-$, dann haben wir nach \textsc{Fall 1}, dass
+            \begin{align*}
+                \int_{N}^{} f_+ \dif \mu &= 0 = \int_{N}^{} f_- \dif \mu\\
+                \impl \int_{N}^{} f \dif \mu &= \int_{N}^{} f_+ \dif \mu - \int_{N}^{} f_- \dif \mu = 0
+            \end{align*}
+        \end{proof}
+    \end{korollar}
+
+    \begin{satz} % Satz 4
+        \label{satz:funkt-vergleich}
+        Seien $f, g$ messbare, numerische Funktionen auf $X$, $\pair{X, \mA, \mu}$ ein Maßraum sowie $f = g$ $\mu$-fs. Dann gilt
+        \begin{enumerate}[label=(\roman*)]
+            \item $f, g \geq 0 \impl \int_{}^{} f \dif \mu = \int_{}^{} g \dif \mu$.
+            \item $f$ integrierbar $\impl$ $g$ integrierbar mit $ \int_{}^{} g \dif \mu = \int_{}^{} f \dif \mu$.
+        \end{enumerate}
+
+        \begin{proof}
+            Sei $N = \set{f \neq g}$. Dann ist $N$ eine Nullmenge.
+            \begin{enumerate}[label=(\roman*)]
+                \item Es gilt
+                \begin{align*}
+                    0 = \int_{N}^{} f \dif \mu &= \int_{N}^{} g \dif \mu = 0
+                    \intertext{Sei $M \coloneqq \comp{N}$}
+                    \impl \int_{M}^{} f \dif \mu = \int_{}^{} \charfunc_{M} f \dif \mu &= \int_{}^{} \charfunc_{M} g \dif \mu = \dif x \int_{M}^{} g \dif \mu\\
+                    \impl \int_{}^{} f \dif \mu = \int_{N}^{} f \dif \mu + \int_{M}^{} f \dif \mu &= \int_{N}^{} g \dif \mu + \int_{M}^{} g \dif \mu = \int_{}^{} g \dif \mu
+                \end{align*}
+                \item Es ist $f_+ = g_+$ $\mu$-fs. sowie $f_- = g_-$ $\mu$-fs. Damit gilt nach (i), dass
+                \begin{align*}
+                    \underbrace{\int_{}^{} f_+ \dif \mu}_{< \infty} &= \int_{}^{} g_+ \dif \mu\\
+                    \impl \int_{}^{} f \dif \mu &= \int_{}^{} f_+ \dif \mu - \int_{}^{} f_- \dif \mu = \int_{}^{} g \dif \mu
+                \end{align*}
+            \end{enumerate}
+        \end{proof}
+    \end{satz}
+
+    \begin{korollar} % Korollar 5
+        Seien $f, g$ meßbare, numerische Funktionen auf $X$ und $\abs{f} \leq g$ $\mu$-fast-überall und $g$ integrierbar. Dann ist $f$ integrierbar (bezüglich $\mu$).
+        \begin{proof}
+            Sei $\tilde{g} \coloneqq g \lor \abs{f} = \max\of{g, \abs{f}}$. Damit ist $\tilde{g} = g$ fast-überall nach Voraussetzung und $\abs{f} \leq \tilde{g}$. Damit gilt nach Satz~\ref{satz:funkt-vergleich}, dass
+            \begin{align*}
+                \int_{}^{} \tilde{g} \dif \mu &= \int_{}^{} g \dif \mu < \infty\\
+                \impl \int_{}^{} \abs{f} \dif \mu &\leq \int_{}^{} \tilde{g} \dif \mu = \int_{}^{} g \dif \mu < \infty\\
+                \impl &f\text{ ist integrierbar}\qedhere
+            \end{align*}
+        \end{proof}
+    \end{korollar}
+
+    \begin{satz} % Satz 6
+        Sei $f$ eine integrierbare, numerische Funktion auf $\pair{X, \mA, \mu}$. Dann ist $f$ $\mu$-fs. reellwertig (d.h. $f$ ist $\mu$-fs. endlich). Ferner hat die Menge $\set{f \neq 0}$ ein $\sigma$-endliches Maß.
+
+        \begin{proof}
+            Sei $N\coloneqq \set{\abs{f} = \infty}\in\mA$. Dann gilt für beliebiges $\alpha \geq 0$, dass $\alpha \charfunc_{N} \leq \abs{f}$. Damit folgt außerdem
+            \begin{align*}
+                \alpha \mu\of{N} = \int_{N}^{} \alpha \charfunc_{N} \dif \mu &\leq \int_{N}^{} \abs{f} \dif \mu \leq \int_{}^{} \abs{f} \dif x < \infty\\
+                \impl \mu\of{N} &\leq \frac{1}{\alpha} \int_{}^{} \abs{f} \dif \mu \to 0 \text{ für }\alpha \to \infty\\
+                \impl \mu\of{N} &= 0
+                \intertext{Also ist $\abs{f} < \infty$ $\mu$-fs. Zu zeigen bleibt die zweite Behauptung}
+                \set{f\neq 0} = \set{\abs{f} > 0} &= \bigcup_{n\in\N} \underbrace{\set{\abs{f}\geq \frac{1}{n}}}_{\eqqcolon A_n}\\
+                \mu\of{A_n} &= \int_{A_n}^{} 1 \dif \mu = \int_{A_n}^{} n\abs{f} \dif \mu\\
+                &= n \int_{A_n}^{} \abs{f} \dif \mu \leq n \int_{}^{} \abs{f} \dif \mu < \infty\\
+                \impl \mu\of{A_n} &< \infty\quad\forall n\in\N
+            \end{align*}
+            Also hat $\set{f \neq 0}$ ein $\sigma$-endliches Maß.
+        \end{proof}
+    \end{satz}
+
+    \begin{bemerkung}
+        Sei $A\in\mA$ und $f: A \to\overline{\R}$ $\pair{A \cap \mA}$-messbar. Wir definieren
+        \begin{align*}
+            \tilde{f}\of{x} &\coloneqq \begin{cases}
+                                           f\of{x} &x\in A\\
+                                           0 &x\not\in A
+            \end{cases}
+        \end{align*}
+        Dann ist $\tilde{f}: X\to\overline{\R}$ $\mA$-messbar und genau dann integrierbar, wenn $f$ über $A$ integrierbar ist. Wir sagen $f$ ist $\mu$-fast-überall definiert, falls $\mu\of{\comp{A}} = 0$ und es gilt
+        \begin{align*}
+            \int_{}^{} \tilde{f} \dif \mu &= \int_{X}^{} \tilde{f} \dif \mu = \int_{A}^{} f \dif \mu
+        \end{align*}
+    \end{bemerkung}
+
+    \newpage
+
+
+    \section{[*] Konvergenzsätze}
+    \imaginarysubsection{Konvergenzssätze}
+    \thispagestyle{pagenumberonly}
+
+    \begin{satz}[Erweiterung von der monotonen Konvergenz]
+        Sei $g\geq 0$ integrierbar und $f_n \geq -g~\forall n\in\N$ und $f_n \leq f_{n+1}~\forall n\in\N$. Dann gilt
+        \begin{align*}
+            \int_{}^{} \lim_{n\toinf} f_n \dif \mu &= \lim_{n\toinf} \int_{}^{} f_n \dif \mu = \sup_{n} \int_{}^{} f_n \dif \mu
+        \end{align*}
+
+        \begin{proof}
+            Sei $h_n \coloneqq f_n - g \geq 0$ mit $h_n \leq h_{n+1}$. Dann ist
+
+            \begin{align*}
+                \int_{}^{} \lim_{n\toinf}  h_n\dif \mu &= \lim_{n\toinf} \int_{}^{} h_n \dif \mu = \int_{}^{} (f+g) \dif \mu\\
+                &= \lim_{n\toinf} \int_{}^{} f_n \dif \mu + \int_{}^{} g \dif \mu \leq \int_{}^{} f_n \dif \mu + \int_{}^{} g \dif \mu\quad(???)
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
 \end{document}
