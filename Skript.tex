@@ -1710,10 +1710,11 @@
 
 
     \section{[*] Konvergenzsätze}
-    \imaginarysubsection{Konvergenzssätze}
+    \subsection{Monotone Konvergenz und das Lemma von Fatou}
     \thispagestyle{pagenumberonly}
 
     \begin{satz}[Erweiterung von der monotonen Konvergenz]
+        \label{satz:monton-konv}
         Sei $g\geq 0$ integrierbar und $f_n \geq -g~\forall n\in\N$ und $f_n \leq f_{n+1}~\forall n\in\N$. Dann gilt
         \begin{align*}
             \int_{}^{} \lim_{n\toinf} f_n \dif \mu &= \lim_{n\toinf} \int_{}^{} f_n \dif \mu = \sup_{n} \int_{}^{} f_n \dif \mu
@@ -1728,5 +1729,103 @@
             \end{align*}
         \end{proof}
     \end{satz}
+
+    \begin{lemma}[Lemma von Fatou]
+        \marginnote{[16. Jan]}
+        \label{lemma:fatou}
+        Sei $(f_n)_{n\in\N} \subset\mM_+\of{X, \mA}$ eine Folge nicht-negativer\footnote{Es reicht sogar, nur zu fordern, dass $0\leq f_n$ $\mu$-fs.}, messbarer numerischer Funktionen. Dann gilt
+        \begin{align*}
+            \int_{}^{} \liminf_{n\toinf} f_n \dif \mu &\leq \liminf_{n\toinf} \int_{}^{} f_n \dif \mu
+        \end{align*}
+
+        \begin{proof}
+            Nach Def. ist
+            \begin{align*}
+                f\coloneqq \liminf_{n\toinf} f_n &= \lim_{n\toinf} \underbrace{\inf_{k\geq n} f_k}_{\eqqcolon g_n}\\
+                \impl g_n &\leq g_{n+1}\\
+                \int_{}^{} f \dif \mu &= \int_{}^{} \lim_{n\toinf} g_n \dif \mu \annot{=}{Satz~\ref{satz:monoton-konv}} \lim_{n\toinf} \int_{}^{} g_n \dif \mu\\
+                &= \liminf_{n\toinf} \int_{}^{} g_n \dif \mu \leq \liminf_{n\toinf} \int_{}^{} f_n \dif \mu\qedhere
+            \end{align*}
+        \end{proof}
+    \end{lemma}
+
+    \begin{lemma}[Leicht verallgemeinertes Fatou]
+        \label{lemma:fatou2}
+        Sei $g\geq 0$ eine $\mu$-integrierbare Funktion und $(f_n)_n$ eine Folge von meßbaren numerischen Funktionen mit $f_{n} \geq -g$ $\mu$-fs. für $n\in\N$ und $f_n \leq f_{n+1}$. Dann sind $f_n$ und $f \coloneqq \liminf_{n\toinf} f_n$ quasi-integrierbar (d.h. $ \int_{}^{} (f_n)_- \dif \mu < \infty$ und $ \int_{}^{} f_- \dif \mu< \infty$) und es ist
+        \begin{align*}
+            -\infty < \int_{}^{} \liminf_{n\toinf} f_n \dif \mu &\leq \liminf_{n\toinf} \int_{}^{} f_n \dif \mu \leq \infty
+        \end{align*}
+
+        \begin{proof}
+            Da $(f_n)_- \leq g$ und $f_- \leq g$ $\mu$-fs. folgt $f_n$ und $f$ sind quasi-integrierbar. Das heißt es existiert $N_n$ mit $\mu\of{N_n} = 0$ und $f_n\of{x}\leq f_{n+1}\of{x}~x\in\comp{N_n}$. Es sei $h_n \coloneqq f_n + g \geq 0 \impl h_n \leq h_{n+1}$ fast überall. Das heißt
+            \begin{align*}
+                \liminf_{n\toinf} h_n &= \liminf_{n\toinf} \pair{f_n + g} = \pair{\liminf_{n\toinf} h_n} + g = f+ g \geq 0\\
+                N &= \bigcup_{n} N_n \impl \mu\of{N} \leq \sum_{j=1}^{\infty} \mu\of{N_n} = C
+                \intertext{und}
+                f_n\of{x} &\leq f_{n+1}\of{x}\quad\forall x\in\comp{N},~n\in\N
+                \intertext{und}
+                \mu\of{M} &= 0\quad f \geq -g \text{ auf }\comp{M}\\
+                \mu\of{M_n} &= 0\quad f_n \geq -g \text{ auf }\comp{M}\\
+                \tilde{M} &= M \cup \bigcup_{n\in\N} M_n \cup N\impl \mu\of{\tilde{M}} = 0
+                \intertext{und}
+                f_n &\leq f_{n+1}\quad f_n \geq -g~f \geq -g \text{ auf }\comp{M}
+                \intertext{Redefiniere $f_n,f$ auf $f_n\of{x} = f\of{x} = 0$ für $x\in M$. Nach Lemma~\ref{lemma:fatou} gilt dann}
+                \int_{}^{} \liminf_{n\toinf} \pair{f_n+g} \dif \mu &\leq \liminf_{n\toinf} \int_{}^{} \pair{f_n+g} \dif \mu\\
+                \impl \int_{}^{} \liminf_{n\toinf} f_n \dif \mu + \int_{}^{} g \dif \mu &\leq \liminf_{n\toinf} \int_{}^{} f_n \dif \mu + \int_{}^{} g \dif \mu\\
+                \impl \int_{}^{} \liminf_{n\toinf} f_n \dif \mu &\leq \liminf_{n\toinf} \int_{}^{} f_n \dif \mu\qedhere
+            \end{align*}
+        \end{proof}
+    \end{lemma}
+
+    \begin{korollar}[$\limsup$-Version von Fatou] % Korollar 3
+        \label{korollar:fatou3}
+        Sei $g\geq 0$ integrierbar und $(f_n)_n$ eine Folge messbarer numerischer Funktionen mit $f_n \leq g$ $\mu$-fast-überall. Dann gilt $f \coloneqq \limsup_{n\toinf} f_n$ ist quasi-integrierbar und
+        \begin{align*}
+            \int_{}^{} f \dif \mu &= \int_{}^{} \limsup_{n\toinf} f \dif \mu \geq \limsup_{n\toinf} \int_{}^{} f_n \dif \mu
+        \end{align*}
+
+        \begin{proof}
+            Wende Lemma~\ref{lemma:fatou2} auf $h_n \coloneqq g - f_n$ an  und $\liminf_{n\toinf} h_n = g - \limsup_{n\toinf} f_n$
+            \begin{align*}
+                \impl \int_{}^{} \liminf_{n\toinf} h_n \dif \mu &\leq \liminf \int_{}^{} h_n \dif \mu = \int_{}^{} g \dif \mu - \limsup_{n\toinf} \int_{}^{} f_n \dif \mu\\
+                \impl \int_{}^{} g \dif \mu - \int_{}^{} f \dif \mu &\leq \int_{}^{} g \dif \mu - \limsup_{n\toinf} \int_{}^{} f_n \dif \mu\\
+                \impl \limsup_{n\toinf} \int_{}^{} f_n \dif \mu &\leq \int_{}^{} \limsup_{n\toinf} f_n \dif \mu\qedhere
+            \end{align*}
+        \end{proof}
+    \end{korollar}
+
+    \subsection{Majorante Konvergenz (Lebesgue)}
+
+    \begin{satz} % Satz 4
+        Seien $f, f_n: X \to \overline{\R}$ meßbare Funktionen und $\lim_{n\toinf} f_n = f$ $\mu$-fast-überall. und es gebe eine $\mu$-integrierbare Funktion $g\geq 0$ mit $\abs{f_n} \leq g$ $\mu$-fast-überall. Dann sind $f_n, f$ integrierbar und
+        \begin{align*}
+            \lim_{n\toinf} \int_{}^{} f_n \dif \mu &= \int_{}^{} f \dif \mu\tag{1}\\
+            \lim_{n\toinf} \int_{}^{} \abs{f_n} \dif \mu &= \int_{}^{} \abs{f} \dif \mu\tag{1'}\\
+            \lim_{n\toinf} \int_{}^{} \abs{f-f_n} \dif \mu &= 0\tag{2}
+        \end{align*}
+        
+        \begin{proof}
+            \begin{align*}
+                \abs{\int_{}^{} f \dif \mu - \int_{}^{} f_n \dif \mu} &= \abs{\int_{}^{} \pair{f-f_n} \dif \mu}\\
+                &\leq \int_{}^{} \abs{f-f_n} \dif \mu \to 0\text{ für }n\toinf\\
+                \abs{ \int_{}^{} \abs{f} \dif \mu - \int_{}^{} \abs{f_n} \dif \mu} &= \abs{ \int_{}^{} \pair{\abs{f} - \abs{f_n}} \dif \mu}\\
+                &\leq \int_{}^{} \abs{f} - \abs{f_n} \dif \mu \leq \int_{}^{} \abs{f-f_n} \dif \mu
+            \end{align*}
+            Das heißt es gelten (1) und (1'), sofern (2) gilt. Wir beweisen zusätzlich noch (2)
+            \begin{align*}
+                0 \leq \int_{}^{} \abs{f-f_n} \dif \mu\\
+                0 \leq h_n &= \abs{f-f_n} \leq \abs{f} + \abs{f_n} \leq \abs{f} + \abs{g} \leq g + g = 2 g\text{ $\mu$-fs.}
+                \intertext{Nach Korollar~\ref{korollar:fatou3} gilt dann}
+                \limsup_{n\toinf} \int_{}^{} h_n \dif \mu &\leq \int_{}^{} \limsup_{n\toinf} h_n \dif \mu\\
+                &= \int_{}^{} \limsup_{n\toinf} \abs{f-f_n} \dif \mu = 0\text{ $\mu$-fs.}\\
+                \impl \limsup_{n\toinf}\int_{}^{} \abs{f-f_n} \dif \mu &= 0\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{bemerkung}
+        Der vorherigen Satz gilt auch für komplexwertige Funktionen.
+    \end{bemerkung}
+
 
 \end{document}
