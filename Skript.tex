@@ -1710,6 +1710,7 @@
 
 
     \section{[*] Konvergenzsätze}
+
     \subsection{Monotone Konvergenz und das Lemma von Fatou}
     \thispagestyle{pagenumberonly}
 
@@ -1785,7 +1786,7 @@
         \end{align*}
 
         \begin{proof}
-            Wende Lemma~\ref{lemma:fatou2} auf $h_n \coloneqq g - f_n$ an  und $\liminf_{n\toinf} h_n = g - \limsup_{n\toinf} f_n$
+            Wende Lemma~\ref{lemma:fatou2} auf $h_n \coloneqq g - f_n$ an und $\liminf_{n\toinf} h_n = g - \limsup_{n\toinf} f_n$
             \begin{align*}
                 \impl \int_{}^{} \liminf_{n\toinf} h_n \dif \mu &\leq \liminf \int_{}^{} h_n \dif \mu = \int_{}^{} g \dif \mu - \limsup_{n\toinf} \int_{}^{} f_n \dif \mu\\
                 \impl \int_{}^{} g \dif \mu - \int_{}^{} f \dif \mu &\leq \int_{}^{} g \dif \mu - \limsup_{n\toinf} \int_{}^{} f_n \dif \mu\\
@@ -1797,13 +1798,14 @@
     \subsection{Majorante Konvergenz (Lebesgue)}
 
     \begin{satz} % Satz 4
+        \label{satz:majorante-konv}
         Seien $f, f_n: X \to \overline{\R}$ meßbare Funktionen und $\lim_{n\toinf} f_n = f$ $\mu$-fast-überall. und es gebe eine $\mu$-integrierbare Funktion $g\geq 0$ mit $\abs{f_n} \leq g$ $\mu$-fast-überall. Dann sind $f_n, f$ integrierbar und
         \begin{align*}
             \lim_{n\toinf} \int_{}^{} f_n \dif \mu &= \int_{}^{} f \dif \mu\tag{1}\\
             \lim_{n\toinf} \int_{}^{} \abs{f_n} \dif \mu &= \int_{}^{} \abs{f} \dif \mu\tag{1'}\\
             \lim_{n\toinf} \int_{}^{} \abs{f-f_n} \dif \mu &= 0\tag{2}
         \end{align*}
-        
+
         \begin{proof}
             \begin{align*}
                 \abs{\int_{}^{} f \dif \mu - \int_{}^{} f_n \dif \mu} &= \abs{\int_{}^{} \pair{f-f_n} \dif \mu}\\
@@ -1826,6 +1828,134 @@
     \begin{bemerkung}
         Der vorherigen Satz gilt auch für komplexwertige Funktionen.
     \end{bemerkung}
+
+    \begin{satz} % Satz 7
+        \marginnote{[17. Jan]}
+        Seien $f_n, f: X \to\overline{\R}$ (oder $\C$) integrierbar mit $f_n \to f$ $\mu$-fs. Dann gilt
+        \begin{align*}
+            \lim_{n\toinf}\int_{}^{} \abs{f_n} \dif \mu &= \int_{}^{} \abs{f} \dif \mu
+            \intertext{genau dann, wenn}
+            \lim_{n\toinf} \int_{}^{} \abs{f-f_n} \dif \mu &= 0
+        \end{align*}
+
+        \begin{proof}
+            \anf{$\Leftarrow$}:
+            \begin{align*}
+                \abs{ \int_{}^{} \abs{f} \dif \mu - \int_{}^{} \abs{f_n} \dif \mu} &= \abs{ \int_{}^{} \abs{f} - \abs{f_n} \dif \mu}\\
+                &\leq \int_{}^{} \abs{\abs{f} - \abs{f_n}} \dif \mu \leq \int_{}^{} \abs{f-f_n} \dif \mu \to 0
+            \end{align*}
+            \anf{$\impl$}:
+            Sei $g_n \coloneqq \abs{f_n} + \abs{f} - \abs{f-f_n} \geq 0$  $\mu$-fs. Dann folgt mit Lemma~\ref{lemma:fatou}
+            \begin{align*}
+                \int_{}^{} \liminf_{n\toinf} g_n \dif \mu &\leq \liminf_{n\toinf} \int_{}^{} g_n \dif \mu\\
+                \liminf_{n\toinf} g_n &= 2\abs{f} - 0 = 2\abs{f}\\
+                \int_{}^{} g_n \dif \mu &= \int_{}^{} \abs{f_n} \dif \mu + \int_{}^{} \abs{f} \dif \mu - \int_{}^{} \abs{f-f_n} \dif \mu\\
+                \impl \liminf_{n\toinf} \int_{}^{} g_n \dif \mu &= 2 \int_{}^{} \abs{f} \dif \mu - \limsup_{n\toinf} \int_{}^{} \abs{f-f_n} \dif \mu\\
+                \impl 0 &\leq \limsup_{n\toinf} \int_{}^{} \abs{f-f_n} \dif \mu \leq 0\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{satz} % Satz 8
+        Seien $f, f_n: X\to \overline{\R}$ (oder $C$) meßbar und es gebe $g\geq 0$ $\mu$-integrierbar mit $\displaystyle \abs{ \sum_{k=1}^{n} f_k} \leq g$ $\mu$-fs. Ferner existiere $f \coloneqq \sum_{n=1}^{\infty} f_n = \lim_{L\toinf} \sum_{n=1}^{L} f_n$ $\mu$-fs. Dann sind $f_n$ und $f$ integrierbar und
+        \begin{align*}
+            \int_{}^{} f \dif\mu &= \sum_{n=1}^{\infty} \int_{}^{} f_n \dif \mu
+        \end{align*}
+        \begin{proof}
+        (Übung)
+        \end{proof}
+    \end{satz}
+
+    \newpage
+
+
+    \section{[*] Anwendung der Konvergenzsätze}
+
+    \subsection{Parameter-abhängige Integrale}
+    \thispagestyle{pagenumberonly}
+
+    \begin{satz} % Satz 1
+        Sei $T$ ein metrischer Raum, $\pair{X, \mA, \mu}$ ein Maßraum und $f: T \times X \to\overline{\R}$ (oder $\C$) eine Funktion mit
+        \begin{enumerate}[label=(\roman*)]
+            \item $x\mapsto f\of{t, x}$ ist $\mu$-integrierbar $\forall t\in T$
+            \item $t \mapsto f\of{t, x}$ ist stetig in $t_0$ für $\mu$-fast-alle $x\in X$
+            \item Es existiert eine $\mu$-integrierbare Funktion $g\geq 0$, sodass $\abs{f\of{t, \cdot}}\leq g$ $\mu$-fs. $\forall t\in T$
+        \end{enumerate}
+        Dann gilt
+        \begin{align*}
+            \varphi: T &\to\R\\
+            t &\mapsto \int_{}^{} f\of{t, x} \mu\of{\dif x}
+        \end{align*}
+        ist stetig in $t_0$.
+
+        \begin{proof}
+            Zu zeigen: Sei $(t_n)_n \subseteq T$ mit $t_n \to t_0$, dann muss folgen $\varphi\of{t_n} \to \varphi\of{t_0}$.\\
+             Wir haben Nullmenge $N_1$, sodass $f\of{t_n, x}\to f\of{t_0, x}$ für $x\in\comp{N_1}$ und wir haben Nullmenge $M_n$, sodass $\abs{f\of{t_n, x}}\leq g\of{x}~\forall x\in\comp{M_n}$. Das heißt für $M \coloneqq = \bigcup_{n} M_n$ gilt $\abs{f\of{t_n, x}} \leq g\of{x}~\forall x \in\comp{M}$. Wir definieren $\tilde{N} \coloneqq M \cup N$ auch Nullmenge und beide obigen Folgerungen gelten für alle $n\in\N, x\in\comp{\tilde{N}}$. Das heißt nach Satz~\ref{satz:majorante-konv} folgt mit $f_n \coloneqq f\of{t_n, \cdot}$
+            \begin{align*}
+                \lim_{n\toinf} \int_{}^{} f_n \dif \mu &= \int_{}^{} f \dif \mu = \int_{}^{} f\of{t_0, x} \mu\of{\dif x} = \varphi\of{t_0} = \lim_{n\toinf} \int_{}^{} f\of{t_n, x} \mu\of{\dif x}\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{lemma}[Differentiationslemma] % Lemma 2
+        \label{lemma.differentiationslemma}
+        Sei $I \subseteq\R$ eine nicht-ausgeartetes Intervall (das heißt weder leer noch einpunktig) und $f: I \times X \to\R$ (oder $\C$) eine Funktion mit
+        \begin{enumerate}[label=(\roman*)]
+            \item $f\of{t, \cdot}$ ist $\mu$-integrierbar $\forall t\in I$
+            \item $t\mapsto f\of{t, x}$ ist differenzierbar auf $I$ für alle $x\in X$
+            \item Es existiert eine $\mu$-integrierbare Funktion $g\geq 0$ mit $\abs{f'\of{t, \cdot}} \leq g$ $\mu$-fs. $\forall t\in I$ (das heißt es existiert \textit{eine} Nullmenge $N\in\mA$ mit $\abs{f'\of{t, x}} \leq g\of{x}~\forall x\in\comp{N}, t\in I$)
+        \end{enumerate}
+        Dann ist $\varphi\of{t} \coloneqq \int_{}^{} f\of{t, x} \mu\of{\dif x}$ differenzierbar auf $I$ und $\forall t\in I$ ist $f'\of{t, \cdot}$ $\mu$-integrierbar mit
+        \begin{align*}
+            \varphi'\of{t} &= \int_{}^{} f'\of{t, x} \mu\of{\dif x}
+        \end{align*}
+
+        \begin{proof}
+            Sei $t_0\in I$ beliebig und $(t_n)_n \subseteq I$ eine Folge mit $t_n \to t_0$, wobei $t_n \neq t_0~\forall n\in\N$.  Dann soll gelten
+            \begin{align*}
+                h_n\of{x} \coloneqq \frac{f\of{t_n, x} - f\of{t_0, x}}{t_n - t_0}\to f'\of{t_0, x}
+            \end{align*}
+            Nach Voraussetzung ist $h_n$ $\mu$-integrierbar.\\
+            Aus dem Mittelwertsatz der Differentialrechnung folgt
+            \begin{align*}
+                \frac{f\of{t, x} - f\of{t_0, x}}{t-t_0} &= f'\of{\xi_t, x}
+                \intertext{für ein $\xi_t$ zwischen $t_0$ und $t$}
+                \impl \abs{ \frac{f\of{t_n, x} - f\of{t_0, x}}{t_n - t_0}} &= \abs{f'\of{\xi_{t_n}, x}} \leq g\of{x}
+                \intertext{Nach Satz~\ref{satz:majorante-konv} folgt}
+                \lim_{n\toinf} \int_{}^{} h_n \dif \mu &= \int_{}^{} \lim_{n\toinf} h_n \dif \mu = \int_{}^{} f'\of{t_0, x} \dif \mu\\
+                \impl \varphi\text{ ist differenzierbar in }t_0\text{ und } \varphi'\of{t_0} &= \lim_{n\toinf} \frac{\varphi\of{t_n} - \varphi\of{t_0}}{t_n-t_0} = \int_{}^{} f'\of{t_0, x} \mu\of{\dif x}\qedhere
+            \end{align*}
+        \end{proof}
+    \end{lemma}
+
+    \begin{korollar}[Mehrdimensionaler Fall] % Korollar 3
+        Sei $U\subseteq\R^d$ offen und $f: U \times X \to \overline{\R}$ (oder $\C$) mit
+        \begin{enumerate}[label=(\roman*)]
+            \item $f\of{t, \cdot}$ ist $\mu$-integrierbar $\forall t\in U$
+            \item $t\mapsto f\of{t, x}$ ist auf $U$ partiell differenzierbar $\mu$-fs. in der Variablen $t_j~\forall x\in X$
+            \item Es existiert eine $\mu$-integrierbare Funktion $g\geq 0$ mit
+            \begin{align*}
+                \abs{ \frac{\partial f}{\partial t_j}\of{t, x}} &\leq g\of{x}\text{ $\mu$-fs. für alle $x\in X$ und $t\in U$}
+            \end{align*}
+        \end{enumerate}
+        Dann ist $\varphi\of{t}\coloneqq \int_{}^{} f\of{t, x} \mu\of{\dif x}$ partiell differenzierbar bezüglich $t_j$ und
+        \begin{align*}
+            \frac{\partial \varphi}{\partial t_j}\of{x} &= \int_{}^{} \frac{\partial f}{\partial t_j}\of{t, x} \mu\of{\dif x}
+        \end{align*}
+        \begin{proof}
+            Halte alle Variablen bis auf $t_j$ und $x$ fest und wende Lemma~\ref{lemma.differentiationslemma} an.
+        \end{proof}
+    \end{korollar}
+
+    \subsection{Vergleich des Riemann- mit dem Lebesgue-Integral}
+
+    \begin{satz}
+        Sei $f: \interv{a,b} \to \K\in\set{\R, \C}$ differenzierbar und $f'$ beschränkt. Dann ist $f'$ Lebesgue-integrierbar auf $\interv{a,b}$ und
+        \begin{align*}
+            \int_{a}^{b} f' \dif \lambda &= f\of{b} - f\of{a}
+        \end{align*}
+        \textbf{Warnung:} $f'$ braucht hierfür nicht Riemann-integrierbar zu sein.
+    \end{satz}
 
 
 \end{document}
