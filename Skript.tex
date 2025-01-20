@@ -1890,7 +1890,7 @@
 
         \begin{proof}
             Zu zeigen: Sei $(t_n)_n \subseteq T$ mit $t_n \to t_0$, dann muss folgen $\varphi\of{t_n} \to \varphi\of{t_0}$.\\
-             Wir haben Nullmenge $N_1$, sodass $f\of{t_n, x}\to f\of{t_0, x}$ für $x\in\comp{N_1}$ und wir haben Nullmenge $M_n$, sodass $\abs{f\of{t_n, x}}\leq g\of{x}~\forall x\in\comp{M_n}$. Das heißt für $M \coloneqq = \bigcup_{n} M_n$ gilt $\abs{f\of{t_n, x}} \leq g\of{x}~\forall x \in\comp{M}$. Wir definieren $\tilde{N} \coloneqq M \cup N$ auch Nullmenge und beide obigen Folgerungen gelten für alle $n\in\N, x\in\comp{\tilde{N}}$. Das heißt nach Satz~\ref{satz:majorante-konv} folgt mit $f_n \coloneqq f\of{t_n, \cdot}$
+            Wir haben Nullmenge $N_1$, sodass $f\of{t_n, x}\to f\of{t_0, x}$ für $x\in\comp{N_1}$ und wir haben Nullmenge $M_n$, sodass $\abs{f\of{t_n, x}}\leq g\of{x}~\forall x\in\comp{M_n}$. Das heißt für $M \coloneqq = \bigcup_{n} M_n$ gilt $\abs{f\of{t_n, x}} \leq g\of{x}~\forall x \in\comp{M}$. Wir definieren $\tilde{N} \coloneqq M \cup N$ auch Nullmenge und beide obigen Folgerungen gelten für alle $n\in\N, x\in\comp{\tilde{N}}$. Das heißt nach Satz~\ref{satz:majorante-konv} folgt mit $f_n \coloneqq f\of{t_n, \cdot}$
             \begin{align*}
                 \lim_{n\toinf} \int_{}^{} f_n \dif \mu &= \int_{}^{} f \dif \mu = \int_{}^{} f\of{t_0, x} \mu\of{\dif x} = \varphi\of{t_0} = \lim_{n\toinf} \int_{}^{} f\of{t_n, x} \mu\of{\dif x}\qedhere
             \end{align*}
@@ -1911,7 +1911,7 @@
         \end{align*}
 
         \begin{proof}
-            Sei $t_0\in I$ beliebig und $(t_n)_n \subseteq I$ eine Folge mit $t_n \to t_0$, wobei $t_n \neq t_0~\forall n\in\N$.  Dann soll gelten
+            Sei $t_0\in I$ beliebig und $(t_n)_n \subseteq I$ eine Folge mit $t_n \to t_0$, wobei $t_n \neq t_0~\forall n\in\N$. Dann soll gelten
             \begin{align*}
                 h_n\of{x} \coloneqq \frac{f\of{t_n, x} - f\of{t_0, x}}{t_n - t_0}\to f'\of{t_0, x}
             \end{align*}
@@ -1949,12 +1949,140 @@
 
     \subsection{Vergleich des Riemann- mit dem Lebesgue-Integral}
 
-    \begin{satz}
+    \begin{satz} % Satz 4
         Sei $f: \interv{a,b} \to \K\in\set{\R, \C}$ differenzierbar und $f'$ beschränkt. Dann ist $f'$ Lebesgue-integrierbar auf $\interv{a,b}$ und
         \begin{align*}
             \int_{a}^{b} f' \dif \lambda &= f\of{b} - f\of{a}
         \end{align*}
         \textbf{Warnung:} $f'$ braucht hierfür nicht Riemann-integrierbar zu sein.
+
+        \begin{proof}
+            \marginnote{[20. Jan]}
+            (Übung)
+        \end{proof}
+    \end{satz}
+
+    \begin{satz} % Satz 5
+        Sei $f: \interv{a,b}\to \R$ Borel-meßbar. Ist $f$ Riemann-integrierbar (also auch beschränkt), so ist $f$ Lebesgue-integrierbar mit
+        \begin{align*}
+            \int_{a}^{b} f \dif x &= \int_{a}^{b} f \dif \lambda
+        \end{align*}
+
+        \begin{proof}
+        (Übung)
+        \end{proof}
+    \end{satz}
+
+    \begin{korollar} % Korollar 6
+        Sei $f\geq 0$ Borel-meßbar auf $\pair{a,b}$ und Riemann-integrierbar über den kompakten Teilintervallen von $\linterv{a,b}$. Dann ist $f$ genau dann Lebesgue-integrierbar über $\pair{a,b}$, wenn das uneigentliche Riemann-integral
+        \begin{align*}
+            \lim_{\tilde{a}\searrow a,~\tilde{b}\nearrow b} \int_{\tilde{a}}^{\tilde{b}} f \dif x
+        \end{align*}
+        existiert und das Riemann-Integral und Lebesgue-Integral gleich sind.\\
+        \textbf{Warnung}:
+        \begin{align*}
+            \int_{0}^{\infty} \frac{\sin\of{x}}{x} \dif x &= \lim_{b\toinf} \int_{0}^{b} \frac{\sin\of{x}}{x} \dif x
+            \intertext{existiert, aber ist nicht Lebesgue-integrierbar über $\linterv{0, \infty}$, denn}
+            \int_{1}^{\infty} \frac{\pair{\sin\of{x}}_+}{x} \dif \lambda\of{\dif x} &= \infty\\
+            \int_{1}^{\infty} \frac{\pair{\sin\of{x}}_-}{x} \dif \lambda\of{\dif x} &= \infty\\
+        \end{align*}
+
+        \begin{proof}
+        (Übung)
+        \end{proof}
+    \end{korollar}
+
+    \subsection{Berechnung von $ \int_{\R}^{} e^{-x^2} \lambda\of{\dif x}$}
+
+    \begin{anwendung}
+        Wir setzen
+        \begin{align*}
+            f\of{t, x} &\coloneqq \frac{e^{-t\of{1+x^2}}}{1+x^2}\tag{$x\in\R$, $t \geq 0$}
+            \intertext{und wählen als Ansatz}
+            a^2 + b^2 &\geq 2ab\tag{$a,b\geq 0$}\\
+            \impl 1+x^2 &\geq 2\abs{x}\geq \abs{x}\\
+            \impl e^{-t\pair{1+x^2}} &\leq e^{-t\abs{x}}\\
+            \impl 0 \leq f\of{t, x} &\leq e^{-t\abs{x}}\\
+            0\leq \int_{a}^{b} f\of{t, x} \lambda\of{\dif x} &\leq \int_{0}^{n} e^{-t\abs{x}} \lambda\of{\dif x}\\
+            &= \int_{0}^{n} e^{-t\abs{x}} \dif x = \frac{1}{t}\interv{-e^{-tx}}_{0}^{n}\\
+            &= \frac{1}{t}\interv{1-e^{-tn}} \to \frac{1}{t}\\
+            \impl \int_{0}^{\infty} f\of{t, x} \lambda\of{\dif x}&\text{ existiert für } t > 0\\
+            \intertext{Genauso zeigt sich}
+            \impl \int_{-\infty}^{0} f\of{t, x} \lambda\of{\dif x}&\text{ existiert für } t > 0\\
+            \intertext{Wir betrachten noch den Fall $t=0$. Dann ist}
+            f\of{0, x} &= \frac{1}{1+x^2} \leq \frac{1}{x^2}\\
+            \impl f&\text{ ist Lebesgue-integrierbar auf $\R$ für $t=0$}
+            \intertext{Sei $x\in\R$ fest, dann ist $0\leq t \mapsto f\of{t, x}$ stetig und $0\leq f\of{t, x} \leq \frac{1}{1+x^2}$ ist eine integrierbare Majorante}
+            \varphi\of{t} &= \int_{\R}^{} f\of{t,x} \lambda\of{\dif x}\text{ ist stetig über }t\geq 0
+            \intertext{und $f\of{t, x}$ ist differenzierbar für $t > 0$. Für $t_0 > 0$, $t \geq t_0$}
+            \partial_t f\of{t, x} &= \frac{-1}{1+x^2} \pair{1+x^2} e^{-t\pair{1+x^2}}\\
+            &= e^{-t\pair{1+x^2}}\\
+            \abs{\partial_t f\of{t, x}} &= e^{-t\pair{1+x^2}} \leq e^{-t\abs{x}} \leq e^{-t_0\abs{x}}\text{ ist Majorante}
+            \intertext{Diffbarkeit: Für $t > t_0$ ist $\varphi$ diff.-bar mit}
+            \varphi'\of{t} &= \int_{\R}^{} e^{-t\pair{1+x^2}} \lambda\of{\dif x}
+            \intertext{Da $t_0 > 0$ beliebig, ist $\varphi$ diffbar $\forall t > 0$. $t> 0$}
+            \varphi'\of{t} &= -\int_{-\infty}^{\infty} e^{-t\pair{1+x^2}} \lambda\of{\dif x}\\
+            &= - \int_{-\infty}^{\infty} e^{-t\pair{1+x^2}} \dif x\\
+            &= -\lim_{n\toinf} \int_{-n}^{\infty} e^{-t\pair{1+x^2}} \dif x
+            \intertext{Substitution $x = t^{-\frac{1}{2}} y$}
+            \int_{-n}^{n} e^{-t\pair{1+x^2}} \dif x &= t^{-1\frac{1}{2}} \int_{-n\sqrt{t}}^{n\sqrt{t}} e^{-t\pair{1+t^{-1}y}} \dif y\\
+            &= t^{-\frac{1}{2}} e^{-t} \int_{-n\sqrt{t}}^{n\sqrt{t}} e^{-y^2} \dif y\to t^{-\frac{1}{2}} e^{-t}\int_{-\infty}^{\infty} e^{-y^2} \dif y\\
+            &\eqqcolon -Gt^{-\frac{1}{2}}e^{-t}\\
+            \varphi'\of{t} &= -Gt^{-\frac{1}{2}}e^{-t}
+            \intertext{Für $0 < \alpha < s$}
+            \varphi\of{x} - \varphi\of{\alpha} &= \int_{\alpha}^{s} \varphi'\of{t} \dif t\\
+            &= -G \int_{\alpha}^{s} e^{-t}t^{-\frac{1}{2}} \dif t
+            \intertext{Substitution $t = r^2$, $\dif t = 2r\dif r$}
+            \int_{\alpha}^{s} e^{t}t^{-\frac{1}{2}} \dif t &= 2 \int_{\sqrt{\alpha}}^{\sqrt{s}} e^{-r^2}t^{-1}2r \dif r\\
+            \varphi\of{s} - \varphi\of{\alpha} &= -2G \int_{\sqrt{\alpha}}^{\sqrt{s}} e^{-r^2} \dif r\\
+            \impl \varphi\of{s} - \varphi\of{0} &= \lim_{\alpha \searrow 0} \pair{\varphi\of{s} - \varphi\of{\alpha}}\\
+            &= -2G \lim_{\alpha \searrow 0} \int_{\sqrt{\alpha}}^{\sqrt{s}} e^{-t^2} \lambda\of{\dif t}\\
+            &= -2G \int_{0}^{\sqrt{s}} e^{-t^2} \lambda\of{\dif t}\\
+            \impl \lim_{s\toinf} \pair{\varphi\of{s} - \varphi\of{0}} &= -2 G \lim_{s\toinf} \int_{0}^{\sqrt{s}} e^{-t^2} \lambda\of{\dif t}\\
+            &= -2 G \int_{0}^{\infty} e^{-t^2} \lambda\of{\dif x} = -G \int_{-\infty}^{\infty} e^{-r^2} \lambda\of{\dif r} = -G^2\\
+            \impl \lim_{s\toinf} \varphi\of{s} &= 0\\
+            \impl t\varphi\of{0} &= t G^2\\
+            0 \leq \varphi\of{s} &= \int_{\R}^{} \frac{e^{-s\pair{1+x^2}}}{1+x^2} \lambda\of{\dif x}\\
+            \int_{-n}^{n} \frac{1}{1+x^2} \dif x &= \arctan\of{n} - \arctan\of{-n} = 2\arctan\of{n}\\
+            \frac{\dif}{\dif x} \arctan\of{x} &= \frac{1}{1+x^2}\\
+            \impl \int_{\R}^{} e^{-x^2} \lambda\of{\dif x} &= \sqrt{\pi}
+        \end{align*}
+    \end{anwendung}
+
+    \newpage
+    \section{[*] Die $\mL^{p}$-Räume}
+    \imaginarysubsection{Die $\mL^{p}$-Räume}
+    \thispagestyle{pagenumberonly}
+    Sei $p\geq 1$ und $f: X \to\overline{\R}$ (oder $\C$) meßbar sowie $\pair{X, \mA}$ ein Messraum. Dann ist auch $\abs{f}$ meßbar. Das heißt $\abs{f}^p$ ist meßbar und $\set{\abs{f}^p > \alpha} = \set{\abs{f} > \alpha^{\frac{1}{p}}}$ für $\alpha \geq 0$.
+
+    \begin{notation}
+        Sei $\pair{X, \mA, \mu}$ ein Maßraum. Wir schreiben
+        \begin{align*}
+            N_p\of{f} &\coloneqq \pair{ \int_{X}^{} \abs{f}^p \dif \mu}^{\frac{1}{p}}
+        \end{align*}
+        Es gilt $0\leq N_p\of{f} \leq \infty$. Für $\alpha\in\R$ gilt $N_p\of{\alpha f} = \abs{\alpha} N_p\of{f}$
+    \end{notation}
+
+    \begin{satz}[Hölder-Ungleichung] % Satz 1
+        Sei $p > 1$ und $1 < q < \infty$ dual zu $p$ (das heißt $\frac{1}{p}+\frac{1}{q} = 1$). Dann gilt für zwei meßbare numerische Funktionen $f,g$ auf $X$
+        \begin{align*}
+            N_1\of{fg} &\leq N_p\of{f}N_q\of{g}
+        \end{align*}
+        \begin{proof}
+            Benutzt die Ungleichung von Young. Für $a, b \geq 0$ folgt $ab \leq \frac{1}{p}a^p + \frac{1}{q}b^q$.
+
+            \begin{proof}[Beweis von der Ungleichung von Young]
+                Sei $G\of{a} \coloneqq \frac{1}{p}a^p$. Wir wollen eine Funktion $F$, sodass $ab \leq G\of{a} + F\of{b}~\forall a,b\geq 0$. Das ist äquivalent zu
+                \begin{align*}
+                    F\of{b} &\geq ab - G\of{a}\quad\forall a\geq 0, b\geq 0\text{ fest}
+                    \intertext{Die beste Wahl von $F$ ist die kleinste obere Schranke. Das heißt}
+                    F\of{b} &= \sup_{a\geq 0} \pair{ab- G\of{a}}\\
+                    \partial_a\of{ab - G\of{a}} &= b- G'\of{a} = b-a^{p-1}\\
+                    \impl F\of{b} &= b\cdot b^{\frac{1}{p-1}} - \frac{1}{p}\pair{b^{\frac{1}{q-1}}}^p\\
+                    &= b^{\frac{1}{p-1}+1} - \frac{1}{p}b^{\frac{p}{p-1}} = \frac{1}{q}b^{q}\qedhere
+                \end{align*}
+            \end{proof}
+        \end{proof}
     \end{satz}
 
 
