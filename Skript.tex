@@ -54,6 +54,7 @@
 \newtheorem{visualisierung}[blockelement]{Visualisierung}
 \newtheorem{anwendung}[blockelement]{Anwendung}
 \newtheorem{skizze}[blockelement]{Skizze}
+\newtheorem{konvention}[blockelement]{Konvention}
 \newtheorem{genv}[blockelement]{}
 
 % Numbering (equations and conditions)
@@ -2050,8 +2051,10 @@
     \end{anwendung}
 
     \newpage
+
+
     \section{[*] Die $\mL^{p}$-Räume}
-    \imaginarysubsection{Die $\mL^{p}$-Räume}
+    \subsection{Definitino der $\mL^{p}$-Räume}
     \thispagestyle{pagenumberonly}
     Sei $p\geq 1$ und $f: X \to\overline{\R}$ (oder $\C$) meßbar sowie $\pair{X, \mA}$ ein Messraum. Dann ist auch $\abs{f}$ meßbar. Das heißt $\abs{f}^p$ ist meßbar und $\set{\abs{f}^p > \alpha} = \set{\abs{f} > \alpha^{\frac{1}{p}}}$ für $\alpha \geq 0$.
 
@@ -2082,8 +2085,140 @@
                     &= b^{\frac{1}{p-1}+1} - \frac{1}{p}b^{\frac{p}{p-1}} = \frac{1}{q}b^{q}\qedhere
                 \end{align*}
             \end{proof}
+            \marginnote{[23. Jan]}
+            \noindent Wir setzen $\sigma = N_p\of{f}$ und $\tau = N_q\of{g}$. Im Fall $\tau = 0$ folgt direkt, dass $N_1\of{fg} = 0$. In diesem Fall ist die Ungleichung erfüllt. Es sei also O.B.d.A. $\sigma > 0$ und $\tau < \infty$ (da die Ungleichung sonst trivialerweise erfüllt ist). Sei $\tilde{f} = \frac{f}{\tau}$, $\tilde{g} = \frac{g}{\sigma}$. Dann ist $N_p\of{\tilde{f}} = N_q\of{\tilde{g}} = 1$. Wir müsen also noch zeigen, dass $N_1\of{\tilde{f}\tilde{g}} \leq 1$ (Skalierungstrick). Es ist
+            \begin{align*}
+                \abs{\tilde{f}\tilde{g}} &= \abs{\tilde{f}}\abs{\tilde{g}} \leq \frac{1}{p}\abs{\tilde{f}}^p + \frac{1}{q}\abs{\tilde{g}}^q\\
+                \impl N_1\of{\tilde{f}\tilde{g}} &= \int_{X}^{} \abs{\tilde{f}\tilde{g}} \dif \mu \leq \int_{X}^{} \pair{\frac{1}{p}\abs{\tilde{f}}^p + \frac{1}{q}\abs{\tilde{g}}^q} \dif \mu\\
+                &= \frac{1}{p} \int_{X}^{} \abs{\tilde{f}}^p \dif \mu + \frac{1}{q} \int_{X}^{} \abs{\tilde{g}}^q \dif \mu\\
+                &= \frac{1}{p}N_p\of{\tilde{f}}^p + \frac{1}{q}N_q\of{\tilde{g}}^q = \frac{1}{p}1^p + \frac{1}{q}1^q = 1\qedhere
+            \end{align*}
         \end{proof}
     \end{satz}
+
+    \begin{satz} % Satz 2
+        Es seien $f, g: X \to\overline{\R}$ (oder $\C$) zwei numerische Funktionen, für die $f+g$ definiert ist und $1\leq p < \infty$. Dann gilt
+        \begin{align*}
+            N_p\of{f+g} &\leq N_p\of{f} + N_p\of{g}\tag{Dreiecksungleichung}
+        \end{align*}
+
+        \begin{proof}
+            \begin{align*}
+                \abs{f+g}^p &\leq \pair{\abs{f} + \abs{g}}^p \leq \pair{2\pair{\abs{f} \lor \abs{g}}}^p\\
+                &= 2^p\pair{\abs{f} \lor \abs{g}} = 2^p\pair{\abs{f}^p \lor \abs{g}^p}  \leq 2^p\pair{\abs{f}^p + \abs{g}^p}\\
+                \impl N_p\of{f+g}^p &= \int_{X}^{} \abs{f+g}^p \dif \mu \leq 2^p\pair{N_p\of{f}^p + N_p\of{g}^p}
+                \intertext{Ist $N_p\of{f}, N_p\of{g} < \infty$, folgt $N_p\of{f+g} < \infty$}
+                \abs{f+g}^p &= \abs{f+g}\abs{f+g}^{p-1} \leq \abs{f}\abs{f+g}^{p-1} + \abs{g}\abs{f+g}^{p-1}\\
+                \impl N_p\of{f+g}^p &= \int_{}^{} \abs{f+g}^p \dif \mu \leq \int_{}^{} \abs{f}\abs{f+g}^{p-1} \dif \mu + \int_{}^{} \abs{g}\abs{f+g}^{p-1} \dif \mu
+                \intertext{Es sei $\frac{1}{p}+ \frac{1}{q} = 1$. Dann folgt nach Hölder}
+                &\leq \pair{ \int_{}^{} \abs{f}^p \dif \mu}^{\frac{1}{p}}\pair{ \int_{}^{} \abs{f+g}^{p-1} \dif \mu}^{\frac{1}{q}} + \pair{ \int_{}^{} \abs{g}^p \dif \mu}^{\frac{1}{p}}\pair{ \int_{}^{} \abs{f+g}^{p-1} \dif \mu}^{\frac{1}{q}}\\
+                &= N_p\of{f}N_p\of{f+g}^{\frac{p}{q}} + N_p\of{g}N_p\of{f+g}^{\frac{p}{q}} = \pair{N_p\of{f} + N_p\of{g}}N_p\of{f+g}^{p-1}\\
+                \impl N_p\of{f+g} &= N_p\of{f+g}^p N_p\of{f+g}^{1-p} \leq N_p\of{f} + N_p\of{g}\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{bemerkung}
+        Ist $N_p\of{f} < \infty$ und $N_{p}\of{g} < \infty$, so ist $f, g$ fast-überall reellwertig und $f+g$ fast-überall definiert.
+    \end{bemerkung}
+
+    \begin{definition}
+        Sei $f: X \to\overline{\R}$ (oder $\C$) meßbar. Dann heißt $f$ $p$-fach integrierbar für $1\leq p < \infty$, wenn $N_p\of{f} < \infty$. Wir definieren
+        \begin{align*}
+            \mL^p\of{\mu} = \mL^p\of{X, \mA, \mu} = \set{\text{messbare Funktion }f: X \to\overline{\R}: N_p\of{f}<\infty}
+        \end{align*}
+        Analog schreiben wir $\mL_{\C}^p$ für den Raum solcher komplexwertiger Funktionen. Die definierten Räume sind Vektorräume. Zusätzlich gilt Homogenität und Dreiecksungleichung für $N_p$. Das heißt $N_p$ ist bereits eine Halbnorm. Aber $N_p\of{f} \impl f = 0$ gilt nur $\mu$-fast-überall. Das kann man beheben, indem man Äquivalenzklassen von $\mL^p$-Funktionen definiert, die $\mu$-fast-überall gleich sind.
+    \end{definition}
+
+    \begin{satz} % Satz 4
+        Seien $f, g\in \mL^p\of{\mu}$. Dann gilt $\alpha f, f+g\in\mL^p\of{\mu}$ sowie $f\land g, f\lor g \in\mL_{\R}^p\of{\mu}$.
+
+        \begin{proof}
+        (Übung)
+        \end{proof}
+    \end{satz}
+
+    \begin{korollar} % Korollar 5
+        Sei $f: X \to\overline{\R}$ eine messbare, numerische Funktion. Dann ist $f\in\mL^p$ genau dann, wenn $f_+, f_- \in\mL^p$.
+
+        \begin{proof}
+            \anf{$\impl$}: $f_+ = f \lor 0$, $f_- = (-f) \lor 0$.\\
+            \anf{$\Leftarrow$}: Sind $f_{\pm}\in\mL^p$. Dann gilt
+            \begin{align*}
+                f &= f_+ + \pair{-f_-}\\
+                N_p\of{f} &\leq N_p\of{f_+} + N_p\of{f_-} < \infty\qedhere
+            \end{align*}
+        \end{proof}
+    \end{korollar}
+
+    \begin{satz}
+        Sei $f\in\mL^p$, $g\in\mL^q$ sowie $\frac{1}{q}+\frac{1}{p} = 1$ mit $1 < p < \infty$. Dann ist $fg \in\mL^1$.
+        \begin{proof}
+            Hölder!
+        \end{proof}
+    \end{satz}
+
+    \begin{bemerkung}
+        Man schreibt auch häufig $\norm{f}_p = N_p\of{f}$.
+    \end{bemerkung}
+
+    \begin{korollar} % Korollar 6
+        Sei $\mu\of{X} < \infty$. Dann folgt aus $f\in\mL^p\of{\mu} \impl \mL^1\of{\mu}$ (für $1\leq p < \infty$).
+
+        \begin{proof}
+            \begin{align*}
+                \int_{X}^{} \abs{f} \dif \mu &= \int_{X}^{} 1\cdot\abs{f} \dif \mu\\
+                \intertext{Nach Hölder}
+                &\leq N_p\of{f}N_q\of{1} = \pair{\mu\of{X}}^{\frac{1}{q}}N_p\of{f}
+                \intertext{$\frac{1}{p} + \frac{1}{q} = 1$}
+                \impl N_1\of{f} &\leq \pair{\mu\of{x}}^{\frac{p-1}{p}}N_p\of{f}\qedhere
+            \end{align*}
+        \end{proof}
+    \end{korollar}
+
+    \begin{satz} % Satz 8
+        Sei $f: X \to\overline{\R}$ (oder $\C$) eine $p$-fach integrierbare Funktion ($f\in\mL^p\of{\mu}$). $g$ sei fast-überall beschränkt, das heißt es existiert ein $\alpha > 0$ und eine Nullmenge $N$, sodass $\abs{g\of{x}} \leq \alpha~\forall x\in\comp{N}$. Dann folgt $gf$ ist $p$-fach integrierbar und $N_p\of{fg} \leq \alpha N_p\of{f}$.
+        \begin{proof}
+            Es gilt $\abs{fg} = \abs{f}\abs{g} \leq \abs{f}\alpha$ $\mu$-fast-überall
+            \begin{align*}
+                \impl N_p\of{fg}^p = \int_{}^{} \abs{fg}^p \dif \mu &\leq \int_{}^{} \alpha^p\abs{f}^p \dif \mu = \alpha^p \int_{}^{} \abs{f}^p \dif \mu = \alpha^p N_p\of{f}^p\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{notation}
+        \begin{align*}
+            \mL^{\infty}\of{\mu} \coloneqq \set{g: X \to\overline{\R} \text{ messbar}: \exists M_g \geq 0, N_g\in\mA: \mu\of{N_g} = 0\text{ sodass } \abs{g\of{x}} \leq M_g~\forall x\in\comp{N_g}}
+        \end{align*}
+    \end{notation}
+
+    \begin{definition}
+        Wir definieren $N_\infty\of{g}\coloneqq \inf\set{M\geq 0: \abs{g}\leq M ~\mu\text{-fast-überall}}$. Es gilt
+        \begin{align*}
+            N_1\of{fg} &\leq N_1\of{f}N_{\infty}\of{g}
+            \intertext{Auch}
+            N_{\infty}\of{f+g} &\leq N_{\infty}\of{f}+ N_{\infty}\of{g}
+        \end{align*}
+    \end{definition}
+
+    \begin{konvention}
+        Wenn wir die $\mL^p$-Räume betrachten, beschränken wir uns auf den Fall $1\leq p < \infty$, da für $p < 1$ Eigenschaften wie die Dreiecksungleichung verloren gehen und die resultierenden Räume sich daher von denen mit $p\geq 1$ unterscheiden.
+    \end{konvention}
+
+    \subsection{Konvergenzsätze}
+
+    Sei $1\leq p < \infty$ und $\pair{X, \mA, \mu}$ ein Maßraum. $N_p$ ist auf $\mL^p\of{\mu}$ eine Halbnorm. Wir können also auch einen Abstandsbegriff definieren:
+    \begin{align*}
+        d_p\of{f,g} \coloneqq N_p\of{f-g} = \norm{f-g}_p
+    \end{align*}
+    Es gilt $d_p\of{f,g} = 0 \impl f=g$ $\mu$-fast-überall. Wir definieren außerdem Folgen $(f_n)_n \subset \mL^p\of{\mu}$. Wir sagen $f_n$ konvergiert im $p$-ten Mittel gegen $f$, wenn
+    \begin{align*}
+        \lim_{n\toinf} d_p\of{f_n - f} = 0
+    \end{align*}
+    Man sagt auch $f_n$ konvergiert in $\mL^p$ gegen $f$. Wir sagen außerdem, dass $(f_n)_n$ eine Cauchy-Folge in $\mL^p\of{\mu}$ ist, falls
+    \begin{align*}
+        \forall\varepsilon > 0\ex N\in\N\colon N_p\of{f_n-f_m} < \varepsilon\quad\forall m,n\geq N
+    \end{align*}
 
 
 \end{document}
