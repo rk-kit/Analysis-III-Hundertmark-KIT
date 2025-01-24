@@ -2054,6 +2054,7 @@
 
 
     \section{[*] Die $\mL^{p}$-Räume}
+
     \subsection{Definitino der $\mL^{p}$-Räume}
     \thispagestyle{pagenumberonly}
     Sei $p\geq 1$ und $f: X \to\overline{\R}$ (oder $\C$) meßbar sowie $\pair{X, \mA}$ ein Messraum. Dann ist auch $\abs{f}$ meßbar. Das heißt $\abs{f}^p$ ist meßbar und $\set{\abs{f}^p > \alpha} = \set{\abs{f} > \alpha^{\frac{1}{p}}}$ für $\alpha \geq 0$.
@@ -2219,6 +2220,126 @@
     \begin{align*}
         \forall\varepsilon > 0\ex N\in\N\colon N_p\of{f_n-f_m} < \varepsilon\quad\forall m,n\geq N
     \end{align*}
+
+    \begin{satz}
+        \marginnote{[24. Jan]}
+        Sei $(f_n)_n \subseteq \mL^p$ eine Folge für $1\leq p < \infty$ mit $f_n \to f$ und $\pair{X, \mA, \mu}$ ein Maßraum. Dann gilt für alle $A \in\mA$
+        \begin{align*}
+            \int_{A}^{} \abs{f_n}^p \dif \mu \to \int_{A}^{} \abs{f}^p \dif \mu
+        \end{align*}
+        \begin{proof}
+            \begin{align*}
+                \int_{A}^{} \abs{f_n}^p \dif \mu &= \int_{}^{} \charfunc_{A} \abs{f_n}^p \dif \mu\\
+                &= \int_{}^{} \abs{\charfunc_A f_n}^p \dif \mu = N_p\of{\charfunc_{A} f_n}\\
+                \impl \abs{N_p\of{\charfunc_A f_n} - N_p\of{\charfunc_A f}} &\leq N_p\of{\charfunc_{A}\pair{f_n - f}}\\
+                &\leq N_p\of{f_n - f} \to 0\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{satz}[Riesz] % Satz 2
+        Konvergiere $(f_n)_n \subseteq \mL^p$ $\mu$-fast-überall gegen $f\in\mL^p$. Dann gilt
+        \begin{align*}
+            \lim_{n\toinf} \int_{}^{} \abs{f_n}^p \dif \mu &= \int_{}^{} \abs{f}^p \dif \mu
+            \intertext{genau dann, wenn}
+            \lim_{n\toinf} N_p\of{f_n-f} &= 0
+        \end{align*}
+
+        \begin{proof}
+            \anf{$\impl$}: siehe oben.\\
+            \anf{$\Leftarrow$}: Schritt 1
+            \begin{align*}
+                \pair{\alpha+\beta}^p &\leq \pair{2\pair{\alpha \lor \beta}}^p = 2^p\pair{\alpha^p \lor \beta^p} \leq 2^p\pair{\alpha^p+\beta^p}\tag{$\alpha, \beta \geq 0$}
+            \end{align*}
+            Schritt 2: Es gilt
+            \begin{align*}
+                \abs{\alpha - \beta}^p &\leq \abs{\abs{\alpha} + \abs{\beta}}^p \leq 2^p\pair{\abs{\alpha}^p + \abs{\beta}^p}\\
+                g_n &\coloneqq 2^p\pair{\abs{f_n}^p + \abs{f}^p} - \abs{f_n - f}^p\\
+                \lim_{n\toinf} g_n &= 2^{p+1}\abs{f}^p
+                \intertext{Nach Fatou gilt}
+                2^{p+1} \int_{}^{} \abs{f}^p \dif \mu &= \int_{}^{} \liminf_{n\toinf} fg_n \dif \mu \leq \liminf_{n\toinf} \int_{}^{} g_n \dif \mu\\
+                &= 2^p\pair{\lim_{n\toinf} \int_{}^{} \abs{f_n}^p \dif \mu + \int_{}^{} \abs{f}^p \dif \mu} - \limsup_{n\toinf} \pair{ \int_{}^{} \abs{f_n-f}^p \dif \mu}\\
+                &~~~- 2^{p+1} \int_{}^{} \abs{f}^p \dif x - \limsup_{n\toinf} \pair{\ldots}\\
+                \impl \limsup_{n\toinf} \int_{}^{} \abs{f_n-f}^p \dif \mu &= 0\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{lemma} % Lemma 3
+        Sei $(f_n)_n \subseteq \mM_+\of{X, \mA}$. Dann gilt
+        \begin{align*}
+            N_p\of{ \sum_{n=1}^{\infty} f_n} \leq \sum_{n=1}^{\infty} N_p\of{f_n}
+        \end{align*}
+
+        \begin{proof}
+            Sei $k\in\N$. Dann ist
+            \begin{align*}
+                N_p\of{ \sum_{n=1}^{k} f_n} &\leq \sum_{n=1}^{k} N_p\of{f_n} \leq \sum_{n=1}^{\infty} N_p\of{f_n}\\
+                S_k &\coloneqq \sum_{n=1}^{k} f_n \text{ monoton wachsend}\\
+                \lim_{k\toinf} N_p\of{S_k}^p &= \lim_{k\toinf}  \int_{}^{} \abs{S_k}^p \dif \mu = \int_{}^{} \lim_{k\toinf} \abs{S_k}^p \dif \mu\\
+                &= \int_{}^{} \abs{ \sum_{n=1}^{\infty} f_n}^p \dif x = N_p\of{ \sum_{n=1}^{\infty} f_n}^p \qedhere
+            \end{align*}
+        \end{proof}
+    \end{lemma}
+
+    \begin{satz}[Maj. Konvergenz in $\mL^p$] % Satz 4
+        Sei $(f_n)_n$ eine Folge $\mu$-fast-überall definierter Funktionen $f_n \in\mL^p\of{\mu}$. Es existiert ein $\mL^p\ni g\geq 0$ mit $\abs{f_n}\leq g$ $\mu$-fast-überall $\forall n\in\N$ und $\lim_{n\toinf} \abs{f_n}$ existiert $\mu$-fast-überall.\\
+        Dann existiert ein $f\in\mL^p\of{\mu}$, sodass $f_n \to f$ $\mu$-fast-überall und $f_n$ konvergiert gegen $f$ in $\mL^p\of{\mu}$.
+
+        \begin{proof}
+            Entsprechend der Voraussetzungen existiert eine Nullmenge $N_1$, sodass $f\of{x} \coloneqq \lim_{n\toinf} f_n\of{x}$ existiert $\forall x\in\comp{N_1}$. Wir definieren außerdem $f\of{x} = 0~\forall x\in N_1$. Das heißt $\abs{f} \leq g$ $\mu$-fast-überall. Damit können wir folgern
+            \begin{align*}
+                N_p\of{f} &\leq N_p\of{g} < \infty\\
+                \impl f&\in\mL^p\\
+                h_n &\coloneqq \abs{f_n - f}^p \leq \pair{\abs{f_n} + \abs{f}}^p \leq \pair{g + \abs{f}}^p \leq 2^p\pair{g^p +\abs{f}^p}
+                \intertext{$\mu$-fast-sicher. Das heißt es ist zu zeigen $ \int_{}^{} h_n \dif \mu \to 0$}
+                g_n &\coloneqq 2^p\pair{g^p + \abs{f}^p} - h_n = 2^p\pair{g^p + \abs{f}^p} - \abs{f_n - f}^p\\
+                \impl \liminf_{n\toinf} &= \lim_{n\toinf} g_n = 2^p\pair{g^p + \abs{f}^p} \text{ $\mu$-fas-überall}
+                \intertext{Ferner}
+                \int_{}^{} 2^p\pair{g^p+\abs{f}^p} \dif \mu &= \int_{}^{} \liminf_{n\toinf} g_n \dif \mu \leq \liminf_{n\toinf} \int_{}^{} g_n \dif \mu\\
+                &= \int_{}^{} 2^p\pair{g^p+\abs{f}^p} \dif \mu - \limsup_{n\toinf} \int_{}^{} \abs{f_n-f} \dif \mu\\
+                \impl 0 &\leq \limsup_{n\toinf} \int_{}^{} \abs{f_n-f}^p \dif \mu\leq 0\\
+                \impl \lim_{n\toinf} N_p\of{f_n - f}^p &= 0\\
+                \impl \lim_{n\toinf} N_p\of{f_n - f} &= 0\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{satz}[Vollständigkeit von $\mL^p$]
+        Sei $1\leq p < \infty$. Jede Cauchy-Folge $(f_n)_n \subseteq \mL^p\of{\mu}$ konvergiert gegen ein $f\in\mL^p\of{\mu}$ im $p$-ten Mittel und eine geordnete Teilfolge $(f_{n_k})_k$ konvergiert $\mu$-fast-überall gegen $f$. Das gilt auch für den Fall $p=\infty$.
+
+        \begin{proof}
+            Sei $(f_n)_n$ eine Cauchy-Folge im $\mL^p$. Dann gilt
+            \begin{align*}
+                \lim_{n\toinf} \sup_{m\geq n} N_p\of{f_m - f_n} &= 0\tag{1}
+            \end{align*}
+            Schritt 1: Wir zeigen, dass eine Teilfolge $(f_{n_k})$ existiert, sodass $ \sum_{k=1}^{\infty} N_p\of{f_{n_{k-1}} - f_{n_k}} < \infty$. Nach (1) gilt
+            \begin{align*}
+                \exists n_1\in\N\colon \sup_{m\geq n_1} N_p\of{f_m - f_{n_1}} &\leq \frac{1}{2}\\
+                \impl \exists n_2\in\N\colon \sup_{m\geq n_2} N_p\of{f_m - f_{n_2}} &\leq \frac{1}{2^2}\\
+                &\vdots\\
+                \impl \exists n_k\in\N\colon \sup_{m\geq n_k} N_p\of{f_m - f_{n_k}} &\leq \frac{1}{2^k}\\
+                \\
+                \impl N_p\of{f_{n_{k+1}} - f_{n_k}} &\leq \sup_{m\geq n_k} N_p\of{f_m - f_{n_k}}\\
+                \impl \sum_{k=1}^{\infty} N_p\of{f_{n_k} - f_{n_k}} &\leq \sum_{k=1}^{\infty} \frac{1}{2^k} = 1
+                \intertext{Schritt 2: Definiere}
+                g_k &\coloneqq f_{n_{k+1}} - f_{n_k}\\
+                g &\coloneqq \sum_{k=1}^{\infty} \abs{g_k}\\
+                f_{n_{k+1}} &= g_k + f_{n_k} = g_k + g_{k-1} + f_{n_{k-1}}\\
+                &= g_k + g_{k-1} + \ldots + g_1 + f_{n_1}\\
+                &\leq N_p\of{ \sum_{k=1}^{\infty} \abs{g_k}} \leq \sum_{k=1}^{\infty} N_p\of{\abs{g_k}} \leq \sum_{k=1}^{\infty} \frac{1}{2^k} = 1\\
+                \impl N_p\of{g} &\leq 1\\
+                \impl g &\in \mL^p\\
+                \impl g &\text{ ist $\mu$-fast-überall endlich}\\
+                \impl \exists \text{Nullmenge }M\colon \sum_{n=1}^{\infty} \abs{g_k\of{x}} &= g\of{x} < \infty \quad\forall x\in\comp{M}\\
+                \impl \sum_{k=1}^{\infty} g_k\of{x}&\text{ konvergiert}\quad\forall x\in\comp{M}\\
+                \impl \lim_{L\toinf} \sum_{k=1}^{L} g_k\of{x}&\text{ existiert}\\
+                \impl \lim_{L \toinf} f_{n_{L+1}}\of{x} &= \sum_{k=1}^{\infty} g_k\of{x} + f_{n_1}\of{x}\text{ existiert}\quad\forall x\in\comp{M}\\
+                \impl (f_{n_k})_k&\text{ konvergiert }\mu\text{-fast-überall}
+                \intertext{Schritt 3: Definiere $f\of{x} \coloneqq \lim_{k\toinf} f_{n_k}\of{x}$ existiert für $\mu$-fast-alle $x\in X$. Frage: Ist $f\in\mL^p$?}
+            \end{align*}
+        \end{proof}
+    \end{satz}
 
 
 \end{document}
