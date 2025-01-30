@@ -2342,4 +2342,120 @@
     \end{satz}
 
 
+    \marginnote{[27. Jan]}
+
+    \newpage
+
+
+    \section{[*] Produkte von $\sigma$-Algebren}
+
+    \imaginarysubsection{Produkte von $\sigma$-Algebren}
+    \thispagestyle{pagenumberonly}
+
+    \marginnote{[30. Jan]}
+    Situation: Wir haben endlich viele Messräume $\pair{X_j, \mA_j}$, $j\in\set{1, \ldots, n}$. Wir definieren ein Produkt
+    \begin{align*}
+        X &\coloneqq \prod_{j=1}^{n} X_j = X_1 \times X_2 \times \ldots \times X_n
+        \intertext{und für ein $x=\pair{x_1, \ldots, x_n}\in X$ ist $x_j\in X_j$. Wir definieren außerdem \textit{Projektionsabbildungen}}
+        p_j&: X \to X_j\\
+        x &= \pair{x_1, \ldots, x_n} \mapsto x_j
+        \intertext{Wir haben $\sigma$-Algebren $\mA_j$ und wollen nun auch eine $\sigma$-Algebra auf $X$ definieren. Versuch für $n=2$: Wir definieren die Elemente der $\sigma$-Algebra als $A_1 \times A_2$ mit $A_1 \in\mA_1$, $A_2\in\mA_2$. Allerdings ist}
+        &\set{A_1 \times A_2: A_1\in\mA_1 \land A_2 \in\mA_2}
+        \intertext{nur ein Halbring, aber im Allgemeinen keine $\sigma$-Algebra. Wir setzen also stattdessen}
+        \bigotimes_{j=1}^n \mA_j &\coloneqq \mA_1 \otimes \mA_2 \otimes \ldots \otimes \mA_n \coloneqq \sigma\of{p_1, p_2, \ldots, p_n}\\
+        &\coloneqq \text{ kleinste $\sigma$-Algebra auf $X=X_1 \times \ldots \times X_n$, sodass}\\
+        &\quad\quad\text{alle Funktionen $p_j: X \to X_j$ $\mA-\mA_j$-messbar ist.}\\
+    \end{align*}
+
+    \begin{satz} % Satz 1
+        \label{satz:prod-sigma}
+        Sei für $j=1, \ldots, n$ $\xi_j$ ein Erzeuger von $\mA_j$ ($\mA_j = \sigma\of{\xi_j}$), welcher eine Folge von Mengen $(E_{jk})_{k\in\N}$ mit $E_{jk}\nearrow X_j$ enthält. Dann gilt $\mA_1 \otimes \ldots \otimes \mA_n$ wird von den Mengen $E_1 \times E_2 \times \ldots \times E_n$ für $E_j\in\xi_j$ erzeugt.
+
+        \begin{proof}
+            Es gilt $\mA = \mA_1 \otimes \ldots \otimes \mA_n = \sigma\of{p_1, \ldots, p_n}$ genau dann, wenn $p_j$ $\mA-\mA_j$-messbar ist und $\mA$ die kleinste solcher $\sigma$-Algebren ist. Das heißt nach $\mA_j = \sigma\of{\xi_j}$ gilt $p_j$ ist $\mA-\mA_j$-meßbar. Das heißt
+            \begin{align*}
+                \equivalent p_j^{-1}\of{E_j} &\in\mA\quad\forall E_j \in\xi_j\\
+                p_j^{-1}\of{E_j} &= X_1 \times \ldots \times X_{j-1}\times E_j \times X_{j+1}\times X_n\\
+                \underbrace{p_1^{-1}\of{E_1} \cap p_2^{-1}\of{E_2} \cap \ldots \cap p_n^{-1}\of{e_n}}_{\text{ist meßbar}} &= E_1 \times E_2 \times \ldots \times E_n\in\mA_1 \otimes \ldots \otimes \mA_n\\
+                \impl \sigma\of{\set{E_1 \times \ldots \times E_n: E_j \in\xi_j}} &\subseteq \mA_1 \otimes \mA_2 \otimes \ldots \otimes \mA_n
+                \intertext{Umgekehrt ist}
+                E_1 \times E_2 \times \ldots \times E_n &\subseteq \mA
+            \end{align*}
+            für alle $E_j \in\xi_j$. Nehme für $1\leq j\leq j$
+            \begin{align*}
+                F_k &\coloneqq E_{1,k} \times \ldots \times E_{j-1, k} \times E_j \times E_{j+1, k} \times \ldots \times E_{n,k} \subseteq \mA\\
+                F_k &\nearrow X_1 \times \ldots \times X_{j-1}\times E_j \times X_{j+1} \times \ldots \times X_n = p_j^{-1}\of{E_j}\\
+                \impl p_j &\text{ ist }\mA-\mA_j \text{-messbar}\\
+            \end{align*}
+            Das heißt $\mA$ ist die $\sigma$-Algebra, die von $E_1 \times E_2 \times \ldots \times E_n$ ($E_j \in\xi_j$) erzeugt wird.\qedhere
+        \end{proof}
+    \end{satz}
+
+    \begin{bemerkung}
+        Sei $\mA_1 = \set{\emptyset, X_1}$ und $\mA_2 = \set{\emptyset, A, \comp{A}, X_2}$. Außerdem sei $\xi_1 = \set{\emptyset}$, $\xi_2 = \mA_2$. Dann ist
+        \begin{align*}
+            \xi_1 \times \xi_2 &= \set{E_1 \times E_2: E_1\in\xi_1, E_2\in\xi_2} = \emptyset\\
+            \impl \sigma\of{\xi_1 \times \xi_2} &= \sigma\of{\emptyset} = \set{\emptyset, X_1 \times X_2} &\neq \mA_1 \otimes \mA_2
+        \end{align*}
+        Das heißt wir brauchen die Bedingung, dass es ausschöpfende Folgen in den Erzeugern gibt, im vorherigen Satz.
+    \end{bemerkung}
+
+    \begin{beispiel}
+        Sei $X_j = \R$ und $\mA_j = \mB^1$, $\xi_j = \mJ^1$. Dann ist $\xi_1\times \ldots \times \xi_n = \mJ^n$. Nach Satz~\ref{satz:prod-sigma} gilt
+        \begin{align*}
+            \mB^1 \otimes\ldots \otimes \mB^1 &= \sigma\of{\xi_1 \times \ldots \times \xi_n} = \sigma\of{\mJ^n} = \mB^n
+            \intertext{Analog gilt auch}
+            \mB^{n} \otimes \mB^{m} &= \mB^{n+m}
+        \end{align*}
+    \end{beispiel}
+
+    \newpage
+
+
+    \section{[*] Produktmaße und der Satz von Fubini-Tonelli}
+
+    \subsection{Eindeutigkeit von Produktmaßen}
+    \thispagestyle{pagenumberonly}
+
+    Situation: Wir haben Maßräume $\pair{X_j, \mA_j, \mu_j}$, $j\in\set{1, \ldots, n}$ und Erzeuger $\xi_j$ von $\mA_j$. Wann gibt es dann ein Maß $\pi$ auf $\mA_1 \otimes \ldots\otimes \mA_n$ (Produktmaß) mit
+    \begin{align*}
+        \pi\of{E_1 \times \ldots \times E_n} &= \mu_1\of{E_1}\cdot \ldots \cdot \mu_n\of{E_n}\quad\forall E_j\in\xi_j
+    \end{align*}
+    und wann ist ein solches Maß eindeutig?
+
+    ´\begin{satz} % Satz 2
+         Seien $\xi_j$ $\cap$-stabile Erzeuger von $\sigma$-Algebren $\mA_j$, $j\in\set{1, \ldots, m}$ und es gebe Folgen $(E_{j,k})_{k\in\N} \subseteq \xi_j$ mit $E_{j,k}\nearrow \xi_j$ für $k\toinf$ mit $\mu_j\of{E_{j,k}} < \infty~\forall k$. Dann gibt es höchstens ein Produktmaß $\pi$ mit der Eigenschaft
+         \begin{align*}
+             \pi\of{E_1 \times \ldots \times E_n} &= \mu_1\of{E_1}\cdot \ldots \cdot \mu_n\of{E_n}\quad\forall E_j\in\xi_j
+         \end{align*}
+
+         \begin{proof}
+             Sei $\xi \coloneqq \xi_1 \times \ldots \times \xi_n$. Dann folgt nach Satz~\ref{satz:prod-sigma}, dass $\mA_1 \otimes \ldots \otimes \mA_n = \sigma\of{\xi}$ und $\xi$ ist $\cap$-stabil. Außerdem ist
+             \begin{align*}
+                 \pair{\prod_{j=1}^{n} E_j} \cap \pair{ \prod_{j=1}^{n} F_j} &= \prod_{j=1}^{n} \pair{E_j \cap F_j}
+                 \intertext{was induktiv aus ${E_1 \times E_2 \cap F_1 \times F_2 = \pair{E_1 \cap F_1 }\times \pair{E_2 \cap F_2}}$ ergibt. Dann gilt}
+                 E_k &\coloneqq E_{1, k}\times \ldots \times E_{n,k}\nearrow X = X_1 \times \ldots \times X_n\\
+                 \mu_j\of{E_{j,k}} &< \infty
+                 \intertext{Wenn wir nun definieren, dass}
+                 \pi\of{E_1 \times \ldots \times E_n} &\coloneqq \prod_{j=1}^{n} \mu_j\of{E_j}
+             \end{align*}
+             dann ist $\pi$ durch die Definition als Prämaß nach dem Eindeutigkeitssatz eindeutig auf ein Maß fortsetzbar. Das heißt es gibt höchstens ein solches Maß.\qedhere
+         \end{proof}
+    \end{satz}
+
+    \subsection{Existenz von Produktmaßen}
+
+    Idee für $n=2$: Für $\pair{X_1, \mA_1, \mu_1}$ und $\pair{X_2, \mA_2, \mu_2}$ gilt
+    \begin{align*}
+        \mu_1\of{A_1} &= \int_{}^{} \charfunc_{A_1}\of{x_1} \mu_1{\dif x_1}\\
+        \mu_2\of{A_2} &= \int_{}^{} \charfunc_{A_2}\of{x_2} \mu_2\of{\dif x_2}
+        \intertext{Wir hätten gerne, dass}
+        \pair{\mu_1\otimes\mu_2}\of{A_1\times A_2} \annot[{&}]{=}{!} \mu_1\of{A_1}\mu\of{A_2}\\
+        &= \pair{\int_{}^{} \charfunc_{A_1}\of{x_1} \mu\of{\dif x_1}}\pair{ \int_{}^{} \charfunc_{A_2}\of{x_2} \mu\of{\dif x_2}}
+        \intertext{Vergleiche mit}
+        &\int_{}^{} \pair{ \int_{}^{} \charfunc_{A_1}\of{x_1}\charfunc_{A_2}\of{x_2} \mu_2\of{x_2}} \mu_1\of{x_1}\\
+        &= \int_{}^{} \pair{ \int_{}^{} \charfunc_{A_2}\of{x_2}\mu\of{\dif x_2}}\charfunc_{A_1}\of{x_1} \mu\of{\dif x_1}\\
+        &= \pair{\int_{}^{} \charfunc_{A_1}\of{x_1} \mu_2\of{\dif x_1}}\pair{ \int_{}^{} \charfunc_{A_2}\of{x_2} \mu_1\of{\dif x_2}}
+    \end{align*}
+
 \end{document}
