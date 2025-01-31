@@ -2407,6 +2407,7 @@
             \intertext{Analog gilt auch}
             \mB^{n} \otimes \mB^{m} &= \mB^{n+m}
         \end{align*}
+        Das heißt die $d$-dimensionalen Borel-Mengen sind bereits als $d$-fache Produkt-$\sigma$-Algebra von den eindimensionalen Borel-Mengen definiert.
     \end{beispiel}
 
     \newpage
@@ -2457,5 +2458,44 @@
         &= \int_{}^{} \pair{ \int_{}^{} \charfunc_{A_2}\of{x_2}\mu\of{\dif x_2}}\charfunc_{A_1}\of{x_1} \mu\of{\dif x_1}\\
         &= \pair{\int_{}^{} \charfunc_{A_1}\of{x_1} \mu_2\of{\dif x_1}}\pair{ \int_{}^{} \charfunc_{A_2}\of{x_2} \mu_1\of{\dif x_2}}
     \end{align*}
+
+    \begin{konstruktion}[Schnitte im Fall $n=2$]
+        \marginnote{[31. Jan]}
+        Es sei $Q\subseteq X_1\times X_2$ für Messräume $\pair{X_1, \mA_1},\pair{X_2, \mA_2}$. Dann definieren wir
+        \begin{align*}
+            Q_{x_1} &\coloneqq \set{x_2 \in X_2: \pair{x_1, x_2}\in Q}\subseteq X_2\\
+            Q_{x_2} &\coloneqq \set{x_1 \in X_1: \pair{x_1, x_2}\in Q}\subseteq X_1\\
+            \intertext{Wir haben dann}
+            \charfunc_{Q_{x_1}}\of{x_2} &= \charfunc_{Q}\of{x_1, x_2} = \charfunc_{Q_{x_2}}\of{x_1}
+        \end{align*}
+    \end{konstruktion}
+
+    \begin{lemma} % Lemma 1
+        Sei $Q\in\mA_1 \times \mA_2$. Dann gilt $Q_{x_1}\in \mA_2$ und $Q_{x_2}\in\mA_1$ $\forall x_1\in X_1, x_2\in X_2$.
+
+        \begin{proof}
+            Prinzip der guten Mengen. Für $x_1$-Schnitte ($x_2$-Schnitte funktionieren analog) sei
+            \begin{align*}
+                \mC &\coloneqq \set{Q\in\mA_1 \otimes\mA_2: Q_{x_1}\in\mA_2}\subseteq \mA_1 \otimes\mA_2
+                \intertext{Wir zeigen, dass $\mC$ eine $\sigma$-Algebra ist:}
+                \pair{X_1 \times X_2}_{x_1} &= X_2\\
+                \pair{\comp{Q}}_{x_1} &= \pair{X_1 \times X_2 \setminus Q}_{x_1} = \pair{X_2\setminus Q_{x_1}} = \comp{\pair{Q_{x_1}}}\\
+                \pair{\bigcup_{n=1}^{\infty} Q_n}_{x_1} &= \bigcup_{n=1}^{\infty} \pair{Q_n}_{x_1}
+                \intertext{Das heißt $\mC$ ist eine $\sigma$-Algebra in $X_1\times X_2$ und}
+                A_1 \times A_2 &\in \mC\quad\forall A_1\in\mA_1, A_2\in\mA_2\\
+                \impl \sigma\of{\mA_1 \times \mA_2} &\subseteq \mC \subseteq \mA_1\otimes\mA_2\\
+                \impl \mA_1\otimes\mA_2&\subseteq \mC \subseteq \mA_1\otimes\mA_2\\
+                \impl \mC &= \mA_1\otimes\mA_2
+                \intertext{Noch zu zeigen: $x_1 \mapsto \mu_2\of{Q_{x_1}}$ ist $\mA_1$-messbar. Definieren}
+                s_Q\of{x_1} &\coloneqq \mu_2\of{Q_{x_1}}\\
+                \mD &\coloneqq \set{Q\in\mA_1\otimes\mA_2: s_Q\text{ ist $\mA_1$-messbar}}\\
+                s_{\comp{Q}}\of{x_1} &= \mu_2\of{\comp{Q_{x_1}}} = \mu_2\of{X_2 \setminus Q_{x_1}} = \mu_2\of{X_2} - \mu_2\of{Q_{x_1}}
+                \intertext{Für den letzten Schritt brauchen wir allerdings, dass $\mu_2\of{X_2} < \infty$}
+                s_{\bigcup_{n=1}^{\infty} Q_{n}}\of{x_1} &= \mu_2\of{\pair{\bigcup_{n=1}^{\infty} Q_n}_{x_1}} = \mu_2\of{\bigcup_{n\in\N} \pair{Q_n}_{x_1}}\\
+                &= \sum_{n=1}^{\infty} \mu_2\of{\pair{Q_n}_{x_1}}
+            \end{align*}
+        \end{proof}
+    \end{lemma}
+
 
 \end{document}
