@@ -2497,5 +2497,122 @@
         \end{proof}
     \end{lemma}
 
+    \marginnote{[*03. Feb]}
+
+    \newpage
+
+    \begin{satz}[Tonelli]
+        \label{satz:tonelli}
+        Sei $f\in\mM_+\of{X_1\times X_2, \mA_1 \otimes \mA_2}$. Dann ist
+        \begin{align*}
+            x_1 &\mapsto \int_{x_2}^{} f\of{x_1, x_2} \mu\of{\dif x_2}
+            \intertext{$\mA_1$-messbar und}
+            x_2 &\mapsto \int_{x_1}^{} f\of{x_1, x_2}\mu\of{\dif x_1}
+            \intertext{ist $\mA_2$-messbar. Außerdem gilt insgesamt}
+            \int_{X_1 \times X_2}^{} f \dif\of{\mu_1\otimes \mu_2} &= \int_{X_1}^{} \int_{X_2}^{} f\of{x_1, x_2}\mu_2\of{\dif x_2}\mu_1\of{\dif x_1}\\
+            &= \int_{X_2}^{} \int_{X_1}^{} f\of{x_1, x_2}\mu_1\of{\dif x_1}\mu_2\of{\dif x_2}\\
+        \end{align*}
+
+        \begin{proof}[Beweisskizze]
+            Klar, wenn $f$ eine einfache Funktion $\geq 0$ ist. Ist $f$ eine meßbare Funktion auf $X_1\times X_2$, dann verwenden wir eine wachsende Folge einfacher Funktionen $(u_n)_n \nearrow f$. Dann ist
+            \begin{align*}
+                \int_{X_1 \times X_2}^{} u_n \dif\of{\mu_1\otimes\mu_2} &= \int_{}^{} \int_{X_1}^{} u_n\of{x_1, x_2}\mu_2\of{\dif x_2}\mu_1\of{\dif x_1}
+            \end{align*}
+            und aus monotoner Konvergenz folgt dann die Behauptung. Dass sich die Integrale taushcen lassen, zeigt sich analog.
+        \end{proof}
+    \end{satz}
+
+    \begin{satz}[Fubini] % Satz 7
+        \label{satz:fubini}
+        Seien $\pair{X_j, \mA_j, \mu_j}$ $\sigma$-endliche Maßräume für $j=1, 2$ und $f: X_1 \times X_2 \to \overline{\R}$ $\mA_1\otimes\mA_2$-messbare Funktionen welche bezüglich des Produktmaßes $\mu_1\otimes\mu_2$ integrierbar ist. Dann ist $x_1\mapsto f\of{x_1, x_2}$ für festes $x_2$ $\mA_1$-messbar und für $\mu_2$-fast-alle $x_2$ bezüglich $\mu_1$ integrierbar. Das heißt
+        \begin{align*}
+            \int_{}^{} &f\of{x_1, x_2} \mu_1\of{\dif x_1}
+            \intertext{existiert für $x_2$ fest. Und umgekehrt ist $x_2 \mapsto f\of{x_1, x_2}$ $\mA_2$-messbar und für alle $x_1\in X_1$ $\mu_2$-integrierbar. Ferner gilt}
+            \int_{X_1 \times X_2}^{} f \dif\of{\mu_1\otimes \mu_2} &= \int_{X_1}^{} \pair{\int_{X_2}^{} f\of{x_1, x_2} \mu_2\of{\dif x_2}} \mu_1\of{\dif x_1}\\
+            &= \int_{X_2}^{} \pair{\int_{X_1}^{} f\of{x_1, x_2} \mu_1\of{\dif x_1}} \mu_2\of{\dif x_2}
+        \end{align*}
+    \end{satz}
+
+    \marginnote{[06. Feb]}
+
+    \noindent\textbf{Wichtig}: Die Voraussetzung für Satz~\ref{satz:fubini} ist bereits, dass $f$ $\mu_1\otimes \mu_2$-integrierbar ist. Beziehungsweise äquivalent, dass $\abs{f}$ $\mu_1\otimes \mu_2$-integrierbar ist. Zu wissen, dass das der Fall ist, ist eigentlich gerade unser Ursprungsproblem, aber hier können wir Satz~\ref{satz:tonelli} anwenden, da $\abs{f}\geq 0$. Das heißt, genau dann, wenn nach Tonelli eines der einzelnen Integrale von $\abs{f}$ endlich ist, können wir dann Fubini anwenden.
+
+    \begin{beispiel}
+        Sei $f\of{x_1, x_2} \coloneqq \charfunc_{\Q}\of{x_1}$. Dann ist
+        \begin{align*}
+            \int_{}^{} f\of{x_1,x_2}\lambda^1\of{\dif x_1} &= 0\quad\forall x_2\in X_2\\
+            \int_{}^{} f\of{x_1, x_2}\lambda^1\of{\dif x_2} &= \int_{}^{} \charfunc_{\Q}\of{x_1}\lambda^1\of{\dif x_2}\\
+            &= \charfunc_{\Q}\of{x_1}\lambda^1\of{\R} = \infty \times \charfunc_{\Q}\of{x_1}\\
+            &= \begin{cases}
+                   0 &x_1\in\R\setminus\Q\\
+                   \infty &x_1\in\Q
+            \end{cases}
+            \intertext{Zerlege $f = f_+-f_-$. Dann ist $\abs{f}$ $\mu_1\otimes\mu_2$-integrierbar, genau dann, wenn $f_+, f_-$ $\mu_1\otimes\mu_2$-integrierbar sind. Nach Tonelli folgt}
+            \int_{}^{} \int_{}^{} f_{\pm}\of{x_1, x_2}\mu_2\of{\dif x_2}\mu_1\of{\dif x_1} &< \infty\\
+            \impl \int_{}^{} f_{\pm}\of{x_1, x_2}\mu_2\of{\dif x_2} &< \infty
+            \intertext{für $\mu_1$-fast-alle $x_1$}
+            \int_{}^{} f_{\pm}\of{x_1, x_2}\mu_1\of{\dif x_1} &< \infty
+            \intertext{für $\mu_2$-fast-alle $x_2$ nach Tonelli und Symmetrie. Das heißt nach Tonelli}
+            \int_{X_2}^{} \int_{X_1}^{} f_{\pm}\of{x_1, x_2}\mu_1\of{\dif x_1}\mu_2\of{\dif x_2} &= \int_{}^{}f_{\pm} \dif\of{\mu_1\otimes\mu_2}\\
+            \impl \int_{}^{} f \dif\of{\mu_1\otimes \mu_2} &= \int_{}^{} \int_{}^{} f_+\of{x_1, x_2}\mu_1\of{\dif x_1}\mu_2\of{\dif x_2}\\
+            &~~~-\int_{}^{} \int_{}^{} f_-\of{x_1, x_2}\mu_1\of{\dif x_1}\mu_2\of{\dif x_2}\\
+            &= \int_{}^{} f\of{x_1, x_2}\mu_1\of{\dif x_1} \mu_2\of{\dif x_2}
+            \intertext{Mit den Einzelintegralen oben folgt dann}
+            \impl \int_{}^{} \int_{}^{} f\dif\of{\lambda^1\otimes\lambda^2} &= 0
+        \end{align*}
+    \end{beispiel}
+
+    \begin{satz}[Extrem nützlich] % Satz 8
+        Sei $\pair{X, \mA, \mu}$ ein $\sigma$-endlicher Maßraum und $f: x\to\interv{0, \infty}$ messbar sowie $\phi: \interv{0, \infty}\to\interv{0,\infty}$ monoton wachsend, stetig, $\phi\of{0} = 0$ und $\phi$ diff.bar auf $\pair{0, \infty}$. Dann ist
+        \begin{align*}
+            \int_{}^{} \phi\circ f \dif \mu &\coloneqq \int_{X}^{} \phi\of{f} \dif \mu = \int_{0}^{\infty} \phi'\of{t}\mu\of{\set{f\geq t}}\lambda^1\of{\dif t}
+        \end{align*}
+
+        \begin{proof}
+            \begin{align*}
+                \phi\of{a} &= \phi\of{0} + \int_{0}^{a} \phi'\of{s} \dif s\\
+                &= \int_{0}^{a} \phi'\of{s} \dif s = \int_{0}^{\infty} \phi'\of{s}\charfunc_{\interv{0, a}}\of{s} \dif s\\
+                \impl \phi\of{f\of{x}} &= \int_{0}^{\infty} \phi'\of{s}\charfunc_{\interv{0, f\of{x}}}\of{s} \dif s\\
+                \impl \int_{}^{} \phi\circ f \dif \mu &= \int_{}^{} \pair{ \int_{0}^{\infty} \phi'\of{s}\charfunc_{\interv{0, f\of{x}}}\of{s} \dif s} \mu\of{\dif x}\\
+                &= \int_{}^{} \pair{ \int_{0}^{\infty} \phi'\of{s}\charfunc_{\set{f\geq s}}\of{x} \dif s} \mu\of{\dif x}\\
+                \intertext{Wir müssten uns jetzt noch überlegen, dass $\pair{s, x}\mapsto \phi'\of{s}\charfunc_{\set{f\geq s}}\of{x} \geq 0$ $\mB^1\otimes \mA$-messbar ist. Dann können wir mit Tonelli folgern, dass}
+                &= \int_{0}^{\infty} \pair{ \int_{}^{} \phi'\of{s}\charfunc_{\set{f\geq s}} \dif \mu} \dif s\\
+                &= \int_{0}^{\infty} \phi'\of{s}\mu\of{\set{f\geq s}} \dif s\qedhere
+            \end{align*}
+        \end{proof}
+
+        \begin{proof}[\anf{Richtiger} Beweis]
+            Wir definieren $\mB_+\coloneqq\interv{0, \infty}\cap \mB^1$ und $\lambda_+ \coloneqq \lambda^1\vert_{\mB_+}$. $F\of{x, t} = \pair{f\of{x}, t}\in\R^2$. $F: X\times \R_+\to\R^2$ ist $\mA\otimes \mB_+ - \mB^2$-messbar. Dann ist $p_j\of{s_1, s_2}\coloneqq s_j$ die Koordinatenprojektion und $p_1 \circ F = f$ sowie $f_2 \circ F\of{x, t} = t$. Wir betrachten $E\coloneqq \set{\pair{x, t}\in X \times \R_+: f\of{x}\geq t}\in\mA\otimes\mB_+$. Dann ist $E = F^{-1}\of{\set{\pair{s, t}: s\geq t}}\in\mA\times \mB_+$. Nach Tonelli gilt
+            \begin{align*}
+                \int_{}^{} \pair{ \int_{}^{} \phi'\of{t}\charfunc_{E}\of{x, t}\lambda_+\of{\dif t}} \mu\of{\dif x} &= \int_{}^{} \int_{}^{} \phi'\of{t}\charfunc_{E}\of{x, t} \mu\of{\dif x}\lambda_+\of{\dif t}\\
+                &= \int_{}^{} \phi'\of{t}\pair{ \int_{}^{} \charfunc_{E}\of{x, t}\mu\of{\dif x}} \lambda_+\of{\dif t}\\
+                &= \int_{}^{} \phi'\of{t}\mu\of{\set{f\geq t}} \lambda_+\of{\dif t}
+                \intertext{Ferner}
+                \int_{0}^{a} \phi'\of{t}\lambda_+\of{\dif t} &= \int_{\rinterv{0, a}}^{} \phi'\of{t} \dif t\\
+                &= \lim_{n\toinf} \int_{\interv{\frac{1}{n}, a}}^{} \phi'\of{t} \dif t = \lim_{n\toinf} \phi\of{a} - \phi\of{\frac{1}{n}} = \phi\of{a}\\
+                \int_{}^{} \phi'\of{t}\charfunc_{E}\of{x, t}\lambda_+\of{\dif t}&= \int_{\pair{0, \infty}}^{} \phi'\of{t}\charfunc_{\set{f\of{x}\geq t}} \lambda^1\of{\dif t}\\
+                &= \int_{0}^{f\of{x}} \phi'\of{t} \dif t = \phi\of{f\of{x}}\\
+                \impl \int_{}^{} \int_{}^{} \phi'\of{t}\charfunc_{E}\of{x, t}\lambda_+\of{\dif t}\mu\of{\dif x} &= \int_{}^{} \phi\of{f\of{x}} \mu\of{\dif x}\\
+                &= \int_{}^{} \phi\circ f \dif \mu\qedhere
+            \end{align*}
+        \end{proof}
+    \end{satz}
+
+    \begin{beispiel}
+        Sei $\phi\of{a} = a$, $\phi' = 1$. Dann ist $\phi \circ f = f$ und
+        \begin{align*}
+            \int_{}^{} f \dif \mu &= \int_{0}^{\infty} \phi'\of{t}\mu\of{\set{f\geq t}} \lambda^1\of{\dif t}\\
+            &= \int_{0}^{\infty} \mu\of{\set{f\geq t}} \dif t
+        \end{align*}
+        Das heißt wir messen an jeder Stelle $t$ das Maß des Levels, wo $f\geq t$. Da das in der Vorstellung einer Funktion, die stufenweise steigt und dann stufenweise wieder sinkt (was dem Querschnitt eines mehrstöckigen Hochzeitskuchen ähnelt), nennt sich diese Darstellung auch \textit{Wedding cake representation}.
+    \end{beispiel}
+
+    \begin{beispiel}
+        Sei $\phi\of{a} = a^p \impl \phi'\of{a} = pa^{p-1}$. Dann gilt
+        \begin{align*}
+            \int_{}^{} f^p \dif\mu &= p \int_{0}^{\infty} t^{p-1}\mu\of{\set{f\geq t}} \dif t\\
+            \int_{}^{} \abs{f}^p \dif\mu &= p \int_{0}^{\infty} t^{p-1}\mu\of{\set{\abs{f}\geq t}} \dif t
+        \end{align*}
+    \end{beispiel}
 
 \end{document}
