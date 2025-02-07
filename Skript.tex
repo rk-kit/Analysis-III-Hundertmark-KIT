@@ -92,6 +92,7 @@
 \newcommand{\definedasequiv}[0]{\ratio\Leftrightarrow{}}
 \renewcommand{\emptyset}{\varnothing}
 \newcommand{\dif}{\mathop{}\!\mathrm{d}}
+\newcommand{\Dif}{\mathop{}\!\mathrm{D}}
 \newcommand{\dsty}{\displaystyle}
 \newcommand{\charfunc}{\altmathbb{1}}
 
@@ -2614,5 +2615,94 @@
             \int_{}^{} \abs{f}^p \dif\mu &= p \int_{0}^{\infty} t^{p-1}\mu\of{\set{\abs{f}\geq t}} \dif t
         \end{align*}
     \end{beispiel}
+
+    \begin{satz} % Satz 9
+        \marginnote{[07. Feb]}
+        Zu $\sigma$-endlichen Maßen $\mu_j$ auf $\mA_j$, $j=1, \ldots, n$ existiert genau ein Produktmaß $\pi$ auf $\pair{\mA_1\otimes\cdots\otimes \mA_n}$ mit
+        \begin{align*}
+            \pi\of{A_1\times\cdots \times} &= \prod_{j=1}^{n} \mu_j\of{A_j}
+        \end{align*}
+
+        \begin{proof}
+            Sei $\mE_j \coloneqq \mA_j$ als Erzeuger. Nach der dem Eindeutigkeitssatz für Maße gibt es also höchstens ein solches Produktmaß. Um auch die Existenz zu beweisen, gehen wir induktiv vor. Wir setzen
+            \begin{align*}
+                \pi_l &\coloneqq \mu_1 \otimes \cdots \otimes \mu_l\quad 2\leq l \leq n\\
+                \impl \pi_2 &= \mu_1\otimes\mu_2\quad\text{auf } \mA_1 \otimes \mA_2\\
+                \impl \pi_3 &= \pi_2 \otimes \mu_3\quad\text{auf }\pair{\mA_1\otimes\mA_2}\otimes\mA_3\\
+                &= \pair{\mu_1\otimes\mu_2}\otimes\mu_3
+                \intertext{Wir könnten $\pi_3$ aber auch definieren als}
+                \pi_3' &= \mu_1\otimes\pair{\mu_2\otimes\mu_3}
+                \intertext{Nach dem Eindeutigkeitssatz muss aber gelten}
+                \pi_3 &= \pi_3'
+            \end{align*}
+            Wenn man dieses Argument iteriert, folgt die Assoziativität des Produktmaßes im Allgemeinen. Das heißt, da wir die Existenz des Produktmaß zweier Maße bereits gezeigt haben, ergibt sich induktiv die Behauptung.\qedhere
+        \end{proof}
+    \end{satz}
+
+    \newpage
+
+
+    \section{[*] Integrale bezüglich Bildmaß und Jacobi Transformationsformel}
+
+    \subsection{Integrale bezüglich Bildmaß}
+    \thispagestyle{pagenumberonly}
+
+    Wir haben $\pair{X, \mA}$, $\pair{X', \mA'}$ Messräume und $T: X\to X'$ eine $\mA-\mA'$-messbare Funktion sowie $\mu$ ein Maß auf $\pair{X, \mA}$. Dann ist $T\of{\mu}$ definiert durch $T\of{\mu}\of{A'} \coloneqq \mu\of{T^{-1}\of{A'}}$ für $A'\in\mA'$. Wie hängt das Integrieren bezüglich Maß und Bildmaß zusammen?
+
+    \begin{satz} % Satz 1
+        Seien $\pair{X, \mA}$, $\pair{X', \mA'}$ Messräume und $T: X\to X'$ eine $\mA-\mA'$-messbare Funktion, $\mu$ ein Maß auf $\pair{X, \mA}$ sowie $f: X' \to \overline{\R}$ eine Funktion. Dann gilt: Ist $f$ bezüglich $T\of{\mu}$ integrierbar, so ist $f\circ T$ bezüglich $\mu$ integrierbar und es gilt
+        \begin{align*}
+            \int_{X'}^{} f\dif T\of{\mu} &= \int_{X}^{} f\circ T \dif \mu\tag{1}
+        \end{align*}
+        Ist $f\geq 0$, so gilt (1) immer.
+
+        \begin{proof}
+            Mit algebraischer Induktion. (Siehe Übung).
+        \end{proof}
+    \end{satz}
+
+    \subsection{Jacobi-Transformationsformel}
+
+    Situation: Seien $X, Y\subseteq\R^d$ offen und $\Phi: X \to Y$ ein Diffeomorphismus (d.h. bijektiv, stetig differenzierbar und $\Phi^{-1}$ auch stetig differenzierbar)
+
+    \begin{satz}[Jacobi] % Satz 3
+        Sei $\Phi: X \to Y$ mit $X, Y\subseteq\R^d$ offen ein Diffeomorphismus. Dann gilt
+        \begin{enumerate}[label=(\roman*)]
+            \item
+            Für $A\in\mB^d \cap X$
+            \begin{align*}
+                \lambda^d\of{\Phi\of{A}} &= \int_{A}^{} \abs{\det \Dif\Phi} \dif\lambda^d
+            \end{align*}
+            \item Für alle $f: X \to \interv{0, \infty}$ numerischen, meßbaren Funktionen
+            \begin{align*}
+                \int_{Y}^{} f \dif \lambda^d &= \int_{X}^{} f\circ \Phi \abs{\det \Dif\Phi} \dif \lambda^d\\
+                &= \int_{X}^{} f\of{\Phi\of{x}}\abs{\det \Dif\Phi\of{x}} \lambda^d\of{\dif x}
+            \end{align*}
+            \item $f: Y \to\overline{\R}$ ist genau dann über $Y$ Lebesgue-integrierbar, wenn $f\circ \Phi \abs{\det \Dif\Phi}$ über $X$ Lebegue-integrierbar ist und es gilt
+            \begin{align*}
+                \int_{X}^{} f \dif\lambda^d &= \int_{X}^{} f\circ\Phi\abs{\det\Dif\Phi} \dif \lambda^d
+            \end{align*}
+        \end{enumerate}
+
+        \begin{proof}
+            \theoremescape
+            \begin{enumerate}[label=(\roman*)]
+                \item Es reicht zu zeigen, dass $\forall f\in\mM_{*}\of{Y, \mB^d \cap Y}$ ist
+                \begin{align*}
+                    \int_{Y}^{} f \dif \lambda^d &\leq \int_{X}^{} f\circ\Phi\abs{\det\Dif\Phi} \dif \lambda^d\tag{2}
+                    \intertext{Haben wir nämlich die Ungleichung (2), definieren wir $\Psi \coloneqq \Phi^{-1}$, $h\coloneqq f\circ\Phi \abs{\det\Dif \Phi \circ \Psi}$, dann folgt mit (2)}
+                    \impl \int_{X}^{} h \dif \lambda^d &\leq \int_{Y}^{} h\circ \Psi\abs{\det \Dif\Psi} \dif \lambda^d\\
+                    \intertext{Außerdem ist}
+                    \Dif\Psi\of{y} &= \Dif\of{\Phi^{-1}}\of{y} = \pair{\Dif \Phi\of{\Psi\of{y}}}^{-1} = \interv{\Dif \Phi \circ \Psi}^{-1}\\
+                    \impl \det \Dif\Psi\of{y} &= \frac{1}{\det\Dif\Phi\of{\Psi\of{y}}}\\
+                    \intertext{Gemeinsam folgt dann}
+                    \int_{X}^{} f\circ\Phi\abs{\det\Dif\Phi} \dif \lambda^d &\leq~??\\
+                    &\leq \int_{Y}^{} h\circ \Psi\abs{\det\Dif \Psi} \dif \lambda^d\\
+                    &= \int_{Y}^{} f\underbrace{\abs{\det \Dif \Phi \circ \Psi}\abs{\det \Dif\Psi}}_{=1} \dif \lambda^d = \int_{Y}^{} f\dif\lambda^d
+                    \intertext{Das heißt wir aus (2) erhalten wir auch die Ungleichung in die andere Richtung und damit Gleichheit. Wir müssen nun noch (2) beweisen: ???}
+                \end{align*}
+            \end{enumerate}
+        \end{proof}
+    \end{satz}
 
 \end{document}
