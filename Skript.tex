@@ -130,6 +130,7 @@
 \DeclareMathOperator{\spann}{Spann}
 \DeclareMathOperator{\flaeche}{Fläche}
 \DeclareMathOperator{\bew}{Bew}
+\DeclareMathOperator{\diag}{diag}
 
 % Mengenbezeichner
 \newcommand{\R}{\mathbb{R}}
@@ -2699,10 +2700,115 @@
                     \int_{X}^{} f\circ\Phi\abs{\det\Dif\Phi} \dif \lambda^d &\leq~??\\
                     &\leq \int_{Y}^{} h\circ \Psi\abs{\det\Dif \Psi} \dif \lambda^d\\
                     &= \int_{Y}^{} f\underbrace{\abs{\det \Dif \Phi \circ \Psi}\abs{\det \Dif\Psi}}_{=1} \dif \lambda^d = \int_{Y}^{} f\dif\lambda^d
-                    \intertext{Das heißt wir aus (2) erhalten wir auch die Ungleichung in die andere Richtung und damit Gleichheit. Wir müssen nun noch (2) beweisen: ???}
+                    \intertext{Das heißt aus (2) erhalten wir auch die Ungleichung in die andere Richtung und damit Gleichheit. Wir müssen nun noch (2) beweisen: ???}
                 \end{align*}
             \end{enumerate}
         \end{proof}
     \end{satz}
+
+    \newpage
+
+
+    \section{[**] Der Satz von Gauß}
+    \thispagestyle{pagenumberonly}
+
+    \subsection{Vorbereitungen}
+
+
+    \marginnote{[10. Feb]}
+
+    \textbf{Schritt 1.} Wir betrachten den $\R^d$ und eine lineare Abbildung $T: \R^k \to\R^d$. Außerdem sei $L \coloneqq T\of{\R^k} = k$-dimensionaler Unterraum des $\R^d$. Wenn wir dann $V \subseteq \R^k$ offen betrachten, dann ist $T\of{V}$ relativ-offen in $L \subseteq \R^d$.
+
+    \begin{definition}[Isometrische Matrizen]
+        Wir definieren
+        \begin{align*}
+            \mO\of{k, d} &= \set{G\in\mL\of{\R^k, \R^d}: G^{\mathrm{T}}G = \charfunc_{\R^k}}
+            \intertext{als die Menge der isometrischen Matrizen. Dann gilt bezüglich des Standardskalaprodukts}
+            \scalprod{Gx, Gx}_{\R^d} &= \scalprod{x, G^{\mathrm{T}}Gx}_{\R^d} = \scalprod{x, x}_{\R^d}
+        \end{align*}
+    \end{definition}
+
+    \begin{beobachtung}[Polarzerlegung]
+        Sei $T\in\mL\of{\R^k, \R^d}$ mit vollem Rang (d.h. $T$ hat Rang $k$). Dann existieren $Q\in\mO\of{k, d}$ und $S\in\mL\of{\R^k, \R^k}$ mit $S$ symmetrisch und positiv-definit, sodass $T = QS$. Ferner gilt dann
+        \begin{align*}
+            S^2 &= T^{\mathrm{T}}T\\
+            \det S &= \sqrt{\det\of{T^{\mathrm{T}}T}}
+        \end{align*}
+
+        \begin{proof}
+            $T^{\mathrm{T}}T: \R^k \to \R^k$ ist linear und $T^{\mathrm{T}}T \neq 0$ für $\R^k \ni x \neq 0$, denn
+            \begin{align*}
+                \scalprod{x, T^{\mathrm{T}}Tx} &= \scalprod{Tx, Tx}\geq 0
+                \intertext{Das heißt $T^{\mathrm{T}}T$ ist positiv-definit und symmetrisch, weil}
+                \pair{T^{\mathrm{T}}T}^{\mathrm{T}} &= T^{\mathrm{T}}T
+                \intertext{Das heißt es gibt ein $R\in\mathcal{SO}$, sodass}
+                T^{\mathrm{T}}T &= R^{\mathrm{T}}DR
+                \intertext{wobei}
+                D &= \diag\of{d_1, \ldots, d_k}\quad d_j \geq 0~\forall j=1, \ldots, k\\
+                \sqrt{D} &= \diag\of{\sqrt{d_1}, \ldots, \sqrt{d_k}}\\
+                \impl S &= R^{\mathrm{T}}\sqrt{D}R\\
+                \impl S^{\mathrm{T}} = S\\
+                S^2 &= R^{\mathrm{T}}\sqrt{D}RR^{\mathrm{T}}\sqrt{D}R = R^{\mathrm{T}}DR = T^{\mathrm{T}}T
+                \intertext{Wir definieren}
+                Q &\coloneqq TS^{-1}\\
+                S^{-1} &= \pair{R^{\mathrm{T}}\sqrt{D}R}^{-1} = R^{-1}\sqrt{D}^{-1}\pair{R^{\mathrm{T}}}{-1}\\
+                &= R^{\mathrm{T}}\sqrt{D}^{-1}R = R^{\mathrm{T}}\diag\pair{d_1^{-1}, \ldots, d_n^{-1}}^{-1}R\\
+                \impl T &= QS\\
+                Q^{\mathrm{T}}Q &= \pair{TS^{-1}}^{\mathrm{T}}\pair{TS^{-1}} = S^{-1}T^{\mathrm{T}}TS^{-1} = S^{-1}S^2 S^{-1} = \charfunc_{\R^k}\\
+                \pair{\det S}^2 &= \det S^2 = \det T^{\mathrm T}T\\
+                \impl \det S &= \sqrt{\det T^{\mathrm{T}}T}\qedhere
+            \end{align*}
+        \end{proof}
+        \noindent Sei $A\subseteq \R^k$ offen. Dann sei $H^k\of{T\of{A}}$ das $k$-dimensionale Volumen von $T\of{A}$ als Teilmenge von $L\coloneqq T\of{\R^d}$. Es gilt
+        \begin{align*}
+            H^{k}\of{T\of{A}} &= H^k\of{Q\of{S\of{A}}} = H^k\of{S\of{A}} \coloneqq \abs{\det S} \lambda^k\of{A}
+        \end{align*}
+    \end{beobachtung}
+
+    \begin{definition}
+        Sei $V\subseteq \R^k$ offen und $\varphi: V\to\R^d$ eine Immersion. Das heißt
+        \begin{align*}
+            \forall x\in V\colon D_{\varphi}\of{x}: \R^k \to\R^d\text{ hat vollen Rang}
+        \end{align*}
+        Wir definieren
+        \begin{align*}
+            \mA_{\varphi} \coloneqq \set{B\in\varphi\of{V}: \varphi ???}
+        \end{align*}
+        ??
+    \end{definition}
+
+    \begin{lemma}
+        \theoremescape
+        \begin{enumerate}[label=(\roman*)]
+            \item $\mA_{\varphi}$ ist eine $\sigma$-Algebra
+            \item ??
+            \item $\pair{\varphi\of{V}, \mA_{\varphi}, H^k_{\varphi}}$ ist ein Maßraum.
+        \end{enumerate}
+    \end{lemma}
+    
+    \begin{lemma} % Lemma 4
+        $\pair{D_{\varphi}\of{x}}^{\mathrm{T}}D_{\varphi}\of{x}$ ist eine $k\times k$-Matrix. Die Matrix ist gegeben durch
+        \begin{align*}
+            \pair{\pair{D_{\varphi}}^{\mathrm{T}}D_{\varphi}}_{l, m} &= \scalprod{\partial_l \varphi, \partial_m \varphi}
+        \end{align*}
+    \end{lemma}
+
+    \noindent\textbf{Schritt 2}: Integration über $k$-dimensionale Untermannigfaltigkeiten des $\R^d$. Sei $M \subseteq \R^d$ mit $M\neq \emptyset$.
+
+    \begin{definition}[Karte]
+        $\pair{\varphi, U}$ nennen wir eine Karte, wenn $U\subseteq\R^k$ offen ist und $\varphi: U \to M$ ein Homomorphismus ist. $M$ ist eine $k$-dimensionale Untermannigfaltigkeit, wenn
+        \begin{align*}
+            \forall p\in M\ex R>0, \text{ Karte}\pair{\varphi, k}: B_{R}\of{p}\cap M \subseteq \varphi\of{U}
+        \end{align*}
+    \end{definition}
+
+    \begin{definition}[Atlas]
+        $\pair{\varphi_j, U_j}_{j\in I}$ $I$ ist endlich oder abzählbar $\bigcup_{i\in I} \varphi_i\of{U_k} = M$
+    \end{definition}
+
+    \begin{beobachtung}
+        Jeder Punkt in $M$ liegt in endlich vielen $\varphi_j\of{U_j}$.
+    \end{beobachtung}
+
 
 \end{document}
