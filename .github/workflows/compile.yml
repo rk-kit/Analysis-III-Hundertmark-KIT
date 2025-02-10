@@ -24,6 +24,7 @@ jobs:
            sudo apt-get install texlive-latex-extra --no-install-recommends
            sudo apt-get install texlive-lang-german
            sudo apt-get install texlive-science
+           sudo apt-get install texlive-fonts-extra
            sudo apt-get install latexmk
 
       - name: Compile Skript.pdf
