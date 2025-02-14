@@ -131,6 +131,7 @@
 \DeclareMathOperator{\flaeche}{Fläche}
 \DeclareMathOperator{\bew}{Bew}
 \DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\fdiv}{div}
 
 % Mengenbezeichner
 \newcommand{\R}{\mathbb{R}}
@@ -2785,7 +2786,7 @@
             \item $\pair{\varphi\of{V}, \mA_{\varphi}, H^k_{\varphi}}$ ist ein Maßraum.
         \end{enumerate}
     \end{lemma}
-    
+
     \begin{lemma} % Lemma 4
         $\pair{D_{\varphi}\of{x}}^{\mathrm{T}}D_{\varphi}\of{x}$ ist eine $k\times k$-Matrix. Die Matrix ist gegeben durch
         \begin{align*}
@@ -2809,5 +2810,74 @@
     \begin{beobachtung}
         Jeder Punkt in $M$ liegt in endlich vielen $\varphi_j\of{U_j}$.
     \end{beobachtung}
+
+    \marginnote{[14. Feb]}
+    \noindent\textbf{Schritt 3}: Regulärer Rand offener Gebiete, offene Gebiete mit $\mC^1$-Rand.
+
+    \begin{definition}
+        Sei $\Omega\in\R^d$ offen und $\partial \Omega$ Rand $= \overline{\Omega}\cap\overline{\pair{\comp{\Omega}}}$. Wir definieren
+        \begin{align*}
+            \partial_{\text{reg}}\Omega &= \set{x\in\partial\Omega: \exists p > 0, \exists\text{Funktion} G\in\mC^{1}\of{B_p\of{x}}, \forall G\of{x}\neq 0, \Omega\cap B_p\of{x} = G^{-1}\of{\pair{-\infty, 0}}}
+        \end{align*}
+        als den regulären Rand von $\Omega$. Hat $\Omega$ $\mC^1$-Rand, haben $\partial\Omega = \partial_{\text{reg}}\Omega$.
+    \end{definition}
+
+    \begin{lemma}
+        Sei $x\in\partial_{\text{reg}}\Omega$. Dann folgt $\Omega \cap B_p\of{x} = G^{-1}\of{\set{0}}$.
+
+        \begin{proof}
+            Ist $G\of{x} < 0$. Dann folgt für $r> 0$, dass $\forall y\in B_{r}\of{x}: G\of{y} < 0$. Ist $G\of{x} > 0$, so folgt für $r' > 0$, dass $\exists\in B_{r'}\of{x}: G\of{y} > 0$. Daraus folgt $x\not\in\partial\Omega$.\\
+            Ist $G\of{x} = 0$. $a\in\R^d$
+            \begin{align*}
+                \partial_t G\of{x+ ta} &= \Dif G\of{x+ta}\interv{a} = \scalprod{\nabla G\of{x+ta}, a} \to_{t\to 0} \scalprod{\partial G\of{x}, a} \neq 0
+            \end{align*}
+            Beobachte: Satz von der impliziten Funktion. (+Tangentialraum) (?)\qedhere
+        \end{proof}
+    \end{lemma}
+
+    \begin{lemma}
+        Sei $\Omega$ offen. Dann existiert für alle $x\in\partial_{\text{reg}}\Omega$ existiert genau ein Normalenvektor $V\of{x}$, sodass
+        \begin{enumerate}[label=(\roman*)]
+            \item $\abs{V\of{x}} = 1$
+            \item $V\of{x} = \partial{T_x\partial \Omega}^{\mathrm{T}}$ (wobei $T$ der Tangentialraum ist), das heißt $V\of{x}$ ist parallel zu $\nabla G\of{x}$
+            \item $\forall x\in\partial_{\text{reg}}\Omega\ex p > 0: x+tV\of{x} \in\Omega~\forall -f < t < 0$, $x+ tV\of{x}\in\comp{\Omega}~\forall 0 < t < f$.
+        \end{enumerate}
+        \begin{proof}
+            Definiere
+            \begin{align*}
+                V\of{x} &\coloneqq \frac{\nabla G\of{x}}{\abs{\nabla G\of{x}}}
+            \end{align*}
+            und rechne Eigenschaften nach.\qedhere
+        \end{proof}
+    \end{lemma}
+
+    \subsection{Der Satz von Gauß}
+
+    \begin{satz}[Satz von Gauß]
+        \label{satz:von-gauss}
+        Sei $\Omega$ offen und beschränkt mit $\mC^1$-Rand. Sei $F\in\mC^{1}\of{\Omega, \R^d} \cap \mC\of{\overline{\Omega}, \R^d}$ mit $\fdiv F = \sum_{j=1}^{n} \partial_{x_j} F_j \subseteq \mL^1\of{\Omega}$. Dann gilt
+        \begin{align*}
+            \int_{\Omega}^{} \fdiv F \dif \lambda^d &= \int_{\partial\Omega}^{} F\nu \dif H_{\partial \Omega}^{d-1}
+        \end{align*}
+        mit $\nu$ als äußere Normale von $\partial \Omega$ im Punkt $x\in\partial\Omega$.
+    \end{satz}
+
+    \begin{korollar}
+        \begin{align*}
+            \int_{\Omega}^{} \partial_j f \dif \lambda^d &= \int_{\partial\Omega}^{} f\nu_j \dif H_{\partial\Omega}^{d-1}
+        \end{align*}
+    \end{korollar}
+
+    \begin{lemma}[Integral unter dem Graphen einer Funktion (mit Rand)]
+        Sei $V\subseteq\R^{d-1}$ offen und $g\in\mC^{1}\of{V}$. $A=\set{x=\pair{y,t}: t\leq g\of{y}}$, $F\in\mC^{1}\of{A, \R^{d}}\cap\mC^{\overline{A}, \R^d}$. Es gelte $K \subseteq V \times \R$ kompakt, sodass $F = 0$ auf $A \setminus K$. Dann folgt
+        \begin{align*}
+            \int_{A}^{} \fdiv F \dif \lambda^d &= \int_{M}^{} ?
+        \end{align*}
+        wobei $M = $ graph$\of{G}$.
+    \end{lemma}
+
+    \begin{proof}[Beweis von Satz~\ref{satz:von-gauss}]
+        \textit{(Fehlt hier)}
+    \end{proof}
 
 \end{document}
